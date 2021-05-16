@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Invoice
 module TgBotAPI.Types.Invoice where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,31 +37,31 @@ import TgBotAPI.TypeAlias
 -- This object contains basic information about an invoice.
 data Invoice = Invoice {
   -- | currency: Three-letter ISO 4217 [currency](\/bots\/payments\#supported-currencies) code
-  invoiceCurrency :: Data.Text.Internal.Text
+  currency :: Data.Text.Internal.Text
   -- | description: Product description
-  , invoiceDescription :: Data.Text.Internal.Text
+  , description :: Data.Text.Internal.Text
   -- | start_parameter: Unique bot deep-linking parameter that can be used to generate this invoice
-  , invoiceStartParameter :: Data.Text.Internal.Text
+  , startParameter :: Data.Text.Internal.Text
   -- | title: Product name
-  , invoiceTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   -- | total_amount: Total price in the *smallest units* of the currency (integer, **not** float\/double). For example, for a price of \`US\$ 1.45\` pass \`amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-  , invoiceTotalAmount :: GHC.Types.Int
+  , totalAmount :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Invoice
-    where toJSON obj = Data.Aeson.Types.Internal.object ("currency" Data.Aeson.Types.ToJSON..= invoiceCurrency obj : "description" Data.Aeson.Types.ToJSON..= invoiceDescription obj : "start_parameter" Data.Aeson.Types.ToJSON..= invoiceStartParameter obj : "title" Data.Aeson.Types.ToJSON..= invoiceTitle obj : "total_amount" Data.Aeson.Types.ToJSON..= invoiceTotalAmount obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("currency" Data.Aeson.Types.ToJSON..= invoiceCurrency obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= invoiceDescription obj) GHC.Base.<> (("start_parameter" Data.Aeson.Types.ToJSON..= invoiceStartParameter obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= invoiceTitle obj) GHC.Base.<> ("total_amount" Data.Aeson.Types.ToJSON..= invoiceTotalAmount obj)))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("currency" Data.Aeson.Types.ToJSON..= currency obj : "description" Data.Aeson.Types.ToJSON..= description obj : "start_parameter" Data.Aeson.Types.ToJSON..= startParameter obj : "title" Data.Aeson.Types.ToJSON..= title obj : "total_amount" Data.Aeson.Types.ToJSON..= totalAmount obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("currency" Data.Aeson.Types.ToJSON..= currency obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("start_parameter" Data.Aeson.Types.ToJSON..= startParameter obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= title obj) GHC.Base.<> ("total_amount" Data.Aeson.Types.ToJSON..= totalAmount obj)))))
 instance Data.Aeson.Types.FromJSON.FromJSON Invoice
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Invoice" (\obj -> ((((GHC.Base.pure Invoice GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "currency")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "start_parameter")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "total_amount"))
 -- | Create a new 'Invoice' with all required fields.
-mkInvoice :: Data.Text.Internal.Text -- ^ 'invoiceCurrency'
-  -> Data.Text.Internal.Text -- ^ 'invoiceDescription'
-  -> Data.Text.Internal.Text -- ^ 'invoiceStartParameter'
-  -> Data.Text.Internal.Text -- ^ 'invoiceTitle'
-  -> GHC.Types.Int -- ^ 'invoiceTotalAmount'
+mkInvoice :: Data.Text.Internal.Text -- ^ 'currency'
+  -> Data.Text.Internal.Text -- ^ 'description'
+  -> Data.Text.Internal.Text -- ^ 'startParameter'
+  -> Data.Text.Internal.Text -- ^ 'title'
+  -> GHC.Types.Int -- ^ 'totalAmount'
   -> Invoice
-mkInvoice invoiceCurrency invoiceDescription invoiceStartParameter invoiceTitle invoiceTotalAmount = Invoice{invoiceCurrency = invoiceCurrency,
-                                                                                                             invoiceDescription = invoiceDescription,
-                                                                                                             invoiceStartParameter = invoiceStartParameter,
-                                                                                                             invoiceTitle = invoiceTitle,
-                                                                                                             invoiceTotalAmount = invoiceTotalAmount}
+mkInvoice currency description startParameter title totalAmount = Invoice{currency = currency,
+                                                                          description = description,
+                                                                          startParameter = startParameter,
+                                                                          title = title,
+                                                                          totalAmount = totalAmount}

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Document
 module TgBotAPI.Types.Document where
@@ -24,45 +25,44 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.PhotoSize
+import  {-# SOURCE #-}  TgBotAPI.Types.PhotoSize (PhotoSize)
 
 -- | Defines the object schema located at @components.schemas.Document@ in the specification.
 -- 
 -- This object represents a general file (as opposed to [photos](https:\/\/core.telegram.org\/bots\/api\/\#photosize), [voice messages](https:\/\/core.telegram.org\/bots\/api\/\#voice) and [audio files](https:\/\/core.telegram.org\/bots\/api\/\#audio)).
 data Document = Document {
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
-  documentFileId :: Data.Text.Internal.Text
+  fileId :: Data.Text.Internal.Text
   -- | file_name: *Optional*. Original filename as defined by sender
-  , documentFileName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , fileName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | file_size: *Optional*. File size
-  , documentFileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , documentFileUniqueId :: Data.Text.Internal.Text
+  , fileUniqueId :: Data.Text.Internal.Text
   -- | mime_type: *Optional*. MIME type of the file as defined by sender
-  , documentMimeType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , mimeType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb: This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
-  , documentThumb :: (GHC.Maybe.Maybe PhotoSize)
+  , thumb :: (GHC.Maybe.Maybe PhotoSize)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Document
-    where toJSON obj = Data.Aeson.Types.Internal.object ("file_id" Data.Aeson.Types.ToJSON..= documentFileId obj : "file_name" Data.Aeson.Types.ToJSON..= documentFileName obj : "file_size" Data.Aeson.Types.ToJSON..= documentFileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= documentFileUniqueId obj : "mime_type" Data.Aeson.Types.ToJSON..= documentMimeType obj : "thumb" Data.Aeson.Types.ToJSON..= documentThumb obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_id" Data.Aeson.Types.ToJSON..= documentFileId obj) GHC.Base.<> (("file_name" Data.Aeson.Types.ToJSON..= documentFileName obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= documentFileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= documentFileUniqueId obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= documentMimeType obj) GHC.Base.<> ("thumb" Data.Aeson.Types.ToJSON..= documentThumb obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("file_id" Data.Aeson.Types.ToJSON..= fileId obj : "file_name" Data.Aeson.Types.ToJSON..= fileName obj : "file_size" Data.Aeson.Types.ToJSON..= fileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj : "mime_type" Data.Aeson.Types.ToJSON..= mimeType obj : "thumb" Data.Aeson.Types.ToJSON..= thumb obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_id" Data.Aeson.Types.ToJSON..= fileId obj) GHC.Base.<> (("file_name" Data.Aeson.Types.ToJSON..= fileName obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= mimeType obj) GHC.Base.<> ("thumb" Data.Aeson.Types.ToJSON..= thumb obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Document
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Document" (\obj -> (((((GHC.Base.pure Document GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "mime_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb"))
 -- | Create a new 'Document' with all required fields.
-mkDocument :: Data.Text.Internal.Text -- ^ 'documentFileId'
-  -> Data.Text.Internal.Text -- ^ 'documentFileUniqueId'
+mkDocument :: Data.Text.Internal.Text -- ^ 'fileId'
+  -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
   -> Document
-mkDocument documentFileId documentFileUniqueId = Document{documentFileId = documentFileId,
-                                                          documentFileName = GHC.Maybe.Nothing,
-                                                          documentFileSize = GHC.Maybe.Nothing,
-                                                          documentFileUniqueId = documentFileUniqueId,
-                                                          documentMimeType = GHC.Maybe.Nothing,
-                                                          documentThumb = GHC.Maybe.Nothing}
+mkDocument fileId fileUniqueId = Document{fileId = fileId,
+                                          fileName = GHC.Maybe.Nothing,
+                                          fileSize = GHC.Maybe.Nothing,
+                                          fileUniqueId = fileUniqueId,
+                                          mimeType = GHC.Maybe.Nothing,
+                                          thumb = GHC.Maybe.Nothing}

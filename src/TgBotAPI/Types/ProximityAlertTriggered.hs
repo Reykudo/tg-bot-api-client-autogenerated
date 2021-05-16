@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ProximityAlertTriggered
 module TgBotAPI.Types.ProximityAlertTriggered where
@@ -24,37 +25,36 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.ProximityAlertTriggered@ in the specification.
 -- 
 -- This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.
 data ProximityAlertTriggered = ProximityAlertTriggered {
   -- | distance: The distance between the users
-  proximityAlertTriggeredDistance :: GHC.Types.Int
+  distance :: GHC.Types.Int
   -- | traveler: This object represents a Telegram user or bot.
-  , proximityAlertTriggeredTraveler :: User
+  , traveler :: User
   -- | watcher: This object represents a Telegram user or bot.
-  , proximityAlertTriggeredWatcher :: User
+  , watcher :: User
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ProximityAlertTriggered
-    where toJSON obj = Data.Aeson.Types.Internal.object ("distance" Data.Aeson.Types.ToJSON..= proximityAlertTriggeredDistance obj : "traveler" Data.Aeson.Types.ToJSON..= proximityAlertTriggeredTraveler obj : "watcher" Data.Aeson.Types.ToJSON..= proximityAlertTriggeredWatcher obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("distance" Data.Aeson.Types.ToJSON..= proximityAlertTriggeredDistance obj) GHC.Base.<> (("traveler" Data.Aeson.Types.ToJSON..= proximityAlertTriggeredTraveler obj) GHC.Base.<> ("watcher" Data.Aeson.Types.ToJSON..= proximityAlertTriggeredWatcher obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("distance" Data.Aeson.Types.ToJSON..= distance obj : "traveler" Data.Aeson.Types.ToJSON..= traveler obj : "watcher" Data.Aeson.Types.ToJSON..= watcher obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("distance" Data.Aeson.Types.ToJSON..= distance obj) GHC.Base.<> (("traveler" Data.Aeson.Types.ToJSON..= traveler obj) GHC.Base.<> ("watcher" Data.Aeson.Types.ToJSON..= watcher obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON ProximityAlertTriggered
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ProximityAlertTriggered" (\obj -> ((GHC.Base.pure ProximityAlertTriggered GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "distance")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "traveler")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "watcher"))
 -- | Create a new 'ProximityAlertTriggered' with all required fields.
-mkProximityAlertTriggered :: GHC.Types.Int -- ^ 'proximityAlertTriggeredDistance'
-  -> User -- ^ 'proximityAlertTriggeredTraveler'
-  -> User -- ^ 'proximityAlertTriggeredWatcher'
+mkProximityAlertTriggered :: GHC.Types.Int -- ^ 'distance'
+  -> User -- ^ 'traveler'
+  -> User -- ^ 'watcher'
   -> ProximityAlertTriggered
-mkProximityAlertTriggered proximityAlertTriggeredDistance proximityAlertTriggeredTraveler proximityAlertTriggeredWatcher = ProximityAlertTriggered{proximityAlertTriggeredDistance = proximityAlertTriggeredDistance,
-                                                                                                                                                   proximityAlertTriggeredTraveler = proximityAlertTriggeredTraveler,
-                                                                                                                                                   proximityAlertTriggeredWatcher = proximityAlertTriggeredWatcher}
+mkProximityAlertTriggered distance traveler watcher = ProximityAlertTriggered{distance = distance,
+                                                                              traveler = traveler,
+                                                                              watcher = watcher}

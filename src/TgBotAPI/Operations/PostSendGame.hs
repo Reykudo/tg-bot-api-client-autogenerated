@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSendGame
 module TgBotAPI.Operations.PostSendGame where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to send a game. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postSendGame :: forall m . TgBotAPI.Common.MonadHTTP m => PostSendGameRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSendGameResponse) -- ^ Monadic computation which returns the result of the operation
-postSendGame body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendGame body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                        PostSendGameResponseBody200)
-                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                            | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendGame") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/sendGame.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,39 +58,39 @@ postSendGame body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.eit
 -- 
 data PostSendGameRequestBody = PostSendGameRequestBody {
   -- | allow_sending_without_reply: Pass *True*, if the message should be sent even if the specified replied-to message is not found
-  postSendGameRequestBodyAllowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  allowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | chat_id: Unique identifier for the target chat
-  , postSendGameRequestBodyChatId :: GHC.Types.Int
+  , chatId :: GHC.Types.Int
   -- | disable_notification: Sends the message [silently](https:\/\/telegram.org\/blog\/channels-2-0\#silent-messages). Users will receive a notification with no sound.
-  , postSendGameRequestBodyDisableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | game_short_name: Short name of the game, serves as the unique identifier for the game. Set up your games via [Botfather](https:\/\/t.me\/botfather).
-  , postSendGameRequestBodyGameShortName :: Data.Text.Internal.Text
+  , gameShortName :: Data.Text.Internal.Text
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , postSendGameRequestBodyReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , postSendGameRequestBodyReplyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendGameRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyAllowSendingWithoutReply obj : "chat_id" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyChatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyDisableNotification obj : "game_short_name" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyGameShortName obj : "reply_markup" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyReplyMarkup obj : "reply_to_message_id" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyReplyToMessageId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyAllowSendingWithoutReply obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyChatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyDisableNotification obj) GHC.Base.<> (("game_short_name" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyGameShortName obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyReplyMarkup obj) GHC.Base.<> ("reply_to_message_id" Data.Aeson.Types.ToJSON..= postSendGameRequestBodyReplyToMessageId obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= allowSendingWithoutReply obj : "chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj : "game_short_name" Data.Aeson.Types.ToJSON..= gameShortName obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "reply_to_message_id" Data.Aeson.Types.ToJSON..= replyToMessageId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= allowSendingWithoutReply obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj) GHC.Base.<> (("game_short_name" Data.Aeson.Types.ToJSON..= gameShortName obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> ("reply_to_message_id" Data.Aeson.Types.ToJSON..= replyToMessageId obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendGameRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendGameRequestBody" (\obj -> (((((GHC.Base.pure PostSendGameRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "allow_sending_without_reply")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "game_short_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_to_message_id"))
 -- | Create a new 'PostSendGameRequestBody' with all required fields.
-mkPostSendGameRequestBody :: GHC.Types.Int -- ^ 'postSendGameRequestBodyChatId'
-  -> Data.Text.Internal.Text -- ^ 'postSendGameRequestBodyGameShortName'
+mkPostSendGameRequestBody :: GHC.Types.Int -- ^ 'chatId'
+  -> Data.Text.Internal.Text -- ^ 'gameShortName'
   -> PostSendGameRequestBody
-mkPostSendGameRequestBody postSendGameRequestBodyChatId postSendGameRequestBodyGameShortName = PostSendGameRequestBody{postSendGameRequestBodyAllowSendingWithoutReply = GHC.Maybe.Nothing,
-                                                                                                                       postSendGameRequestBodyChatId = postSendGameRequestBodyChatId,
-                                                                                                                       postSendGameRequestBodyDisableNotification = GHC.Maybe.Nothing,
-                                                                                                                       postSendGameRequestBodyGameShortName = postSendGameRequestBodyGameShortName,
-                                                                                                                       postSendGameRequestBodyReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                       postSendGameRequestBodyReplyToMessageId = GHC.Maybe.Nothing}
+mkPostSendGameRequestBody chatId gameShortName = PostSendGameRequestBody{allowSendingWithoutReply = GHC.Maybe.Nothing,
+                                                                         chatId = chatId,
+                                                                         disableNotification = GHC.Maybe.Nothing,
+                                                                         gameShortName = gameShortName,
+                                                                         replyMarkup = GHC.Maybe.Nothing,
+                                                                         replyToMessageId = GHC.Maybe.Nothing}
 -- | Represents a response of the operation 'postSendGame'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendGameResponseError' is used.
 data PostSendGameResponse =
-   PostSendGameResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSendGameResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSendGameResponse200 PostSendGameResponseBody200 -- ^ 
   | PostSendGameResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -99,22 +99,22 @@ data PostSendGameResponse =
 -- 
 data PostSendGameResponseBody200 = PostSendGameResponseBody200 {
   -- | ok
-  postSendGameResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a message.
-  , postSendGameResponseBody200Result :: Message
+  , result :: Message
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendGameResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSendGameResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSendGameResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSendGameResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSendGameResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendGameResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendGameResponseBody200" (\obj -> (GHC.Base.pure PostSendGameResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSendGameResponseBody200' with all required fields.
-mkPostSendGameResponseBody200 :: GHC.Types.Bool -- ^ 'postSendGameResponseBody200Ok'
-  -> Message -- ^ 'postSendGameResponseBody200Result'
+mkPostSendGameResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Message -- ^ 'result'
   -> PostSendGameResponseBody200
-mkPostSendGameResponseBody200 postSendGameResponseBody200Ok postSendGameResponseBody200Result = PostSendGameResponseBody200{postSendGameResponseBody200Ok = postSendGameResponseBody200Ok,
-                                                                                                                            postSendGameResponseBody200Result = postSendGameResponseBody200Result}
+mkPostSendGameResponseBody200 ok result = PostSendGameResponseBody200{ok = ok,
+                                                                      result = result}
 -- | > POST /sendGame
 -- 
 -- The same as 'postSendGame' but accepts an explicit configuration.
@@ -122,9 +122,9 @@ postSendGameWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBot
   -> PostSendGameRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSendGameResponse) -- ^ Monadic computation which returns the result of the operation
 postSendGameWithConfiguration config
-                              body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                              body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                         PostSendGameResponseBody200)
-                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                           Error)
                                                                                                                                                                             | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendGame") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /sendGame

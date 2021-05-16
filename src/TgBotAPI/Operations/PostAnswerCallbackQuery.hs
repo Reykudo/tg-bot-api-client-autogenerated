@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postAnswerCallbackQuery
 module TgBotAPI.Operations.PostAnswerCallbackQuery where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -50,9 +50,9 @@ import TgBotAPI.Types
 -- Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first create a game for your bot via [\@Botfather](https:\/\/t.me\/botfather) and accept the terms. Otherwise, you may use links like \`t.me\/your_bot?start=XXXX\` that open your bot with a parameter.
 postAnswerCallbackQuery :: forall m . TgBotAPI.Common.MonadHTTP m => PostAnswerCallbackQueryRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostAnswerCallbackQueryResponse) -- ^ Monadic computation which returns the result of the operation
-postAnswerCallbackQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostAnswerCallbackQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postAnswerCallbackQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostAnswerCallbackQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                         PostAnswerCallbackQueryResponseBody200)
-                                                                                                                                                                                 | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                 | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                           Error)
                                                                                                                                                                                  | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/answerCallbackQuery") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/answerCallbackQuery.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -60,37 +60,37 @@ postAnswerCallbackQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data
 -- 
 data PostAnswerCallbackQueryRequestBody = PostAnswerCallbackQueryRequestBody {
   -- | cache_time: The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
-  postAnswerCallbackQueryRequestBodyCacheTime :: (GHC.Maybe.Maybe GHC.Types.Int)
+  cacheTime :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | callback_query_id: Unique identifier for the query to be answered
-  , postAnswerCallbackQueryRequestBodyCallbackQueryId :: Data.Text.Internal.Text
+  , callbackQueryId :: Data.Text.Internal.Text
   -- | show_alert: If *true*, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to *false*.
-  , postAnswerCallbackQueryRequestBodyShowAlert :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , showAlert :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | text: Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
-  , postAnswerCallbackQueryRequestBodyText :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , text :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | url: URL that will be opened by the user\'s client. If you have created a [Game](https:\/\/core.telegram.org\/bots\/api\/\#game) and accepted the conditions via [\@Botfather](https:\/\/t.me\/botfather), specify the URL that opens your game — note that this will only work if the query comes from a [*callback\\_game*](https:\/\/core.telegram.org\/bots\/api\/\#inlinekeyboardbutton) button.  
   -- 
   -- Otherwise, you may use links like \`t.me\/your_bot?start=XXXX\` that open your bot with a parameter.
-  , postAnswerCallbackQueryRequestBodyUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , url :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostAnswerCallbackQueryRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("cache_time" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyCacheTime obj : "callback_query_id" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyCallbackQueryId obj : "show_alert" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyShowAlert obj : "text" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyText obj : "url" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyUrl obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("cache_time" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyCacheTime obj) GHC.Base.<> (("callback_query_id" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyCallbackQueryId obj) GHC.Base.<> (("show_alert" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyShowAlert obj) GHC.Base.<> (("text" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyText obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryRequestBodyUrl obj)))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("cache_time" Data.Aeson.Types.ToJSON..= cacheTime obj : "callback_query_id" Data.Aeson.Types.ToJSON..= callbackQueryId obj : "show_alert" Data.Aeson.Types.ToJSON..= showAlert obj : "text" Data.Aeson.Types.ToJSON..= text obj : "url" Data.Aeson.Types.ToJSON..= url obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("cache_time" Data.Aeson.Types.ToJSON..= cacheTime obj) GHC.Base.<> (("callback_query_id" Data.Aeson.Types.ToJSON..= callbackQueryId obj) GHC.Base.<> (("show_alert" Data.Aeson.Types.ToJSON..= showAlert obj) GHC.Base.<> (("text" Data.Aeson.Types.ToJSON..= text obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= url obj)))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostAnswerCallbackQueryRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostAnswerCallbackQueryRequestBody" (\obj -> ((((GHC.Base.pure PostAnswerCallbackQueryRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "cache_time")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "callback_query_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "show_alert")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "text")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "url"))
 -- | Create a new 'PostAnswerCallbackQueryRequestBody' with all required fields.
-mkPostAnswerCallbackQueryRequestBody :: Data.Text.Internal.Text -- ^ 'postAnswerCallbackQueryRequestBodyCallbackQueryId'
+mkPostAnswerCallbackQueryRequestBody :: Data.Text.Internal.Text -- ^ 'callbackQueryId'
   -> PostAnswerCallbackQueryRequestBody
-mkPostAnswerCallbackQueryRequestBody postAnswerCallbackQueryRequestBodyCallbackQueryId = PostAnswerCallbackQueryRequestBody{postAnswerCallbackQueryRequestBodyCacheTime = GHC.Maybe.Nothing,
-                                                                                                                            postAnswerCallbackQueryRequestBodyCallbackQueryId = postAnswerCallbackQueryRequestBodyCallbackQueryId,
-                                                                                                                            postAnswerCallbackQueryRequestBodyShowAlert = GHC.Maybe.Nothing,
-                                                                                                                            postAnswerCallbackQueryRequestBodyText = GHC.Maybe.Nothing,
-                                                                                                                            postAnswerCallbackQueryRequestBodyUrl = GHC.Maybe.Nothing}
+mkPostAnswerCallbackQueryRequestBody callbackQueryId = PostAnswerCallbackQueryRequestBody{cacheTime = GHC.Maybe.Nothing,
+                                                                                          callbackQueryId = callbackQueryId,
+                                                                                          showAlert = GHC.Maybe.Nothing,
+                                                                                          text = GHC.Maybe.Nothing,
+                                                                                          url = GHC.Maybe.Nothing}
 -- | Represents a response of the operation 'postAnswerCallbackQuery'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostAnswerCallbackQueryResponseError' is used.
 data PostAnswerCallbackQueryResponse =
-   PostAnswerCallbackQueryResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostAnswerCallbackQueryResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostAnswerCallbackQueryResponse200 PostAnswerCallbackQueryResponseBody200 -- ^ 
   | PostAnswerCallbackQueryResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -99,22 +99,22 @@ data PostAnswerCallbackQueryResponse =
 -- 
 data PostAnswerCallbackQueryResponseBody200 = PostAnswerCallbackQueryResponseBody200 {
   -- | ok
-  postAnswerCallbackQueryResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postAnswerCallbackQueryResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostAnswerCallbackQueryResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postAnswerCallbackQueryResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostAnswerCallbackQueryResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostAnswerCallbackQueryResponseBody200" (\obj -> (GHC.Base.pure PostAnswerCallbackQueryResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostAnswerCallbackQueryResponseBody200' with all required fields.
-mkPostAnswerCallbackQueryResponseBody200 :: GHC.Types.Bool -- ^ 'postAnswerCallbackQueryResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postAnswerCallbackQueryResponseBody200Result'
+mkPostAnswerCallbackQueryResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostAnswerCallbackQueryResponseBody200
-mkPostAnswerCallbackQueryResponseBody200 postAnswerCallbackQueryResponseBody200Ok postAnswerCallbackQueryResponseBody200Result = PostAnswerCallbackQueryResponseBody200{postAnswerCallbackQueryResponseBody200Ok = postAnswerCallbackQueryResponseBody200Ok,
-                                                                                                                                                                        postAnswerCallbackQueryResponseBody200Result = postAnswerCallbackQueryResponseBody200Result}
+mkPostAnswerCallbackQueryResponseBody200 ok result = PostAnswerCallbackQueryResponseBody200{ok = ok,
+                                                                                            result = result}
 -- | > POST /answerCallbackQuery
 -- 
 -- The same as 'postAnswerCallbackQuery' but accepts an explicit configuration.
@@ -122,9 +122,9 @@ postAnswerCallbackQueryWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP
   -> PostAnswerCallbackQueryRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostAnswerCallbackQueryResponse) -- ^ Monadic computation which returns the result of the operation
 postAnswerCallbackQueryWithConfiguration config
-                                         body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostAnswerCallbackQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                         body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostAnswerCallbackQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                          PostAnswerCallbackQueryResponseBody200)
-                                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerCallbackQueryResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                            Error)
                                                                                                                                                                                                   | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/answerCallbackQuery") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /answerCallbackQuery

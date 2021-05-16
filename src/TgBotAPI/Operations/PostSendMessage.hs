@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSendMessage
 module TgBotAPI.Operations.PostSendMessage where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to send text messages. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postSendMessage :: forall m . TgBotAPI.Common.MonadHTTP m => PostSendMessageRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSendMessageResponse) -- ^ Monadic computation which returns the result of the operation
-postSendMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                 PostSendMessageResponseBody200)
-                                                                                                                                                                 | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                 | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                   Error)
                                                                                                                                                                  | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/sendMessage.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,98 +58,98 @@ postSendMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.
 -- 
 data PostSendMessageRequestBody = PostSendMessageRequestBody {
   -- | allow_sending_without_reply: Pass *True*, if the message should be sent even if the specified replied-to message is not found
-  postSendMessageRequestBodyAllowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  allowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  , postSendMessageRequestBodyChatId :: PostSendMessageRequestBodyChatIdVariants
+  , chatId :: ChatIdVariants
   -- | disable_notification: Sends the message [silently](https:\/\/telegram.org\/blog\/channels-2-0\#silent-messages). Users will receive a notification with no sound.
-  , postSendMessageRequestBodyDisableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | disable_web_page_preview: Disables link previews for links in this message
-  , postSendMessageRequestBodyDisableWebPagePreview :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableWebPagePreview :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | entities: List of special entities that appear in message text, which can be specified instead of *parse\\_mode*
-  , postSendMessageRequestBodyEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
+  , entities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | parse_mode: Mode for parsing entities in the message text. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
-  , postSendMessageRequestBodyParseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: Additional interface options. A JSON-serialized object for an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https:\/\/core.telegram.org\/bots\#keyboards), instructions to remove reply keyboard or to force a reply from the user.
-  , postSendMessageRequestBodyReplyMarkup :: (GHC.Maybe.Maybe PostSendMessageRequestBodyReplyMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe ReplyMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , postSendMessageRequestBodyReplyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | text: Text of the message to be sent, 1-4096 characters after entities parsing
-  , postSendMessageRequestBodyText :: Data.Text.Internal.Text
+  , text :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendMessageRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyAllowSendingWithoutReply obj : "chat_id" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyChatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyDisableNotification obj : "disable_web_page_preview" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyDisableWebPagePreview obj : "entities" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyEntities obj : "parse_mode" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyParseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkup obj : "reply_to_message_id" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyToMessageId obj : "text" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyText obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyAllowSendingWithoutReply obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyChatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyDisableNotification obj) GHC.Base.<> (("disable_web_page_preview" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyDisableWebPagePreview obj) GHC.Base.<> (("entities" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyEntities obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyParseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkup obj) GHC.Base.<> (("reply_to_message_id" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyToMessageId obj) GHC.Base.<> ("text" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyText obj)))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= allowSendingWithoutReply obj : "chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj : "disable_web_page_preview" Data.Aeson.Types.ToJSON..= disableWebPagePreview obj : "entities" Data.Aeson.Types.ToJSON..= entities obj : "parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "reply_to_message_id" Data.Aeson.Types.ToJSON..= replyToMessageId obj : "text" Data.Aeson.Types.ToJSON..= text obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= allowSendingWithoutReply obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj) GHC.Base.<> (("disable_web_page_preview" Data.Aeson.Types.ToJSON..= disableWebPagePreview obj) GHC.Base.<> (("entities" Data.Aeson.Types.ToJSON..= entities obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("reply_to_message_id" Data.Aeson.Types.ToJSON..= replyToMessageId obj) GHC.Base.<> ("text" Data.Aeson.Types.ToJSON..= text obj)))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendMessageRequestBody" (\obj -> ((((((((GHC.Base.pure PostSendMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "allow_sending_without_reply")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_web_page_preview")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parse_mode")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_to_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "text"))
 -- | Create a new 'PostSendMessageRequestBody' with all required fields.
-mkPostSendMessageRequestBody :: PostSendMessageRequestBodyChatIdVariants -- ^ 'postSendMessageRequestBodyChatId'
-  -> Data.Text.Internal.Text -- ^ 'postSendMessageRequestBodyText'
+mkPostSendMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> Data.Text.Internal.Text -- ^ 'text'
   -> PostSendMessageRequestBody
-mkPostSendMessageRequestBody postSendMessageRequestBodyChatId postSendMessageRequestBodyText = PostSendMessageRequestBody{postSendMessageRequestBodyAllowSendingWithoutReply = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyChatId = postSendMessageRequestBodyChatId,
-                                                                                                                          postSendMessageRequestBodyDisableNotification = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyDisableWebPagePreview = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyEntities = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyParseMode = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyReplyToMessageId = GHC.Maybe.Nothing,
-                                                                                                                          postSendMessageRequestBodyText = postSendMessageRequestBodyText}
+mkPostSendMessageRequestBody chatId text = PostSendMessageRequestBody{allowSendingWithoutReply = GHC.Maybe.Nothing,
+                                                                      chatId = chatId,
+                                                                      disableNotification = GHC.Maybe.Nothing,
+                                                                      disableWebPagePreview = GHC.Maybe.Nothing,
+                                                                      entities = GHC.Maybe.Nothing,
+                                                                      parseMode = GHC.Maybe.Nothing,
+                                                                      replyMarkup = GHC.Maybe.Nothing,
+                                                                      replyToMessageId = GHC.Maybe.Nothing,
+                                                                      text = text}
 -- | Defines the oneOf schema located at @paths.\/sendMessage.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostSendMessageRequestBodyChatIdVariants =
-   PostSendMessageRequestBodyChatIdInt GHC.Types.Int
-  | PostSendMessageRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSendMessageRequestBodyChatIdVariants
-    where toJSON (PostSendMessageRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostSendMessageRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostSendMessageRequestBodyChatIdVariants
-    where parseJSON val = case (PostSendMessageRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostSendMessageRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Defines the object schema located at @paths.\/sendMessage.POST.requestBody.content.application\/json.schema.properties.reply_markup.anyOf@ in the specification.
 -- 
 -- Additional interface options. A JSON-serialized object for an [inline keyboard](https:\\\/\\\/core.telegram.org\\\/bots\\\#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https:\\\/\\\/core.telegram.org\\\/bots\\\#keyboards), instructions to remove reply keyboard or to force a reply from the user.
-data PostSendMessageRequestBodyReplyMarkup = PostSendMessageRequestBodyReplyMarkup {
+data ReplyMarkup = ReplyMarkup {
   -- | force_reply: Shows reply interface to the user, as if they manually selected the bot\'s message and tapped \'Reply\'
-  postSendMessageRequestBodyReplyMarkupForceReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  forceReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | inline_keyboard: Array of button rows, each represented by an Array of [InlineKeyboardButton](https:\/\/core.telegram.org\/bots\/api\/\#inlinekeyboardbutton) objects
-  , postSendMessageRequestBodyReplyMarkupInlineKeyboard :: (GHC.Maybe.Maybe ([[InlineKeyboardButton]]))
+  , inlineKeyboard :: (GHC.Maybe.Maybe ([[InlineKeyboardButton]]))
   -- | keyboard: Array of button rows, each represented by an Array of [KeyboardButton](https:\/\/core.telegram.org\/bots\/api\/\#keyboardbutton) objects
-  , postSendMessageRequestBodyReplyMarkupKeyboard :: (GHC.Maybe.Maybe ([[KeyboardButton]]))
+  , keyboard :: (GHC.Maybe.Maybe ([[KeyboardButton]]))
   -- | one_time_keyboard: *Optional*. Requests clients to hide the keyboard as soon as it\'s been used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in the chat – the user can press a special button in the input field to see the custom keyboard again. Defaults to *false*.
-  , postSendMessageRequestBodyReplyMarkupOneTimeKeyboard :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , oneTimeKeyboard :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | remove_keyboard: Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use *one\\_time\\_keyboard* in [ReplyKeyboardMarkup](https:\/\/core.telegram.org\/bots\/api\/\#replykeyboardmarkup))
-  , postSendMessageRequestBodyReplyMarkupRemoveKeyboard :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , removeKeyboard :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | resize_keyboard: *Optional*. Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are just two rows of buttons). Defaults to *false*, in which case the custom keyboard is always of the same height as the app\'s standard keyboard.
-  , postSendMessageRequestBodyReplyMarkupResizeKeyboard :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , resizeKeyboard :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | selective: *Optional*. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are \@mentioned in the *text* of the [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) object; 2) if the bot\'s message is a reply (has *reply\\_to\\_message\\_id*), sender of the original message.  
   -- 
   -- *Example:* A user requests to change the bot\'s language, bot replies to the request with a keyboard to select the new language. Other users in the group don\'t see the keyboard.
-  , postSendMessageRequestBodyReplyMarkupSelective :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , selective :: (GHC.Maybe.Maybe GHC.Types.Bool)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSendMessageRequestBodyReplyMarkup
-    where toJSON obj = Data.Aeson.Types.Internal.object ("force_reply" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupForceReply obj : "inline_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupInlineKeyboard obj : "keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupKeyboard obj : "one_time_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupOneTimeKeyboard obj : "remove_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupRemoveKeyboard obj : "resize_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupResizeKeyboard obj : "selective" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupSelective obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("force_reply" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupForceReply obj) GHC.Base.<> (("inline_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupInlineKeyboard obj) GHC.Base.<> (("keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupKeyboard obj) GHC.Base.<> (("one_time_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupOneTimeKeyboard obj) GHC.Base.<> (("remove_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupRemoveKeyboard obj) GHC.Base.<> (("resize_keyboard" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupResizeKeyboard obj) GHC.Base.<> ("selective" Data.Aeson.Types.ToJSON..= postSendMessageRequestBodyReplyMarkupSelective obj)))))))
-instance Data.Aeson.Types.FromJSON.FromJSON PostSendMessageRequestBodyReplyMarkup
-    where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendMessageRequestBodyReplyMarkup" (\obj -> ((((((GHC.Base.pure PostSendMessageRequestBodyReplyMarkup GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "force_reply")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "one_time_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "remove_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "resize_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "selective"))
--- | Create a new 'PostSendMessageRequestBodyReplyMarkup' with all required fields.
-mkPostSendMessageRequestBodyReplyMarkup :: PostSendMessageRequestBodyReplyMarkup
-mkPostSendMessageRequestBodyReplyMarkup = PostSendMessageRequestBodyReplyMarkup{postSendMessageRequestBodyReplyMarkupForceReply = GHC.Maybe.Nothing,
-                                                                                postSendMessageRequestBodyReplyMarkupInlineKeyboard = GHC.Maybe.Nothing,
-                                                                                postSendMessageRequestBodyReplyMarkupKeyboard = GHC.Maybe.Nothing,
-                                                                                postSendMessageRequestBodyReplyMarkupOneTimeKeyboard = GHC.Maybe.Nothing,
-                                                                                postSendMessageRequestBodyReplyMarkupRemoveKeyboard = GHC.Maybe.Nothing,
-                                                                                postSendMessageRequestBodyReplyMarkupResizeKeyboard = GHC.Maybe.Nothing,
-                                                                                postSendMessageRequestBodyReplyMarkupSelective = GHC.Maybe.Nothing}
+instance Data.Aeson.Types.ToJSON.ToJSON ReplyMarkup
+    where toJSON obj = Data.Aeson.Types.Internal.object ("force_reply" Data.Aeson.Types.ToJSON..= forceReply obj : "inline_keyboard" Data.Aeson.Types.ToJSON..= inlineKeyboard obj : "keyboard" Data.Aeson.Types.ToJSON..= keyboard obj : "one_time_keyboard" Data.Aeson.Types.ToJSON..= oneTimeKeyboard obj : "remove_keyboard" Data.Aeson.Types.ToJSON..= removeKeyboard obj : "resize_keyboard" Data.Aeson.Types.ToJSON..= resizeKeyboard obj : "selective" Data.Aeson.Types.ToJSON..= selective obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("force_reply" Data.Aeson.Types.ToJSON..= forceReply obj) GHC.Base.<> (("inline_keyboard" Data.Aeson.Types.ToJSON..= inlineKeyboard obj) GHC.Base.<> (("keyboard" Data.Aeson.Types.ToJSON..= keyboard obj) GHC.Base.<> (("one_time_keyboard" Data.Aeson.Types.ToJSON..= oneTimeKeyboard obj) GHC.Base.<> (("remove_keyboard" Data.Aeson.Types.ToJSON..= removeKeyboard obj) GHC.Base.<> (("resize_keyboard" Data.Aeson.Types.ToJSON..= resizeKeyboard obj) GHC.Base.<> ("selective" Data.Aeson.Types.ToJSON..= selective obj)))))))
+instance Data.Aeson.Types.FromJSON.FromJSON ReplyMarkup
+    where parseJSON = Data.Aeson.Types.FromJSON.withObject "ReplyMarkup" (\obj -> ((((((GHC.Base.pure ReplyMarkup GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "force_reply")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "one_time_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "remove_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "resize_keyboard")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "selective"))
+-- | Create a new 'ReplyMarkup' with all required fields.
+mkReplyMarkup :: ReplyMarkup
+mkReplyMarkup = ReplyMarkup{forceReply = GHC.Maybe.Nothing,
+                            inlineKeyboard = GHC.Maybe.Nothing,
+                            keyboard = GHC.Maybe.Nothing,
+                            oneTimeKeyboard = GHC.Maybe.Nothing,
+                            removeKeyboard = GHC.Maybe.Nothing,
+                            resizeKeyboard = GHC.Maybe.Nothing,
+                            selective = GHC.Maybe.Nothing}
 -- | Represents a response of the operation 'postSendMessage'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendMessageResponseError' is used.
 data PostSendMessageResponse =
-   PostSendMessageResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSendMessageResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSendMessageResponse200 PostSendMessageResponseBody200 -- ^ 
   | PostSendMessageResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -158,22 +158,22 @@ data PostSendMessageResponse =
 -- 
 data PostSendMessageResponseBody200 = PostSendMessageResponseBody200 {
   -- | ok
-  postSendMessageResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a message.
-  , postSendMessageResponseBody200Result :: Message
+  , result :: Message
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendMessageResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSendMessageResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSendMessageResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSendMessageResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSendMessageResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendMessageResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendMessageResponseBody200" (\obj -> (GHC.Base.pure PostSendMessageResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSendMessageResponseBody200' with all required fields.
-mkPostSendMessageResponseBody200 :: GHC.Types.Bool -- ^ 'postSendMessageResponseBody200Ok'
-  -> Message -- ^ 'postSendMessageResponseBody200Result'
+mkPostSendMessageResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Message -- ^ 'result'
   -> PostSendMessageResponseBody200
-mkPostSendMessageResponseBody200 postSendMessageResponseBody200Ok postSendMessageResponseBody200Result = PostSendMessageResponseBody200{postSendMessageResponseBody200Ok = postSendMessageResponseBody200Ok,
-                                                                                                                                        postSendMessageResponseBody200Result = postSendMessageResponseBody200Result}
+mkPostSendMessageResponseBody200 ok result = PostSendMessageResponseBody200{ok = ok,
+                                                                            result = result}
 -- | > POST /sendMessage
 -- 
 -- The same as 'postSendMessage' but accepts an explicit configuration.
@@ -181,9 +181,9 @@ postSendMessageWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => Tg
   -> PostSendMessageRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSendMessageResponse) -- ^ Monadic computation which returns the result of the operation
 postSendMessageWithConfiguration config
-                                 body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                 body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                  PostSendMessageResponseBody200)
-                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                    Error)
                                                                                                                                                                                   | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /sendMessage

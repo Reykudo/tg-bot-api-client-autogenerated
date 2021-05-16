@@ -6,13 +6,13 @@ instance Show InlineQueryResult
 instance Eq InlineQueryResult
 instance FromJSON InlineQueryResult
 instance ToJSON InlineQueryResult
-data InlineQueryResultMimeType
-instance Show InlineQueryResultMimeType
-instance Eq InlineQueryResultMimeType
-instance FromJSON InlineQueryResultMimeType
-instance ToJSON InlineQueryResultMimeType
-data InlineQueryResultThumbMimeType
-instance Show InlineQueryResultThumbMimeType
-instance Eq InlineQueryResultThumbMimeType
-instance FromJSON InlineQueryResultThumbMimeType
-instance ToJSON InlineQueryResultThumbMimeType
+data MimeType
+instance Show MimeType
+instance Eq MimeType
+instance FromJSON MimeType
+instance ToJSON MimeType
+data ThumbMimeType
+instance Show ThumbMimeType
+instance Eq ThumbMimeType
+instance FromJSON ThumbMimeType
+instance ToJSON ThumbMimeType

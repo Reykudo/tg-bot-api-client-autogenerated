@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultContact
 module TgBotAPI.Types.InlineQueryResultContact where
@@ -24,63 +25,62 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
-import {-# SOURCE #-} TgBotAPI.Types.InputMessageContent
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
+import  {-# SOURCE #-}  TgBotAPI.Types.InputMessageContent (InputMessageContent)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultContact@ in the specification.
 -- 
 -- Represents a contact with a phone number. By default, this contact will be sent by the user. Alternatively, you can use *input\\_message\\_content* to send a message with the specified content instead of the contact.
 data InlineQueryResultContact = InlineQueryResultContact {
   -- | first_name: Contact\'s first name
-  inlineQueryResultContactFirstName :: Data.Text.Internal.Text
+  firstName :: Data.Text.Internal.Text
   -- | id: Unique identifier for this result, 1-64 Bytes
-  , inlineQueryResultContactId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
-  , inlineQueryResultContactInputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
+  , inputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
   -- | last_name: *Optional*. Contact\'s last name
-  , inlineQueryResultContactLastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , lastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | phone_number: Contact\'s phone number
-  , inlineQueryResultContactPhoneNumber :: Data.Text.Internal.Text
+  , phoneNumber :: Data.Text.Internal.Text
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultContactReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_height: *Optional*. Thumbnail height
-  , inlineQueryResultContactThumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | thumb_url: *Optional*. Url of the thumbnail for the result
-  , inlineQueryResultContactThumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , thumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb_width: *Optional*. Thumbnail width
-  , inlineQueryResultContactThumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | type: Type of the result, must be *contact*
-  , inlineQueryResultContactType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   -- | vcard: *Optional*. Additional data about the contact in the form of a [vCard](https:\/\/en.wikipedia.org\/wiki\/VCard), 0-2048 bytes
-  , inlineQueryResultContactVcard :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , vcard :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultContact
-    where toJSON obj = Data.Aeson.Types.Internal.object ("first_name" Data.Aeson.Types.ToJSON..= inlineQueryResultContactFirstName obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryResultContactId obj : "input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultContactInputMessageContent obj : "last_name" Data.Aeson.Types.ToJSON..= inlineQueryResultContactLastName obj : "phone_number" Data.Aeson.Types.ToJSON..= inlineQueryResultContactPhoneNumber obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultContactReplyMarkup obj : "thumb_height" Data.Aeson.Types.ToJSON..= inlineQueryResultContactThumbHeight obj : "thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultContactThumbUrl obj : "thumb_width" Data.Aeson.Types.ToJSON..= inlineQueryResultContactThumbWidth obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultContactType obj : "vcard" Data.Aeson.Types.ToJSON..= inlineQueryResultContactVcard obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("first_name" Data.Aeson.Types.ToJSON..= inlineQueryResultContactFirstName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultContactId obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultContactInputMessageContent obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= inlineQueryResultContactLastName obj) GHC.Base.<> (("phone_number" Data.Aeson.Types.ToJSON..= inlineQueryResultContactPhoneNumber obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultContactReplyMarkup obj) GHC.Base.<> (("thumb_height" Data.Aeson.Types.ToJSON..= inlineQueryResultContactThumbHeight obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultContactThumbUrl obj) GHC.Base.<> (("thumb_width" Data.Aeson.Types.ToJSON..= inlineQueryResultContactThumbWidth obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= inlineQueryResultContactType obj) GHC.Base.<> ("vcard" Data.Aeson.Types.ToJSON..= inlineQueryResultContactVcard obj)))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("first_name" Data.Aeson.Types.ToJSON..= firstName obj : "id" Data.Aeson.Types.ToJSON..= id obj : "input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj : "last_name" Data.Aeson.Types.ToJSON..= lastName obj : "phone_number" Data.Aeson.Types.ToJSON..= phoneNumber obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "thumb_height" Data.Aeson.Types.ToJSON..= thumbHeight obj : "thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj : "thumb_width" Data.Aeson.Types.ToJSON..= thumbWidth obj : "type" Data.Aeson.Types.ToJSON..= type' obj : "vcard" Data.Aeson.Types.ToJSON..= vcard obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("first_name" Data.Aeson.Types.ToJSON..= firstName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= lastName obj) GHC.Base.<> (("phone_number" Data.Aeson.Types.ToJSON..= phoneNumber obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("thumb_height" Data.Aeson.Types.ToJSON..= thumbHeight obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj) GHC.Base.<> (("thumb_width" Data.Aeson.Types.ToJSON..= thumbWidth obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= type' obj) GHC.Base.<> ("vcard" Data.Aeson.Types.ToJSON..= vcard obj)))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultContact
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultContact" (\obj -> ((((((((((GHC.Base.pure InlineQueryResultContact GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "first_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "input_message_content")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "phone_number")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_width")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "vcard"))
 -- | Create a new 'InlineQueryResultContact' with all required fields.
-mkInlineQueryResultContact :: Data.Text.Internal.Text -- ^ 'inlineQueryResultContactFirstName'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultContactId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultContactPhoneNumber'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultContactType'
+mkInlineQueryResultContact :: Data.Text.Internal.Text -- ^ 'firstName'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'phoneNumber'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> InlineQueryResultContact
-mkInlineQueryResultContact inlineQueryResultContactFirstName inlineQueryResultContactId inlineQueryResultContactPhoneNumber inlineQueryResultContactType = InlineQueryResultContact{inlineQueryResultContactFirstName = inlineQueryResultContactFirstName,
-                                                                                                                                                                                    inlineQueryResultContactId = inlineQueryResultContactId,
-                                                                                                                                                                                    inlineQueryResultContactInputMessageContent = GHC.Maybe.Nothing,
-                                                                                                                                                                                    inlineQueryResultContactLastName = GHC.Maybe.Nothing,
-                                                                                                                                                                                    inlineQueryResultContactPhoneNumber = inlineQueryResultContactPhoneNumber,
-                                                                                                                                                                                    inlineQueryResultContactReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                                                    inlineQueryResultContactThumbHeight = GHC.Maybe.Nothing,
-                                                                                                                                                                                    inlineQueryResultContactThumbUrl = GHC.Maybe.Nothing,
-                                                                                                                                                                                    inlineQueryResultContactThumbWidth = GHC.Maybe.Nothing,
-                                                                                                                                                                                    inlineQueryResultContactType = inlineQueryResultContactType,
-                                                                                                                                                                                    inlineQueryResultContactVcard = GHC.Maybe.Nothing}
+mkInlineQueryResultContact firstName id phoneNumber type' = InlineQueryResultContact{firstName = firstName,
+                                                                                     id = id,
+                                                                                     inputMessageContent = GHC.Maybe.Nothing,
+                                                                                     lastName = GHC.Maybe.Nothing,
+                                                                                     phoneNumber = phoneNumber,
+                                                                                     replyMarkup = GHC.Maybe.Nothing,
+                                                                                     thumbHeight = GHC.Maybe.Nothing,
+                                                                                     thumbUrl = GHC.Maybe.Nothing,
+                                                                                     thumbWidth = GHC.Maybe.Nothing,
+                                                                                     type' = type',
+                                                                                     vcard = GHC.Maybe.Nothing}

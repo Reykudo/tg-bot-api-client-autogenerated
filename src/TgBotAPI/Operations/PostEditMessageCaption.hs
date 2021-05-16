@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postEditMessageCaption
 module TgBotAPI.Operations.PostEditMessageCaption where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to edit captions of messages. On success, if the edited message is not an inline message, the edited [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned, otherwise *True* is returned.
 postEditMessageCaption :: forall m . TgBotAPI.Common.MonadHTTP m => PostEditMessageCaptionRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostEditMessageCaptionResponse) -- ^ Monadic computation which returns the result of the operation
-postEditMessageCaption body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostEditMessageCaptionResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postEditMessageCaption body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostEditMessageCaptionResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                      PostEditMessageCaptionResponseBody200)
-                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                        Error)
                                                                                                                                                                                | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/editMessageCaption") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/editMessageCaption.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,54 +58,54 @@ postEditMessageCaption body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.
 -- 
 data PostEditMessageCaptionRequestBody = PostEditMessageCaptionRequestBody {
   -- | caption: New caption of the message, 0-1024 characters after entities parsing
-  postEditMessageCaptionRequestBodyCaption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  caption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | caption_entities: List of special entities that appear in the caption, which can be specified instead of *parse\\_mode*
-  , postEditMessageCaptionRequestBodyCaptionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
+  , captionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | chat_id: Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  , postEditMessageCaptionRequestBodyChatId :: (GHC.Maybe.Maybe PostEditMessageCaptionRequestBodyChatIdVariants)
+  , chatId :: (GHC.Maybe.Maybe ChatIdVariants)
   -- | inline_message_id: Required if *chat\\_id* and *message\\_id* are not specified. Identifier of the inline message
-  , postEditMessageCaptionRequestBodyInlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , inlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | message_id: Required if *inline\\_message\\_id* is not specified. Identifier of the message to edit
-  , postEditMessageCaptionRequestBodyMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | parse_mode: Mode for parsing entities in the message caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
-  , postEditMessageCaptionRequestBodyParseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , postEditMessageCaptionRequestBodyReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostEditMessageCaptionRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyCaption obj : "caption_entities" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyCaptionEntities obj : "chat_id" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyChatId obj : "inline_message_id" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyInlineMessageId obj : "message_id" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyMessageId obj : "parse_mode" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyParseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyReplyMarkup obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyCaption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyCaptionEntities obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyChatId obj) GHC.Base.<> (("inline_message_id" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyInlineMessageId obj) GHC.Base.<> (("message_id" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyMessageId obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyParseMode obj) GHC.Base.<> ("reply_markup" Data.Aeson.Types.ToJSON..= postEditMessageCaptionRequestBodyReplyMarkup obj)))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= caption obj : "caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj : "chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "inline_message_id" Data.Aeson.Types.ToJSON..= inlineMessageId obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : "parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= caption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("inline_message_id" Data.Aeson.Types.ToJSON..= inlineMessageId obj) GHC.Base.<> (("message_id" Data.Aeson.Types.ToJSON..= messageId obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj) GHC.Base.<> ("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj)))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageCaptionRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostEditMessageCaptionRequestBody" (\obj -> ((((((GHC.Base.pure PostEditMessageCaptionRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption_entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parse_mode")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup"))
 -- | Create a new 'PostEditMessageCaptionRequestBody' with all required fields.
 mkPostEditMessageCaptionRequestBody :: PostEditMessageCaptionRequestBody
-mkPostEditMessageCaptionRequestBody = PostEditMessageCaptionRequestBody{postEditMessageCaptionRequestBodyCaption = GHC.Maybe.Nothing,
-                                                                        postEditMessageCaptionRequestBodyCaptionEntities = GHC.Maybe.Nothing,
-                                                                        postEditMessageCaptionRequestBodyChatId = GHC.Maybe.Nothing,
-                                                                        postEditMessageCaptionRequestBodyInlineMessageId = GHC.Maybe.Nothing,
-                                                                        postEditMessageCaptionRequestBodyMessageId = GHC.Maybe.Nothing,
-                                                                        postEditMessageCaptionRequestBodyParseMode = GHC.Maybe.Nothing,
-                                                                        postEditMessageCaptionRequestBodyReplyMarkup = GHC.Maybe.Nothing}
+mkPostEditMessageCaptionRequestBody = PostEditMessageCaptionRequestBody{caption = GHC.Maybe.Nothing,
+                                                                        captionEntities = GHC.Maybe.Nothing,
+                                                                        chatId = GHC.Maybe.Nothing,
+                                                                        inlineMessageId = GHC.Maybe.Nothing,
+                                                                        messageId = GHC.Maybe.Nothing,
+                                                                        parseMode = GHC.Maybe.Nothing,
+                                                                        replyMarkup = GHC.Maybe.Nothing}
 -- | Defines the oneOf schema located at @paths.\/editMessageCaption.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostEditMessageCaptionRequestBodyChatIdVariants =
-   PostEditMessageCaptionRequestBodyChatIdInt GHC.Types.Int
-  | PostEditMessageCaptionRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostEditMessageCaptionRequestBodyChatIdVariants
-    where toJSON (PostEditMessageCaptionRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostEditMessageCaptionRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageCaptionRequestBodyChatIdVariants
-    where parseJSON val = case (PostEditMessageCaptionRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostEditMessageCaptionRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postEditMessageCaption'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostEditMessageCaptionResponseError' is used.
 data PostEditMessageCaptionResponse =
-   PostEditMessageCaptionResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostEditMessageCaptionResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostEditMessageCaptionResponse200 PostEditMessageCaptionResponseBody200 -- ^ 
   | PostEditMessageCaptionResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -114,34 +114,34 @@ data PostEditMessageCaptionResponse =
 -- 
 data PostEditMessageCaptionResponseBody200 = PostEditMessageCaptionResponseBody200 {
   -- | ok
-  postEditMessageCaptionResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postEditMessageCaptionResponseBody200Result :: PostEditMessageCaptionResponseBody200ResultVariants
+  , result :: ResultVariants
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostEditMessageCaptionResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postEditMessageCaptionResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postEditMessageCaptionResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postEditMessageCaptionResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postEditMessageCaptionResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageCaptionResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostEditMessageCaptionResponseBody200" (\obj -> (GHC.Base.pure PostEditMessageCaptionResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostEditMessageCaptionResponseBody200' with all required fields.
-mkPostEditMessageCaptionResponseBody200 :: GHC.Types.Bool -- ^ 'postEditMessageCaptionResponseBody200Ok'
-  -> PostEditMessageCaptionResponseBody200ResultVariants -- ^ 'postEditMessageCaptionResponseBody200Result'
+mkPostEditMessageCaptionResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> ResultVariants -- ^ 'result'
   -> PostEditMessageCaptionResponseBody200
-mkPostEditMessageCaptionResponseBody200 postEditMessageCaptionResponseBody200Ok postEditMessageCaptionResponseBody200Result = PostEditMessageCaptionResponseBody200{postEditMessageCaptionResponseBody200Ok = postEditMessageCaptionResponseBody200Ok,
-                                                                                                                                                                    postEditMessageCaptionResponseBody200Result = postEditMessageCaptionResponseBody200Result}
+mkPostEditMessageCaptionResponseBody200 ok result = PostEditMessageCaptionResponseBody200{ok = ok,
+                                                                                          result = result}
 -- | Defines the oneOf schema located at @paths.\/editMessageCaption.POST.responses.200.content.application\/json.schema.properties.result.anyOf@ in the specification.
 -- 
 -- 
-data PostEditMessageCaptionResponseBody200ResultVariants =
-   PostEditMessageCaptionResponseBody200ResultMessage Message
-  | PostEditMessageCaptionResponseBody200ResultBool GHC.Types.Bool
+data ResultVariants =
+   ResultMessage Message
+  | ResultBool GHC.Types.Bool
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostEditMessageCaptionResponseBody200ResultVariants
-    where toJSON (PostEditMessageCaptionResponseBody200ResultMessage a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostEditMessageCaptionResponseBody200ResultBool a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageCaptionResponseBody200ResultVariants
-    where parseJSON val = case (PostEditMessageCaptionResponseBody200ResultMessage Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostEditMessageCaptionResponseBody200ResultBool Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ResultVariants
+    where toJSON (ResultMessage a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ResultBool a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ResultVariants
+    where parseJSON val = case (ResultMessage Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ResultBool Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | > POST /editMessageCaption
@@ -151,9 +151,9 @@ postEditMessageCaptionWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP 
   -> PostEditMessageCaptionRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostEditMessageCaptionResponse) -- ^ Monadic computation which returns the result of the operation
 postEditMessageCaptionWithConfiguration config
-                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostEditMessageCaptionResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostEditMessageCaptionResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                       PostEditMessageCaptionResponseBody200)
-                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageCaptionResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/editMessageCaption") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /editMessageCaption

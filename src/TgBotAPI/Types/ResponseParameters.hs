@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ResponseParameters
 module TgBotAPI.Types.ResponseParameters where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,17 +37,17 @@ import TgBotAPI.TypeAlias
 -- Contains information about why a request was unsuccessful.
 data ResponseParameters = ResponseParameters {
   -- | migrate_to_chat_id: *Optional*. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-  responseParametersMigrateToChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  migrateToChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | retry_after: *Optional*. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
-  , responseParametersRetryAfter :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , retryAfter :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ResponseParameters
-    where toJSON obj = Data.Aeson.Types.Internal.object ("migrate_to_chat_id" Data.Aeson.Types.ToJSON..= responseParametersMigrateToChatId obj : "retry_after" Data.Aeson.Types.ToJSON..= responseParametersRetryAfter obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("migrate_to_chat_id" Data.Aeson.Types.ToJSON..= responseParametersMigrateToChatId obj) GHC.Base.<> ("retry_after" Data.Aeson.Types.ToJSON..= responseParametersRetryAfter obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("migrate_to_chat_id" Data.Aeson.Types.ToJSON..= migrateToChatId obj : "retry_after" Data.Aeson.Types.ToJSON..= retryAfter obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("migrate_to_chat_id" Data.Aeson.Types.ToJSON..= migrateToChatId obj) GHC.Base.<> ("retry_after" Data.Aeson.Types.ToJSON..= retryAfter obj))
 instance Data.Aeson.Types.FromJSON.FromJSON ResponseParameters
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ResponseParameters" (\obj -> (GHC.Base.pure ResponseParameters GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "migrate_to_chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "retry_after"))
 -- | Create a new 'ResponseParameters' with all required fields.
 mkResponseParameters :: ResponseParameters
-mkResponseParameters = ResponseParameters{responseParametersMigrateToChatId = GHC.Maybe.Nothing,
-                                          responseParametersRetryAfter = GHC.Maybe.Nothing}
+mkResponseParameters = ResponseParameters{migrateToChatId = GHC.Maybe.Nothing,
+                                          retryAfter = GHC.Maybe.Nothing}

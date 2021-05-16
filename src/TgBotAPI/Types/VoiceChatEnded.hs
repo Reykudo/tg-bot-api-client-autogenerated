@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema VoiceChatEnded
 module TgBotAPI.Types.VoiceChatEnded where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,15 +37,15 @@ import TgBotAPI.TypeAlias
 -- This object represents a service message about a voice chat ended in the chat.
 data VoiceChatEnded = VoiceChatEnded {
   -- | duration: Voice chat duration; in seconds
-  voiceChatEndedDuration :: GHC.Types.Int
+  duration :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatEnded
-    where toJSON obj = Data.Aeson.Types.Internal.object ("duration" Data.Aeson.Types.ToJSON..= voiceChatEndedDuration obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("duration" Data.Aeson.Types.ToJSON..= voiceChatEndedDuration obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("duration" Data.Aeson.Types.ToJSON..= duration obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("duration" Data.Aeson.Types.ToJSON..= duration obj)
 instance Data.Aeson.Types.FromJSON.FromJSON VoiceChatEnded
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VoiceChatEnded" (\obj -> GHC.Base.pure VoiceChatEnded GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration"))
 -- | Create a new 'VoiceChatEnded' with all required fields.
-mkVoiceChatEnded :: GHC.Types.Int -- ^ 'voiceChatEndedDuration'
+mkVoiceChatEnded :: GHC.Types.Int -- ^ 'duration'
   -> VoiceChatEnded
-mkVoiceChatEnded voiceChatEndedDuration = VoiceChatEnded{voiceChatEndedDuration = voiceChatEndedDuration}
+mkVoiceChatEnded duration = VoiceChatEnded{duration = duration}

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ShippingOption
 module TgBotAPI.Types.ShippingOption where
@@ -24,37 +25,36 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.LabeledPrice
+import  {-# SOURCE #-}  TgBotAPI.Types.LabeledPrice (LabeledPrice)
 
 -- | Defines the object schema located at @components.schemas.ShippingOption@ in the specification.
 -- 
 -- This object represents one shipping option.
 data ShippingOption = ShippingOption {
   -- | id: Shipping option identifier
-  shippingOptionId :: Data.Text.Internal.Text
+  id :: Data.Text.Internal.Text
   -- | prices: List of price portions
-  , shippingOptionPrices :: ([LabeledPrice])
+  , prices :: ([LabeledPrice])
   -- | title: Option title
-  , shippingOptionTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ShippingOption
-    where toJSON obj = Data.Aeson.Types.Internal.object ("id" Data.Aeson.Types.ToJSON..= shippingOptionId obj : "prices" Data.Aeson.Types.ToJSON..= shippingOptionPrices obj : "title" Data.Aeson.Types.ToJSON..= shippingOptionTitle obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("id" Data.Aeson.Types.ToJSON..= shippingOptionId obj) GHC.Base.<> (("prices" Data.Aeson.Types.ToJSON..= shippingOptionPrices obj) GHC.Base.<> ("title" Data.Aeson.Types.ToJSON..= shippingOptionTitle obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("id" Data.Aeson.Types.ToJSON..= id obj : "prices" Data.Aeson.Types.ToJSON..= prices obj : "title" Data.Aeson.Types.ToJSON..= title obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("prices" Data.Aeson.Types.ToJSON..= prices obj) GHC.Base.<> ("title" Data.Aeson.Types.ToJSON..= title obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON ShippingOption
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ShippingOption" (\obj -> ((GHC.Base.pure ShippingOption GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "prices")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title"))
 -- | Create a new 'ShippingOption' with all required fields.
-mkShippingOption :: Data.Text.Internal.Text -- ^ 'shippingOptionId'
-  -> [LabeledPrice] -- ^ 'shippingOptionPrices'
-  -> Data.Text.Internal.Text -- ^ 'shippingOptionTitle'
+mkShippingOption :: Data.Text.Internal.Text -- ^ 'id'
+  -> [LabeledPrice] -- ^ 'prices'
+  -> Data.Text.Internal.Text -- ^ 'title'
   -> ShippingOption
-mkShippingOption shippingOptionId shippingOptionPrices shippingOptionTitle = ShippingOption{shippingOptionId = shippingOptionId,
-                                                                                            shippingOptionPrices = shippingOptionPrices,
-                                                                                            shippingOptionTitle = shippingOptionTitle}
+mkShippingOption id prices title = ShippingOption{id = id,
+                                                  prices = prices,
+                                                  title = title}

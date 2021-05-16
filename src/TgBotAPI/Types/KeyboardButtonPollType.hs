@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema KeyboardButtonPollType
 module TgBotAPI.Types.KeyboardButtonPollType where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,14 +37,14 @@ import TgBotAPI.TypeAlias
 -- This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
 data KeyboardButtonPollType = KeyboardButtonPollType {
   -- | type: *Optional*. If *quiz* is passed, the user will be allowed to create only polls in the quiz mode. If *regular* is passed, only regular polls will be allowed. Otherwise, the user will be allowed to create a poll of any type.
-  keyboardButtonPollTypeType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  type' :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON KeyboardButtonPollType
-    where toJSON obj = Data.Aeson.Types.Internal.object ("type" Data.Aeson.Types.ToJSON..= keyboardButtonPollTypeType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("type" Data.Aeson.Types.ToJSON..= keyboardButtonPollTypeType obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("type" Data.Aeson.Types.ToJSON..= type' obj)
 instance Data.Aeson.Types.FromJSON.FromJSON KeyboardButtonPollType
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "KeyboardButtonPollType" (\obj -> GHC.Base.pure KeyboardButtonPollType GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "type"))
 -- | Create a new 'KeyboardButtonPollType' with all required fields.
 mkKeyboardButtonPollType :: KeyboardButtonPollType
-mkKeyboardButtonPollType = KeyboardButtonPollType{keyboardButtonPollTypeType = GHC.Maybe.Nothing}
+mkKeyboardButtonPollType = KeyboardButtonPollType{type' = GHC.Maybe.Nothing}

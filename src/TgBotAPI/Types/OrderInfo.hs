@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema OrderInfo
 module TgBotAPI.Types.OrderInfo where
@@ -24,37 +25,36 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.ShippingAddress
+import  {-# SOURCE #-}  TgBotAPI.Types.ShippingAddress (ShippingAddress)
 
 -- | Defines the object schema located at @components.schemas.OrderInfo@ in the specification.
 -- 
 -- This object represents information about an order.
 data OrderInfo = OrderInfo {
   -- | email: *Optional*. User email
-  orderInfoEmail :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  email :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | name: *Optional*. User name
-  , orderInfoName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , name :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | phone_number: *Optional*. User\'s phone number
-  , orderInfoPhoneNumber :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , phoneNumber :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | shipping_address: This object represents a shipping address.
-  , orderInfoShippingAddress :: (GHC.Maybe.Maybe ShippingAddress)
+  , shippingAddress :: (GHC.Maybe.Maybe ShippingAddress)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON OrderInfo
-    where toJSON obj = Data.Aeson.Types.Internal.object ("email" Data.Aeson.Types.ToJSON..= orderInfoEmail obj : "name" Data.Aeson.Types.ToJSON..= orderInfoName obj : "phone_number" Data.Aeson.Types.ToJSON..= orderInfoPhoneNumber obj : "shipping_address" Data.Aeson.Types.ToJSON..= orderInfoShippingAddress obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("email" Data.Aeson.Types.ToJSON..= orderInfoEmail obj) GHC.Base.<> (("name" Data.Aeson.Types.ToJSON..= orderInfoName obj) GHC.Base.<> (("phone_number" Data.Aeson.Types.ToJSON..= orderInfoPhoneNumber obj) GHC.Base.<> ("shipping_address" Data.Aeson.Types.ToJSON..= orderInfoShippingAddress obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("email" Data.Aeson.Types.ToJSON..= email obj : "name" Data.Aeson.Types.ToJSON..= name obj : "phone_number" Data.Aeson.Types.ToJSON..= phoneNumber obj : "shipping_address" Data.Aeson.Types.ToJSON..= shippingAddress obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("email" Data.Aeson.Types.ToJSON..= email obj) GHC.Base.<> (("name" Data.Aeson.Types.ToJSON..= name obj) GHC.Base.<> (("phone_number" Data.Aeson.Types.ToJSON..= phoneNumber obj) GHC.Base.<> ("shipping_address" Data.Aeson.Types.ToJSON..= shippingAddress obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON OrderInfo
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "OrderInfo" (\obj -> (((GHC.Base.pure OrderInfo GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "email")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "phone_number")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "shipping_address"))
 -- | Create a new 'OrderInfo' with all required fields.
 mkOrderInfo :: OrderInfo
-mkOrderInfo = OrderInfo{orderInfoEmail = GHC.Maybe.Nothing,
-                        orderInfoName = GHC.Maybe.Nothing,
-                        orderInfoPhoneNumber = GHC.Maybe.Nothing,
-                        orderInfoShippingAddress = GHC.Maybe.Nothing}
+mkOrderInfo = OrderInfo{email = GHC.Maybe.Nothing,
+                        name = GHC.Maybe.Nothing,
+                        phoneNumber = GHC.Maybe.Nothing,
+                        shippingAddress = GHC.Maybe.Nothing}

@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetMyCommands
 module TgBotAPI.Operations.PostSetMyCommands where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to change the list of the bot\'s commands. Returns *True* on success.
 postSetMyCommands :: forall m . TgBotAPI.Common.MonadHTTP m => PostSetMyCommandsRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetMyCommandsResponse) -- ^ Monadic computation which returns the result of the operation
-postSetMyCommands body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetMyCommandsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetMyCommands body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetMyCommandsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                       PostSetMyCommandsResponseBody200)
-                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                      | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setMyCommands") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/setMyCommands.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,23 +58,23 @@ postSetMyCommands body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Eithe
 -- 
 data PostSetMyCommandsRequestBody = PostSetMyCommandsRequestBody {
   -- | commands: A JSON-serialized list of bot commands to be set as the list of the bot\'s commands. At most 100 commands can be specified.
-  postSetMyCommandsRequestBodyCommands :: ([BotCommand])
+  commands :: ([BotCommand])
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetMyCommandsRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("commands" Data.Aeson.Types.ToJSON..= postSetMyCommandsRequestBodyCommands obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("commands" Data.Aeson.Types.ToJSON..= postSetMyCommandsRequestBodyCommands obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("commands" Data.Aeson.Types.ToJSON..= commands obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("commands" Data.Aeson.Types.ToJSON..= commands obj)
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetMyCommandsRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetMyCommandsRequestBody" (\obj -> GHC.Base.pure PostSetMyCommandsRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "commands"))
 -- | Create a new 'PostSetMyCommandsRequestBody' with all required fields.
-mkPostSetMyCommandsRequestBody :: [BotCommand] -- ^ 'postSetMyCommandsRequestBodyCommands'
+mkPostSetMyCommandsRequestBody :: [BotCommand] -- ^ 'commands'
   -> PostSetMyCommandsRequestBody
-mkPostSetMyCommandsRequestBody postSetMyCommandsRequestBodyCommands = PostSetMyCommandsRequestBody{postSetMyCommandsRequestBodyCommands = postSetMyCommandsRequestBodyCommands}
+mkPostSetMyCommandsRequestBody commands = PostSetMyCommandsRequestBody{commands = commands}
 -- | Represents a response of the operation 'postSetMyCommands'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetMyCommandsResponseError' is used.
 data PostSetMyCommandsResponse =
-   PostSetMyCommandsResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetMyCommandsResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetMyCommandsResponse200 PostSetMyCommandsResponseBody200 -- ^ 
   | PostSetMyCommandsResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -83,22 +83,22 @@ data PostSetMyCommandsResponse =
 -- 
 data PostSetMyCommandsResponseBody200 = PostSetMyCommandsResponseBody200 {
   -- | ok
-  postSetMyCommandsResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetMyCommandsResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetMyCommandsResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetMyCommandsResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetMyCommandsResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetMyCommandsResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetMyCommandsResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetMyCommandsResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetMyCommandsResponseBody200" (\obj -> (GHC.Base.pure PostSetMyCommandsResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetMyCommandsResponseBody200' with all required fields.
-mkPostSetMyCommandsResponseBody200 :: GHC.Types.Bool -- ^ 'postSetMyCommandsResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetMyCommandsResponseBody200Result'
+mkPostSetMyCommandsResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetMyCommandsResponseBody200
-mkPostSetMyCommandsResponseBody200 postSetMyCommandsResponseBody200Ok postSetMyCommandsResponseBody200Result = PostSetMyCommandsResponseBody200{postSetMyCommandsResponseBody200Ok = postSetMyCommandsResponseBody200Ok,
-                                                                                                                                                postSetMyCommandsResponseBody200Result = postSetMyCommandsResponseBody200Result}
+mkPostSetMyCommandsResponseBody200 ok result = PostSetMyCommandsResponseBody200{ok = ok,
+                                                                                result = result}
 -- | > POST /setMyCommands
 -- 
 -- The same as 'postSetMyCommands' but accepts an explicit configuration.
@@ -106,9 +106,9 @@ postSetMyCommandsWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => 
   -> PostSetMyCommandsRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSetMyCommandsResponse) -- ^ Monadic computation which returns the result of the operation
 postSetMyCommandsWithConfiguration config
-                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetMyCommandsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetMyCommandsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                        PostSetMyCommandsResponseBody200)
-                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetMyCommandsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setMyCommands") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /setMyCommands

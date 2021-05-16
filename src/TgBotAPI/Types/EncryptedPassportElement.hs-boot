@@ -6,8 +6,8 @@ instance Show EncryptedPassportElement
 instance Eq EncryptedPassportElement
 instance FromJSON EncryptedPassportElement
 instance ToJSON EncryptedPassportElement
-data EncryptedPassportElementType
-instance Show EncryptedPassportElementType
-instance Eq EncryptedPassportElementType
-instance FromJSON EncryptedPassportElementType
-instance ToJSON EncryptedPassportElementType
+data Type
+instance Show Type
+instance Eq Type
+instance FromJSON Type
+instance ToJSON Type

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PhotoSize
 module TgBotAPI.Types.PhotoSize where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,30 +37,30 @@ import TgBotAPI.TypeAlias
 -- This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
 data PhotoSize = PhotoSize {
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
-  photoSizeFileId :: Data.Text.Internal.Text
+  fileId :: Data.Text.Internal.Text
   -- | file_size: *Optional*. File size
-  , photoSizeFileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , photoSizeFileUniqueId :: Data.Text.Internal.Text
+  , fileUniqueId :: Data.Text.Internal.Text
   -- | height: Photo height
-  , photoSizeHeight :: GHC.Types.Int
+  , height :: GHC.Types.Int
   -- | width: Photo width
-  , photoSizeWidth :: GHC.Types.Int
+  , width :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PhotoSize
-    where toJSON obj = Data.Aeson.Types.Internal.object ("file_id" Data.Aeson.Types.ToJSON..= photoSizeFileId obj : "file_size" Data.Aeson.Types.ToJSON..= photoSizeFileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= photoSizeFileUniqueId obj : "height" Data.Aeson.Types.ToJSON..= photoSizeHeight obj : "width" Data.Aeson.Types.ToJSON..= photoSizeWidth obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_id" Data.Aeson.Types.ToJSON..= photoSizeFileId obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= photoSizeFileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= photoSizeFileUniqueId obj) GHC.Base.<> (("height" Data.Aeson.Types.ToJSON..= photoSizeHeight obj) GHC.Base.<> ("width" Data.Aeson.Types.ToJSON..= photoSizeWidth obj)))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("file_id" Data.Aeson.Types.ToJSON..= fileId obj : "file_size" Data.Aeson.Types.ToJSON..= fileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj : "height" Data.Aeson.Types.ToJSON..= height obj : "width" Data.Aeson.Types.ToJSON..= width obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_id" Data.Aeson.Types.ToJSON..= fileId obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj) GHC.Base.<> (("height" Data.Aeson.Types.ToJSON..= height obj) GHC.Base.<> ("width" Data.Aeson.Types.ToJSON..= width obj)))))
 instance Data.Aeson.Types.FromJSON.FromJSON PhotoSize
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PhotoSize" (\obj -> ((((GHC.Base.pure PhotoSize GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "width"))
 -- | Create a new 'PhotoSize' with all required fields.
-mkPhotoSize :: Data.Text.Internal.Text -- ^ 'photoSizeFileId'
-  -> Data.Text.Internal.Text -- ^ 'photoSizeFileUniqueId'
-  -> GHC.Types.Int -- ^ 'photoSizeHeight'
-  -> GHC.Types.Int -- ^ 'photoSizeWidth'
+mkPhotoSize :: Data.Text.Internal.Text -- ^ 'fileId'
+  -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
+  -> GHC.Types.Int -- ^ 'height'
+  -> GHC.Types.Int -- ^ 'width'
   -> PhotoSize
-mkPhotoSize photoSizeFileId photoSizeFileUniqueId photoSizeHeight photoSizeWidth = PhotoSize{photoSizeFileId = photoSizeFileId,
-                                                                                             photoSizeFileSize = GHC.Maybe.Nothing,
-                                                                                             photoSizeFileUniqueId = photoSizeFileUniqueId,
-                                                                                             photoSizeHeight = photoSizeHeight,
-                                                                                             photoSizeWidth = photoSizeWidth}
+mkPhotoSize fileId fileUniqueId height width = PhotoSize{fileId = fileId,
+                                                         fileSize = GHC.Maybe.Nothing,
+                                                         fileUniqueId = fileUniqueId,
+                                                         height = height,
+                                                         width = width}

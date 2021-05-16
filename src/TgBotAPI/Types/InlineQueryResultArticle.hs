@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultArticle
 module TgBotAPI.Types.InlineQueryResultArticle where
@@ -24,63 +25,62 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
-import {-# SOURCE #-} TgBotAPI.Types.InputMessageContent
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
+import  {-# SOURCE #-}  TgBotAPI.Types.InputMessageContent (InputMessageContent)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultArticle@ in the specification.
 -- 
 -- Represents a link to an article or web page.
 data InlineQueryResultArticle = InlineQueryResultArticle {
   -- | description: *Optional*. Short description of the result
-  inlineQueryResultArticleDescription :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  description :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | hide_url: *Optional*. Pass *True*, if you don\'t want the URL to be shown in the message
-  , inlineQueryResultArticleHideUrl :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , hideUrl :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | id: Unique identifier for this result, 1-64 Bytes
-  , inlineQueryResultArticleId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
-  , inlineQueryResultArticleInputMessageContent :: InputMessageContent
+  , inputMessageContent :: InputMessageContent
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultArticleReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_height: *Optional*. Thumbnail height
-  , inlineQueryResultArticleThumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | thumb_url: *Optional*. Url of the thumbnail for the result
-  , inlineQueryResultArticleThumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , thumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb_width: *Optional*. Thumbnail width
-  , inlineQueryResultArticleThumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | title: Title of the result
-  , inlineQueryResultArticleTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   -- | type: Type of the result, must be *article*
-  , inlineQueryResultArticleType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   -- | url: *Optional*. URL of the result
-  , inlineQueryResultArticleUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , url :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultArticle
-    where toJSON obj = Data.Aeson.Types.Internal.object ("description" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleDescription obj : "hide_url" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleHideUrl obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleId obj : "input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleInputMessageContent obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleReplyMarkup obj : "thumb_height" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleThumbHeight obj : "thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleThumbUrl obj : "thumb_width" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleThumbWidth obj : "title" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleTitle obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleType obj : "url" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleUrl obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("description" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleDescription obj) GHC.Base.<> (("hide_url" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleHideUrl obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleId obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleInputMessageContent obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleReplyMarkup obj) GHC.Base.<> (("thumb_height" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleThumbHeight obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleThumbUrl obj) GHC.Base.<> (("thumb_width" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleThumbWidth obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleTitle obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleType obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= inlineQueryResultArticleUrl obj)))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("description" Data.Aeson.Types.ToJSON..= description obj : "hide_url" Data.Aeson.Types.ToJSON..= hideUrl obj : "id" Data.Aeson.Types.ToJSON..= id obj : "input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "thumb_height" Data.Aeson.Types.ToJSON..= thumbHeight obj : "thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj : "thumb_width" Data.Aeson.Types.ToJSON..= thumbWidth obj : "title" Data.Aeson.Types.ToJSON..= title obj : "type" Data.Aeson.Types.ToJSON..= type' obj : "url" Data.Aeson.Types.ToJSON..= url obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("hide_url" Data.Aeson.Types.ToJSON..= hideUrl obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("thumb_height" Data.Aeson.Types.ToJSON..= thumbHeight obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj) GHC.Base.<> (("thumb_width" Data.Aeson.Types.ToJSON..= thumbWidth obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= title obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= type' obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= url obj)))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultArticle
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultArticle" (\obj -> ((((((((((GHC.Base.pure InlineQueryResultArticle GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "hide_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "input_message_content")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_width")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "url"))
 -- | Create a new 'InlineQueryResultArticle' with all required fields.
-mkInlineQueryResultArticle :: Data.Text.Internal.Text -- ^ 'inlineQueryResultArticleId'
-  -> InputMessageContent -- ^ 'inlineQueryResultArticleInputMessageContent'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultArticleTitle'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultArticleType'
+mkInlineQueryResultArticle :: Data.Text.Internal.Text -- ^ 'id'
+  -> InputMessageContent -- ^ 'inputMessageContent'
+  -> Data.Text.Internal.Text -- ^ 'title'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> InlineQueryResultArticle
-mkInlineQueryResultArticle inlineQueryResultArticleId inlineQueryResultArticleInputMessageContent inlineQueryResultArticleTitle inlineQueryResultArticleType = InlineQueryResultArticle{inlineQueryResultArticleDescription = GHC.Maybe.Nothing,
-                                                                                                                                                                                        inlineQueryResultArticleHideUrl = GHC.Maybe.Nothing,
-                                                                                                                                                                                        inlineQueryResultArticleId = inlineQueryResultArticleId,
-                                                                                                                                                                                        inlineQueryResultArticleInputMessageContent = inlineQueryResultArticleInputMessageContent,
-                                                                                                                                                                                        inlineQueryResultArticleReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                                                        inlineQueryResultArticleThumbHeight = GHC.Maybe.Nothing,
-                                                                                                                                                                                        inlineQueryResultArticleThumbUrl = GHC.Maybe.Nothing,
-                                                                                                                                                                                        inlineQueryResultArticleThumbWidth = GHC.Maybe.Nothing,
-                                                                                                                                                                                        inlineQueryResultArticleTitle = inlineQueryResultArticleTitle,
-                                                                                                                                                                                        inlineQueryResultArticleType = inlineQueryResultArticleType,
-                                                                                                                                                                                        inlineQueryResultArticleUrl = GHC.Maybe.Nothing}
+mkInlineQueryResultArticle id inputMessageContent title type' = InlineQueryResultArticle{description = GHC.Maybe.Nothing,
+                                                                                         hideUrl = GHC.Maybe.Nothing,
+                                                                                         id = id,
+                                                                                         inputMessageContent = inputMessageContent,
+                                                                                         replyMarkup = GHC.Maybe.Nothing,
+                                                                                         thumbHeight = GHC.Maybe.Nothing,
+                                                                                         thumbUrl = GHC.Maybe.Nothing,
+                                                                                         thumbWidth = GHC.Maybe.Nothing,
+                                                                                         title = title,
+                                                                                         type' = type',
+                                                                                         url = GHC.Maybe.Nothing}

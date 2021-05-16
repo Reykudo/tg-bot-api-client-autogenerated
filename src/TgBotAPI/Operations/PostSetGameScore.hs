@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetGameScore
 module TgBotAPI.Operations.PostSetGameScore where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to set the score of the specified user in a game. On success, if the message was sent by the bot, returns the edited [Message](https:\/\/core.telegram.org\/bots\/api\/\#message), otherwise returns *True*. Returns an error, if the new score is not greater than the user\'s current score in the chat and *force* is *False*.
 postSetGameScore :: forall m . TgBotAPI.Common.MonadHTTP m => PostSetGameScoreRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetGameScoreResponse) -- ^ Monadic computation which returns the result of the operation
-postSetGameScore body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetGameScoreResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetGameScore body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetGameScoreResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                    PostSetGameScoreResponseBody200)
-                                                                                                                                                                   | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                   | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                      Error)
                                                                                                                                                                    | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setGameScore") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/setGameScore.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,42 +58,42 @@ postSetGameScore body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either
 -- 
 data PostSetGameScoreRequestBody = PostSetGameScoreRequestBody {
   -- | chat_id: Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat
-  postSetGameScoreRequestBodyChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  chatId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | disable_edit_message: Pass True, if the game message should not be automatically edited to include the current scoreboard
-  , postSetGameScoreRequestBodyDisableEditMessage :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableEditMessage :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | force: Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters
-  , postSetGameScoreRequestBodyForce :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , force :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | inline_message_id: Required if *chat\\_id* and *message\\_id* are not specified. Identifier of the inline message
-  , postSetGameScoreRequestBodyInlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , inlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | message_id: Required if *inline\\_message\\_id* is not specified. Identifier of the sent message
-  , postSetGameScoreRequestBodyMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | score: New score, must be non-negative
-  , postSetGameScoreRequestBodyScore :: GHC.Types.Int
+  , score :: GHC.Types.Int
   -- | user_id: User identifier
-  , postSetGameScoreRequestBodyUserId :: GHC.Types.Int
+  , userId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetGameScoreRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyChatId obj : "disable_edit_message" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyDisableEditMessage obj : "force" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyForce obj : "inline_message_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyInlineMessageId obj : "message_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyMessageId obj : "score" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyScore obj : "user_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyUserId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyChatId obj) GHC.Base.<> (("disable_edit_message" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyDisableEditMessage obj) GHC.Base.<> (("force" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyForce obj) GHC.Base.<> (("inline_message_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyInlineMessageId obj) GHC.Base.<> (("message_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyMessageId obj) GHC.Base.<> (("score" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyScore obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= postSetGameScoreRequestBodyUserId obj)))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "disable_edit_message" Data.Aeson.Types.ToJSON..= disableEditMessage obj : "force" Data.Aeson.Types.ToJSON..= force obj : "inline_message_id" Data.Aeson.Types.ToJSON..= inlineMessageId obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : "score" Data.Aeson.Types.ToJSON..= score obj : "user_id" Data.Aeson.Types.ToJSON..= userId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("disable_edit_message" Data.Aeson.Types.ToJSON..= disableEditMessage obj) GHC.Base.<> (("force" Data.Aeson.Types.ToJSON..= force obj) GHC.Base.<> (("inline_message_id" Data.Aeson.Types.ToJSON..= inlineMessageId obj) GHC.Base.<> (("message_id" Data.Aeson.Types.ToJSON..= messageId obj) GHC.Base.<> (("score" Data.Aeson.Types.ToJSON..= score obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= userId obj)))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetGameScoreRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetGameScoreRequestBody" (\obj -> ((((((GHC.Base.pure PostSetGameScoreRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_edit_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "force")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "score")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostSetGameScoreRequestBody' with all required fields.
-mkPostSetGameScoreRequestBody :: GHC.Types.Int -- ^ 'postSetGameScoreRequestBodyScore'
-  -> GHC.Types.Int -- ^ 'postSetGameScoreRequestBodyUserId'
+mkPostSetGameScoreRequestBody :: GHC.Types.Int -- ^ 'score'
+  -> GHC.Types.Int -- ^ 'userId'
   -> PostSetGameScoreRequestBody
-mkPostSetGameScoreRequestBody postSetGameScoreRequestBodyScore postSetGameScoreRequestBodyUserId = PostSetGameScoreRequestBody{postSetGameScoreRequestBodyChatId = GHC.Maybe.Nothing,
-                                                                                                                               postSetGameScoreRequestBodyDisableEditMessage = GHC.Maybe.Nothing,
-                                                                                                                               postSetGameScoreRequestBodyForce = GHC.Maybe.Nothing,
-                                                                                                                               postSetGameScoreRequestBodyInlineMessageId = GHC.Maybe.Nothing,
-                                                                                                                               postSetGameScoreRequestBodyMessageId = GHC.Maybe.Nothing,
-                                                                                                                               postSetGameScoreRequestBodyScore = postSetGameScoreRequestBodyScore,
-                                                                                                                               postSetGameScoreRequestBodyUserId = postSetGameScoreRequestBodyUserId}
+mkPostSetGameScoreRequestBody score userId = PostSetGameScoreRequestBody{chatId = GHC.Maybe.Nothing,
+                                                                         disableEditMessage = GHC.Maybe.Nothing,
+                                                                         force = GHC.Maybe.Nothing,
+                                                                         inlineMessageId = GHC.Maybe.Nothing,
+                                                                         messageId = GHC.Maybe.Nothing,
+                                                                         score = score,
+                                                                         userId = userId}
 -- | Represents a response of the operation 'postSetGameScore'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetGameScoreResponseError' is used.
 data PostSetGameScoreResponse =
-   PostSetGameScoreResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetGameScoreResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetGameScoreResponse200 PostSetGameScoreResponseBody200 -- ^ 
   | PostSetGameScoreResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -102,34 +102,34 @@ data PostSetGameScoreResponse =
 -- 
 data PostSetGameScoreResponseBody200 = PostSetGameScoreResponseBody200 {
   -- | ok
-  postSetGameScoreResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetGameScoreResponseBody200Result :: PostSetGameScoreResponseBody200ResultVariants
+  , result :: ResultVariants
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetGameScoreResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetGameScoreResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetGameScoreResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetGameScoreResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetGameScoreResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetGameScoreResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetGameScoreResponseBody200" (\obj -> (GHC.Base.pure PostSetGameScoreResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetGameScoreResponseBody200' with all required fields.
-mkPostSetGameScoreResponseBody200 :: GHC.Types.Bool -- ^ 'postSetGameScoreResponseBody200Ok'
-  -> PostSetGameScoreResponseBody200ResultVariants -- ^ 'postSetGameScoreResponseBody200Result'
+mkPostSetGameScoreResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> ResultVariants -- ^ 'result'
   -> PostSetGameScoreResponseBody200
-mkPostSetGameScoreResponseBody200 postSetGameScoreResponseBody200Ok postSetGameScoreResponseBody200Result = PostSetGameScoreResponseBody200{postSetGameScoreResponseBody200Ok = postSetGameScoreResponseBody200Ok,
-                                                                                                                                            postSetGameScoreResponseBody200Result = postSetGameScoreResponseBody200Result}
+mkPostSetGameScoreResponseBody200 ok result = PostSetGameScoreResponseBody200{ok = ok,
+                                                                              result = result}
 -- | Defines the oneOf schema located at @paths.\/setGameScore.POST.responses.200.content.application\/json.schema.properties.result.anyOf@ in the specification.
 -- 
 -- 
-data PostSetGameScoreResponseBody200ResultVariants =
-   PostSetGameScoreResponseBody200ResultMessage Message
-  | PostSetGameScoreResponseBody200ResultBool GHC.Types.Bool
+data ResultVariants =
+   ResultMessage Message
+  | ResultBool GHC.Types.Bool
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSetGameScoreResponseBody200ResultVariants
-    where toJSON (PostSetGameScoreResponseBody200ResultMessage a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostSetGameScoreResponseBody200ResultBool a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostSetGameScoreResponseBody200ResultVariants
-    where parseJSON val = case (PostSetGameScoreResponseBody200ResultMessage Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostSetGameScoreResponseBody200ResultBool Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ResultVariants
+    where toJSON (ResultMessage a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ResultBool a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ResultVariants
+    where parseJSON val = case (ResultMessage Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ResultBool Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | > POST /setGameScore
@@ -139,9 +139,9 @@ postSetGameScoreWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => T
   -> PostSetGameScoreRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSetGameScoreResponse) -- ^ Monadic computation which returns the result of the operation
 postSetGameScoreWithConfiguration config
-                                  body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetGameScoreResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                  body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetGameScoreResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                     PostSetGameScoreResponseBody200)
-                                                                                                                                                                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetGameScoreResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                       Error)
                                                                                                                                                                                     | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setGameScore") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /setGameScore

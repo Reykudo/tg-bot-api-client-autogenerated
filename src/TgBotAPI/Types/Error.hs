@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Error
 module TgBotAPI.Types.Error where
@@ -24,40 +25,39 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.ResponseParameters
+import  {-# SOURCE #-}  TgBotAPI.Types.ResponseParameters (ResponseParameters)
 
 -- | Defines the object schema located at @components.schemas.Error@ in the specification.
 -- 
 -- 
 data Error = Error {
   -- | description
-  errorDescription :: Data.Text.Internal.Text
+  description :: Data.Text.Internal.Text
   -- | error_code
-  , errorErrorCode :: GHC.Types.Int
+  , errorCode :: GHC.Types.Int
   -- | ok
-  , errorOk :: GHC.Types.Bool
+  , ok :: GHC.Types.Bool
   -- | parameters: Contains information about why a request was unsuccessful.
-  , errorParameters :: (GHC.Maybe.Maybe ResponseParameters)
+  , parameters :: (GHC.Maybe.Maybe ResponseParameters)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Error
-    where toJSON obj = Data.Aeson.Types.Internal.object ("description" Data.Aeson.Types.ToJSON..= errorDescription obj : "error_code" Data.Aeson.Types.ToJSON..= errorErrorCode obj : "ok" Data.Aeson.Types.ToJSON..= errorOk obj : "parameters" Data.Aeson.Types.ToJSON..= errorParameters obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("description" Data.Aeson.Types.ToJSON..= errorDescription obj) GHC.Base.<> (("error_code" Data.Aeson.Types.ToJSON..= errorErrorCode obj) GHC.Base.<> (("ok" Data.Aeson.Types.ToJSON..= errorOk obj) GHC.Base.<> ("parameters" Data.Aeson.Types.ToJSON..= errorParameters obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("description" Data.Aeson.Types.ToJSON..= description obj : "error_code" Data.Aeson.Types.ToJSON..= errorCode obj : "ok" Data.Aeson.Types.ToJSON..= ok obj : "parameters" Data.Aeson.Types.ToJSON..= parameters obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("error_code" Data.Aeson.Types.ToJSON..= errorCode obj) GHC.Base.<> (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("parameters" Data.Aeson.Types.ToJSON..= parameters obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON Error
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Error" (\obj -> (((GHC.Base.pure Error GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "error_code")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parameters"))
 -- | Create a new 'Error' with all required fields.
-mkError :: Data.Text.Internal.Text -- ^ 'errorDescription'
-  -> GHC.Types.Int -- ^ 'errorErrorCode'
-  -> GHC.Types.Bool -- ^ 'errorOk'
+mkError :: Data.Text.Internal.Text -- ^ 'description'
+  -> GHC.Types.Int -- ^ 'errorCode'
+  -> GHC.Types.Bool -- ^ 'ok'
   -> Error
-mkError errorDescription errorErrorCode errorOk = Error{errorDescription = errorDescription,
-                                                        errorErrorCode = errorErrorCode,
-                                                        errorOk = errorOk,
-                                                        errorParameters = GHC.Maybe.Nothing}
+mkError description errorCode ok = Error{description = description,
+                                         errorCode = errorCode,
+                                         ok = ok,
+                                         parameters = GHC.Maybe.Nothing}

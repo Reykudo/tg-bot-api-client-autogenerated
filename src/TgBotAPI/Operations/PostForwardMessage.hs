@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postForwardMessage
 module TgBotAPI.Operations.PostForwardMessage where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to forward messages of any kind. Service messages can\'t be forwarded. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postForwardMessage :: forall m . TgBotAPI.Common.MonadHTTP m => PostForwardMessageRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostForwardMessageResponse) -- ^ Monadic computation which returns the result of the operation
-postForwardMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostForwardMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postForwardMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostForwardMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                          PostForwardMessageResponseBody200)
-                                                                                                                                                                       | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                       | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                            Error)
                                                                                                                                                                        | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/forwardMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/forwardMessage.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,62 +58,62 @@ postForwardMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Eith
 -- 
 data PostForwardMessageRequestBody = PostForwardMessageRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  postForwardMessageRequestBodyChatId :: PostForwardMessageRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | disable_notification: Sends the message [silently](https:\/\/telegram.org\/blog\/channels-2-0\#silent-messages). Users will receive a notification with no sound.
-  , postForwardMessageRequestBodyDisableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | from_chat_id: Unique identifier for the chat where the original message was sent (or channel username in the format \`\@channelusername\`)
-  , postForwardMessageRequestBodyFromChatId :: PostForwardMessageRequestBodyFromChatIdVariants
+  , fromChatId :: FromChatIdVariants
   -- | message_id: Message identifier in the chat specified in *from\\_chat\\_id*
-  , postForwardMessageRequestBodyMessageId :: GHC.Types.Int
+  , messageId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostForwardMessageRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyChatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyDisableNotification obj : "from_chat_id" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyFromChatId obj : "message_id" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyMessageId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyChatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyDisableNotification obj) GHC.Base.<> (("from_chat_id" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyFromChatId obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= postForwardMessageRequestBodyMessageId obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj : "from_chat_id" Data.Aeson.Types.ToJSON..= fromChatId obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj) GHC.Base.<> (("from_chat_id" Data.Aeson.Types.ToJSON..= fromChatId obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= messageId obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostForwardMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostForwardMessageRequestBody" (\obj -> (((GHC.Base.pure PostForwardMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from_chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'PostForwardMessageRequestBody' with all required fields.
-mkPostForwardMessageRequestBody :: PostForwardMessageRequestBodyChatIdVariants -- ^ 'postForwardMessageRequestBodyChatId'
-  -> PostForwardMessageRequestBodyFromChatIdVariants -- ^ 'postForwardMessageRequestBodyFromChatId'
-  -> GHC.Types.Int -- ^ 'postForwardMessageRequestBodyMessageId'
+mkPostForwardMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> FromChatIdVariants -- ^ 'fromChatId'
+  -> GHC.Types.Int -- ^ 'messageId'
   -> PostForwardMessageRequestBody
-mkPostForwardMessageRequestBody postForwardMessageRequestBodyChatId postForwardMessageRequestBodyFromChatId postForwardMessageRequestBodyMessageId = PostForwardMessageRequestBody{postForwardMessageRequestBodyChatId = postForwardMessageRequestBodyChatId,
-                                                                                                                                                                                   postForwardMessageRequestBodyDisableNotification = GHC.Maybe.Nothing,
-                                                                                                                                                                                   postForwardMessageRequestBodyFromChatId = postForwardMessageRequestBodyFromChatId,
-                                                                                                                                                                                   postForwardMessageRequestBodyMessageId = postForwardMessageRequestBodyMessageId}
+mkPostForwardMessageRequestBody chatId fromChatId messageId = PostForwardMessageRequestBody{chatId = chatId,
+                                                                                            disableNotification = GHC.Maybe.Nothing,
+                                                                                            fromChatId = fromChatId,
+                                                                                            messageId = messageId}
 -- | Defines the oneOf schema located at @paths.\/forwardMessage.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostForwardMessageRequestBodyChatIdVariants =
-   PostForwardMessageRequestBodyChatIdInt GHC.Types.Int
-  | PostForwardMessageRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostForwardMessageRequestBodyChatIdVariants
-    where toJSON (PostForwardMessageRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostForwardMessageRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostForwardMessageRequestBodyChatIdVariants
-    where parseJSON val = case (PostForwardMessageRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostForwardMessageRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Defines the oneOf schema located at @paths.\/forwardMessage.POST.requestBody.content.application\/json.schema.properties.from_chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the chat where the original message was sent (or channel username in the format \`\@channelusername\`)
-data PostForwardMessageRequestBodyFromChatIdVariants =
-   PostForwardMessageRequestBodyFromChatIdInt GHC.Types.Int
-  | PostForwardMessageRequestBodyFromChatIdText Data.Text.Internal.Text
+data FromChatIdVariants =
+   FromChatIdInt GHC.Types.Int
+  | FromChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostForwardMessageRequestBodyFromChatIdVariants
-    where toJSON (PostForwardMessageRequestBodyFromChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostForwardMessageRequestBodyFromChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostForwardMessageRequestBodyFromChatIdVariants
-    where parseJSON val = case (PostForwardMessageRequestBodyFromChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostForwardMessageRequestBodyFromChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON FromChatIdVariants
+    where toJSON (FromChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (FromChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON FromChatIdVariants
+    where parseJSON val = case (FromChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((FromChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postForwardMessage'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostForwardMessageResponseError' is used.
 data PostForwardMessageResponse =
-   PostForwardMessageResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostForwardMessageResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostForwardMessageResponse200 PostForwardMessageResponseBody200 -- ^ 
   | PostForwardMessageResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -122,22 +122,22 @@ data PostForwardMessageResponse =
 -- 
 data PostForwardMessageResponseBody200 = PostForwardMessageResponseBody200 {
   -- | ok
-  postForwardMessageResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a message.
-  , postForwardMessageResponseBody200Result :: Message
+  , result :: Message
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostForwardMessageResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postForwardMessageResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postForwardMessageResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postForwardMessageResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postForwardMessageResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostForwardMessageResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostForwardMessageResponseBody200" (\obj -> (GHC.Base.pure PostForwardMessageResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostForwardMessageResponseBody200' with all required fields.
-mkPostForwardMessageResponseBody200 :: GHC.Types.Bool -- ^ 'postForwardMessageResponseBody200Ok'
-  -> Message -- ^ 'postForwardMessageResponseBody200Result'
+mkPostForwardMessageResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Message -- ^ 'result'
   -> PostForwardMessageResponseBody200
-mkPostForwardMessageResponseBody200 postForwardMessageResponseBody200Ok postForwardMessageResponseBody200Result = PostForwardMessageResponseBody200{postForwardMessageResponseBody200Ok = postForwardMessageResponseBody200Ok,
-                                                                                                                                                    postForwardMessageResponseBody200Result = postForwardMessageResponseBody200Result}
+mkPostForwardMessageResponseBody200 ok result = PostForwardMessageResponseBody200{ok = ok,
+                                                                                  result = result}
 -- | > POST /forwardMessage
 -- 
 -- The same as 'postForwardMessage' but accepts an explicit configuration.
@@ -145,9 +145,9 @@ postForwardMessageWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m =>
   -> PostForwardMessageRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostForwardMessageResponse) -- ^ Monadic computation which returns the result of the operation
 postForwardMessageWithConfiguration config
-                                    body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostForwardMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                    body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostForwardMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                           PostForwardMessageResponseBody200)
-                                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostForwardMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                             Error)
                                                                                                                                                                                         | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/forwardMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /forwardMessage

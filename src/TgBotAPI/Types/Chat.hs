@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Chat
 module TgBotAPI.Types.Chat where
@@ -24,108 +25,107 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.ChatLocation
-import {-# SOURCE #-} TgBotAPI.Types.ChatPermissions
-import {-# SOURCE #-} TgBotAPI.Types.ChatPhoto
-import {-# SOURCE #-} TgBotAPI.Types.Message
+import  {-# SOURCE #-}  TgBotAPI.Types.ChatLocation (ChatLocation)
+import  {-# SOURCE #-}  TgBotAPI.Types.ChatPermissions (ChatPermissions)
+import  {-# SOURCE #-}  TgBotAPI.Types.ChatPhoto (ChatPhoto)
+import  {-# SOURCE #-}  TgBotAPI.Types.Message (Message)
 
 -- | Defines the object schema located at @components.schemas.Chat@ in the specification.
 -- 
 -- This object represents a chat.
 data Chat = Chat {
   -- | bio: *Optional*. Bio of the other party in a private chat. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  chatBio :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  bio :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | can_set_sticker_set: *Optional*. True, if the bot can change the group sticker set. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatCanSetStickerSet :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canSetStickerSet :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | description: *Optional*. Description, for groups, supergroups and channel chats. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatDescription :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , description :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | first_name: *Optional*. First name of the other party in a private chat
-  , chatFirstName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , firstName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | id: Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-  , chatId :: GHC.Types.Int
+  , id :: GHC.Types.Int
   -- | invite_link: *Optional*. Primary invite link, for groups, supergroups and channel chats. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatInviteLink :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , inviteLink :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | last_name: *Optional*. Last name of the other party in a private chat
-  , chatLastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , lastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | linked_chat_id: *Optional*. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty\/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatLinkedChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , linkedChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | location: Represents a location to which a chat is connected.
-  , chatLocation :: (GHC.Maybe.Maybe ChatLocation)
+  , location :: (GHC.Maybe.Maybe ChatLocation)
   -- | message_auto_delete_time: *Optional*. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatMessageAutoDeleteTime :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageAutoDeleteTime :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | permissions: Describes actions that a non-administrator user is allowed to take in a chat.
-  , chatPermissions :: (GHC.Maybe.Maybe ChatPermissions)
+  , permissions :: (GHC.Maybe.Maybe ChatPermissions)
   -- | photo: This object represents a chat photo.
-  , chatPhoto :: (GHC.Maybe.Maybe ChatPhoto)
+  , photo :: (GHC.Maybe.Maybe ChatPhoto)
   -- | pinned_message: This object represents a message.
-  , chatPinnedMessage :: (GHC.Maybe.Maybe Message)
+  , pinnedMessage :: (GHC.Maybe.Maybe Message)
   -- | slow_mode_delay: *Optional*. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatSlowModeDelay :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , slowModeDelay :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | sticker_set_name: *Optional*. For supergroups, name of group sticker set. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , chatStickerSetName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , stickerSetName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | title: *Optional*. Title, for supergroups, channels and group chats
-  , chatTitle :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , title :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | type: Type of chat, can be either “private”, “group”, “supergroup” or “channel”
-  , chatType :: ChatType
+  , type' :: Type
   -- | username: *Optional*. Username, for private chats, supergroups and channels if available
-  , chatUsername :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , username :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Chat
-    where toJSON obj = Data.Aeson.Types.Internal.object ("bio" Data.Aeson.Types.ToJSON..= chatBio obj : "can_set_sticker_set" Data.Aeson.Types.ToJSON..= chatCanSetStickerSet obj : "description" Data.Aeson.Types.ToJSON..= chatDescription obj : "first_name" Data.Aeson.Types.ToJSON..= chatFirstName obj : "id" Data.Aeson.Types.ToJSON..= chatId obj : "invite_link" Data.Aeson.Types.ToJSON..= chatInviteLink obj : "last_name" Data.Aeson.Types.ToJSON..= chatLastName obj : "linked_chat_id" Data.Aeson.Types.ToJSON..= chatLinkedChatId obj : "location" Data.Aeson.Types.ToJSON..= chatLocation obj : "message_auto_delete_time" Data.Aeson.Types.ToJSON..= chatMessageAutoDeleteTime obj : "permissions" Data.Aeson.Types.ToJSON..= chatPermissions obj : "photo" Data.Aeson.Types.ToJSON..= chatPhoto obj : "pinned_message" Data.Aeson.Types.ToJSON..= chatPinnedMessage obj : "slow_mode_delay" Data.Aeson.Types.ToJSON..= chatSlowModeDelay obj : "sticker_set_name" Data.Aeson.Types.ToJSON..= chatStickerSetName obj : "title" Data.Aeson.Types.ToJSON..= chatTitle obj : "type" Data.Aeson.Types.ToJSON..= chatType obj : "username" Data.Aeson.Types.ToJSON..= chatUsername obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("bio" Data.Aeson.Types.ToJSON..= chatBio obj) GHC.Base.<> (("can_set_sticker_set" Data.Aeson.Types.ToJSON..= chatCanSetStickerSet obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= chatDescription obj) GHC.Base.<> (("first_name" Data.Aeson.Types.ToJSON..= chatFirstName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= chatInviteLink obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= chatLastName obj) GHC.Base.<> (("linked_chat_id" Data.Aeson.Types.ToJSON..= chatLinkedChatId obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= chatLocation obj) GHC.Base.<> (("message_auto_delete_time" Data.Aeson.Types.ToJSON..= chatMessageAutoDeleteTime obj) GHC.Base.<> (("permissions" Data.Aeson.Types.ToJSON..= chatPermissions obj) GHC.Base.<> (("photo" Data.Aeson.Types.ToJSON..= chatPhoto obj) GHC.Base.<> (("pinned_message" Data.Aeson.Types.ToJSON..= chatPinnedMessage obj) GHC.Base.<> (("slow_mode_delay" Data.Aeson.Types.ToJSON..= chatSlowModeDelay obj) GHC.Base.<> (("sticker_set_name" Data.Aeson.Types.ToJSON..= chatStickerSetName obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= chatTitle obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= chatType obj) GHC.Base.<> ("username" Data.Aeson.Types.ToJSON..= chatUsername obj))))))))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("bio" Data.Aeson.Types.ToJSON..= bio obj : "can_set_sticker_set" Data.Aeson.Types.ToJSON..= canSetStickerSet obj : "description" Data.Aeson.Types.ToJSON..= description obj : "first_name" Data.Aeson.Types.ToJSON..= firstName obj : "id" Data.Aeson.Types.ToJSON..= id obj : "invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj : "last_name" Data.Aeson.Types.ToJSON..= lastName obj : "linked_chat_id" Data.Aeson.Types.ToJSON..= linkedChatId obj : "location" Data.Aeson.Types.ToJSON..= location obj : "message_auto_delete_time" Data.Aeson.Types.ToJSON..= messageAutoDeleteTime obj : "permissions" Data.Aeson.Types.ToJSON..= permissions obj : "photo" Data.Aeson.Types.ToJSON..= photo obj : "pinned_message" Data.Aeson.Types.ToJSON..= pinnedMessage obj : "slow_mode_delay" Data.Aeson.Types.ToJSON..= slowModeDelay obj : "sticker_set_name" Data.Aeson.Types.ToJSON..= stickerSetName obj : "title" Data.Aeson.Types.ToJSON..= title obj : "type" Data.Aeson.Types.ToJSON..= type' obj : "username" Data.Aeson.Types.ToJSON..= username obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("bio" Data.Aeson.Types.ToJSON..= bio obj) GHC.Base.<> (("can_set_sticker_set" Data.Aeson.Types.ToJSON..= canSetStickerSet obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("first_name" Data.Aeson.Types.ToJSON..= firstName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= lastName obj) GHC.Base.<> (("linked_chat_id" Data.Aeson.Types.ToJSON..= linkedChatId obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= location obj) GHC.Base.<> (("message_auto_delete_time" Data.Aeson.Types.ToJSON..= messageAutoDeleteTime obj) GHC.Base.<> (("permissions" Data.Aeson.Types.ToJSON..= permissions obj) GHC.Base.<> (("photo" Data.Aeson.Types.ToJSON..= photo obj) GHC.Base.<> (("pinned_message" Data.Aeson.Types.ToJSON..= pinnedMessage obj) GHC.Base.<> (("slow_mode_delay" Data.Aeson.Types.ToJSON..= slowModeDelay obj) GHC.Base.<> (("sticker_set_name" Data.Aeson.Types.ToJSON..= stickerSetName obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= title obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= type' obj) GHC.Base.<> ("username" Data.Aeson.Types.ToJSON..= username obj))))))))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Chat
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Chat" (\obj -> (((((((((((((((((GHC.Base.pure Chat GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "bio")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_set_sticker_set")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "first_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "invite_link")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "linked_chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_auto_delete_time")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "permissions")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "pinned_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "slow_mode_delay")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "sticker_set_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "username"))
 -- | Create a new 'Chat' with all required fields.
-mkChat :: GHC.Types.Int -- ^ 'chatId'
-  -> ChatType -- ^ 'chatType'
+mkChat :: GHC.Types.Int -- ^ 'id'
+  -> Type -- ^ 'type''
   -> Chat
-mkChat chatId chatType = Chat{chatBio = GHC.Maybe.Nothing,
-                              chatCanSetStickerSet = GHC.Maybe.Nothing,
-                              chatDescription = GHC.Maybe.Nothing,
-                              chatFirstName = GHC.Maybe.Nothing,
-                              chatId = chatId,
-                              chatInviteLink = GHC.Maybe.Nothing,
-                              chatLastName = GHC.Maybe.Nothing,
-                              chatLinkedChatId = GHC.Maybe.Nothing,
-                              chatLocation = GHC.Maybe.Nothing,
-                              chatMessageAutoDeleteTime = GHC.Maybe.Nothing,
-                              chatPermissions = GHC.Maybe.Nothing,
-                              chatPhoto = GHC.Maybe.Nothing,
-                              chatPinnedMessage = GHC.Maybe.Nothing,
-                              chatSlowModeDelay = GHC.Maybe.Nothing,
-                              chatStickerSetName = GHC.Maybe.Nothing,
-                              chatTitle = GHC.Maybe.Nothing,
-                              chatType = chatType,
-                              chatUsername = GHC.Maybe.Nothing}
+mkChat id type' = Chat{bio = GHC.Maybe.Nothing,
+                       canSetStickerSet = GHC.Maybe.Nothing,
+                       description = GHC.Maybe.Nothing,
+                       firstName = GHC.Maybe.Nothing,
+                       id = id,
+                       inviteLink = GHC.Maybe.Nothing,
+                       lastName = GHC.Maybe.Nothing,
+                       linkedChatId = GHC.Maybe.Nothing,
+                       location = GHC.Maybe.Nothing,
+                       messageAutoDeleteTime = GHC.Maybe.Nothing,
+                       permissions = GHC.Maybe.Nothing,
+                       photo = GHC.Maybe.Nothing,
+                       pinnedMessage = GHC.Maybe.Nothing,
+                       slowModeDelay = GHC.Maybe.Nothing,
+                       stickerSetName = GHC.Maybe.Nothing,
+                       title = GHC.Maybe.Nothing,
+                       type' = type',
+                       username = GHC.Maybe.Nothing}
 -- | Defines the enum schema located at @components.schemas.Chat.properties.type@ in the specification.
 -- 
 -- Type of chat, can be either “private”, “group”, “supergroup” or “channel”
-data ChatType =
-   ChatTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | ChatTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | ChatTypeEnumPrivate -- ^ Represents the JSON value @"private"@
-  | ChatTypeEnumGroup -- ^ Represents the JSON value @"group"@
-  | ChatTypeEnumSupergroup -- ^ Represents the JSON value @"supergroup"@
-  | ChatTypeEnumChannel -- ^ Represents the JSON value @"channel"@
+data Type =
+   TypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | TypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | TypeEnumPrivate -- ^ Represents the JSON value @"private"@
+  | TypeEnumGroup -- ^ Represents the JSON value @"group"@
+  | TypeEnumSupergroup -- ^ Represents the JSON value @"supergroup"@
+  | TypeEnumChannel -- ^ Represents the JSON value @"channel"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON ChatType
-    where toJSON (ChatTypeOther val) = val
-          toJSON (ChatTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (ChatTypeEnumPrivate) = "private"
-          toJSON (ChatTypeEnumGroup) = "group"
-          toJSON (ChatTypeEnumSupergroup) = "supergroup"
-          toJSON (ChatTypeEnumChannel) = "channel"
-instance Data.Aeson.Types.FromJSON.FromJSON ChatType
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "private" -> ChatTypeEnumPrivate
-                                            | val GHC.Classes.== "group" -> ChatTypeEnumGroup
-                                            | val GHC.Classes.== "supergroup" -> ChatTypeEnumSupergroup
-                                            | val GHC.Classes.== "channel" -> ChatTypeEnumChannel
-                                            | GHC.Base.otherwise -> ChatTypeOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON Type
+    where toJSON (TypeOther val) = val
+          toJSON (TypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (TypeEnumPrivate) = "private"
+          toJSON (TypeEnumGroup) = "group"
+          toJSON (TypeEnumSupergroup) = "supergroup"
+          toJSON (TypeEnumChannel) = "channel"
+instance Data.Aeson.Types.FromJSON.FromJSON Type
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "private" -> TypeEnumPrivate
+                                            | val GHC.Classes.== "group" -> TypeEnumGroup
+                                            | val GHC.Classes.== "supergroup" -> TypeEnumSupergroup
+                                            | val GHC.Classes.== "channel" -> TypeEnumChannel
+                                            | GHC.Base.otherwise -> TypeOther val)

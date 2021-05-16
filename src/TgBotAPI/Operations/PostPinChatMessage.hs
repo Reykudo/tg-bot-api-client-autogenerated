@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postPinChatMessage
 module TgBotAPI.Operations.PostPinChatMessage where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the \'can\\_pin\\_messages\' admin right in a supergroup or \'can\\_edit\\_messages\' admin right in a channel. Returns *True* on success.
 postPinChatMessage :: forall m . TgBotAPI.Common.MonadHTTP m => PostPinChatMessageRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostPinChatMessageResponse) -- ^ Monadic computation which returns the result of the operation
-postPinChatMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostPinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postPinChatMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostPinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                          PostPinChatMessageResponseBody200)
-                                                                                                                                                                       | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                       | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                            Error)
                                                                                                                                                                        | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/pinChatMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/pinChatMessage.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,44 +58,44 @@ postPinChatMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Eith
 -- 
 data PostPinChatMessageRequestBody = PostPinChatMessageRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  postPinChatMessageRequestBodyChatId :: PostPinChatMessageRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | disable_notification: Pass *True*, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
-  , postPinChatMessageRequestBodyDisableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | message_id: Identifier of a message to pin
-  , postPinChatMessageRequestBodyMessageId :: GHC.Types.Int
+  , messageId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostPinChatMessageRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postPinChatMessageRequestBodyChatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= postPinChatMessageRequestBodyDisableNotification obj : "message_id" Data.Aeson.Types.ToJSON..= postPinChatMessageRequestBodyMessageId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postPinChatMessageRequestBodyChatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= postPinChatMessageRequestBodyDisableNotification obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= postPinChatMessageRequestBodyMessageId obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= messageId obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON PostPinChatMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostPinChatMessageRequestBody" (\obj -> ((GHC.Base.pure PostPinChatMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'PostPinChatMessageRequestBody' with all required fields.
-mkPostPinChatMessageRequestBody :: PostPinChatMessageRequestBodyChatIdVariants -- ^ 'postPinChatMessageRequestBodyChatId'
-  -> GHC.Types.Int -- ^ 'postPinChatMessageRequestBodyMessageId'
+mkPostPinChatMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> GHC.Types.Int -- ^ 'messageId'
   -> PostPinChatMessageRequestBody
-mkPostPinChatMessageRequestBody postPinChatMessageRequestBodyChatId postPinChatMessageRequestBodyMessageId = PostPinChatMessageRequestBody{postPinChatMessageRequestBodyChatId = postPinChatMessageRequestBodyChatId,
-                                                                                                                                           postPinChatMessageRequestBodyDisableNotification = GHC.Maybe.Nothing,
-                                                                                                                                           postPinChatMessageRequestBodyMessageId = postPinChatMessageRequestBodyMessageId}
+mkPostPinChatMessageRequestBody chatId messageId = PostPinChatMessageRequestBody{chatId = chatId,
+                                                                                 disableNotification = GHC.Maybe.Nothing,
+                                                                                 messageId = messageId}
 -- | Defines the oneOf schema located at @paths.\/pinChatMessage.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostPinChatMessageRequestBodyChatIdVariants =
-   PostPinChatMessageRequestBodyChatIdInt GHC.Types.Int
-  | PostPinChatMessageRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostPinChatMessageRequestBodyChatIdVariants
-    where toJSON (PostPinChatMessageRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostPinChatMessageRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostPinChatMessageRequestBodyChatIdVariants
-    where parseJSON val = case (PostPinChatMessageRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostPinChatMessageRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postPinChatMessage'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostPinChatMessageResponseError' is used.
 data PostPinChatMessageResponse =
-   PostPinChatMessageResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostPinChatMessageResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostPinChatMessageResponse200 PostPinChatMessageResponseBody200 -- ^ 
   | PostPinChatMessageResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -104,22 +104,22 @@ data PostPinChatMessageResponse =
 -- 
 data PostPinChatMessageResponseBody200 = PostPinChatMessageResponseBody200 {
   -- | ok
-  postPinChatMessageResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postPinChatMessageResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostPinChatMessageResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postPinChatMessageResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postPinChatMessageResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postPinChatMessageResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postPinChatMessageResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostPinChatMessageResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostPinChatMessageResponseBody200" (\obj -> (GHC.Base.pure PostPinChatMessageResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostPinChatMessageResponseBody200' with all required fields.
-mkPostPinChatMessageResponseBody200 :: GHC.Types.Bool -- ^ 'postPinChatMessageResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postPinChatMessageResponseBody200Result'
+mkPostPinChatMessageResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostPinChatMessageResponseBody200
-mkPostPinChatMessageResponseBody200 postPinChatMessageResponseBody200Ok postPinChatMessageResponseBody200Result = PostPinChatMessageResponseBody200{postPinChatMessageResponseBody200Ok = postPinChatMessageResponseBody200Ok,
-                                                                                                                                                    postPinChatMessageResponseBody200Result = postPinChatMessageResponseBody200Result}
+mkPostPinChatMessageResponseBody200 ok result = PostPinChatMessageResponseBody200{ok = ok,
+                                                                                  result = result}
 -- | > POST /pinChatMessage
 -- 
 -- The same as 'postPinChatMessage' but accepts an explicit configuration.
@@ -127,9 +127,9 @@ postPinChatMessageWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m =>
   -> PostPinChatMessageRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostPinChatMessageResponse) -- ^ Monadic computation which returns the result of the operation
 postPinChatMessageWithConfiguration config
-                                    body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostPinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                    body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostPinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                           PostPinChatMessageResponseBody200)
-                                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostPinChatMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                             Error)
                                                                                                                                                                                         | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/pinChatMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /pinChatMessage

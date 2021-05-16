@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postRestrictChatMember
 module TgBotAPI.Operations.PostRestrictChatMember where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup for this to work and must have the appropriate admin rights. Pass *True* for all permissions to lift restrictions from a user. Returns *True* on success.
 postRestrictChatMember :: forall m . TgBotAPI.Common.MonadHTTP m => PostRestrictChatMemberRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostRestrictChatMemberResponse) -- ^ Monadic computation which returns the result of the operation
-postRestrictChatMember body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostRestrictChatMemberResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postRestrictChatMember body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostRestrictChatMemberResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                      PostRestrictChatMemberResponseBody200)
-                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                        Error)
                                                                                                                                                                                | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/restrictChatMember") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/restrictChatMember.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,48 +58,48 @@ postRestrictChatMember body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.
 -- 
 data PostRestrictChatMemberRequestBody = PostRestrictChatMemberRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-  postRestrictChatMemberRequestBodyChatId :: PostRestrictChatMemberRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | permissions: Describes actions that a non-administrator user is allowed to take in a chat.
-  , postRestrictChatMemberRequestBodyPermissions :: ChatPermissions
+  , permissions :: ChatPermissions
   -- | until_date: Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
-  , postRestrictChatMemberRequestBodyUntilDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , untilDate :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | user_id: Unique identifier of the target user
-  , postRestrictChatMemberRequestBodyUserId :: GHC.Types.Int
+  , userId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostRestrictChatMemberRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyChatId obj : "permissions" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyPermissions obj : "until_date" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyUntilDate obj : "user_id" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyUserId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyChatId obj) GHC.Base.<> (("permissions" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyPermissions obj) GHC.Base.<> (("until_date" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyUntilDate obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= postRestrictChatMemberRequestBodyUserId obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "permissions" Data.Aeson.Types.ToJSON..= permissions obj : "until_date" Data.Aeson.Types.ToJSON..= untilDate obj : "user_id" Data.Aeson.Types.ToJSON..= userId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("permissions" Data.Aeson.Types.ToJSON..= permissions obj) GHC.Base.<> (("until_date" Data.Aeson.Types.ToJSON..= untilDate obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= userId obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostRestrictChatMemberRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostRestrictChatMemberRequestBody" (\obj -> (((GHC.Base.pure PostRestrictChatMemberRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "permissions")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "until_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostRestrictChatMemberRequestBody' with all required fields.
-mkPostRestrictChatMemberRequestBody :: PostRestrictChatMemberRequestBodyChatIdVariants -- ^ 'postRestrictChatMemberRequestBodyChatId'
-  -> ChatPermissions -- ^ 'postRestrictChatMemberRequestBodyPermissions'
-  -> GHC.Types.Int -- ^ 'postRestrictChatMemberRequestBodyUserId'
+mkPostRestrictChatMemberRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> ChatPermissions -- ^ 'permissions'
+  -> GHC.Types.Int -- ^ 'userId'
   -> PostRestrictChatMemberRequestBody
-mkPostRestrictChatMemberRequestBody postRestrictChatMemberRequestBodyChatId postRestrictChatMemberRequestBodyPermissions postRestrictChatMemberRequestBodyUserId = PostRestrictChatMemberRequestBody{postRestrictChatMemberRequestBodyChatId = postRestrictChatMemberRequestBodyChatId,
-                                                                                                                                                                                                     postRestrictChatMemberRequestBodyPermissions = postRestrictChatMemberRequestBodyPermissions,
-                                                                                                                                                                                                     postRestrictChatMemberRequestBodyUntilDate = GHC.Maybe.Nothing,
-                                                                                                                                                                                                     postRestrictChatMemberRequestBodyUserId = postRestrictChatMemberRequestBodyUserId}
+mkPostRestrictChatMemberRequestBody chatId permissions userId = PostRestrictChatMemberRequestBody{chatId = chatId,
+                                                                                                  permissions = permissions,
+                                                                                                  untilDate = GHC.Maybe.Nothing,
+                                                                                                  userId = userId}
 -- | Defines the oneOf schema located at @paths.\/restrictChatMember.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-data PostRestrictChatMemberRequestBodyChatIdVariants =
-   PostRestrictChatMemberRequestBodyChatIdInt GHC.Types.Int
-  | PostRestrictChatMemberRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostRestrictChatMemberRequestBodyChatIdVariants
-    where toJSON (PostRestrictChatMemberRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostRestrictChatMemberRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostRestrictChatMemberRequestBodyChatIdVariants
-    where parseJSON val = case (PostRestrictChatMemberRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostRestrictChatMemberRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postRestrictChatMember'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostRestrictChatMemberResponseError' is used.
 data PostRestrictChatMemberResponse =
-   PostRestrictChatMemberResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostRestrictChatMemberResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostRestrictChatMemberResponse200 PostRestrictChatMemberResponseBody200 -- ^ 
   | PostRestrictChatMemberResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -108,22 +108,22 @@ data PostRestrictChatMemberResponse =
 -- 
 data PostRestrictChatMemberResponseBody200 = PostRestrictChatMemberResponseBody200 {
   -- | ok
-  postRestrictChatMemberResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postRestrictChatMemberResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostRestrictChatMemberResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postRestrictChatMemberResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postRestrictChatMemberResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postRestrictChatMemberResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postRestrictChatMemberResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostRestrictChatMemberResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostRestrictChatMemberResponseBody200" (\obj -> (GHC.Base.pure PostRestrictChatMemberResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostRestrictChatMemberResponseBody200' with all required fields.
-mkPostRestrictChatMemberResponseBody200 :: GHC.Types.Bool -- ^ 'postRestrictChatMemberResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postRestrictChatMemberResponseBody200Result'
+mkPostRestrictChatMemberResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostRestrictChatMemberResponseBody200
-mkPostRestrictChatMemberResponseBody200 postRestrictChatMemberResponseBody200Ok postRestrictChatMemberResponseBody200Result = PostRestrictChatMemberResponseBody200{postRestrictChatMemberResponseBody200Ok = postRestrictChatMemberResponseBody200Ok,
-                                                                                                                                                                    postRestrictChatMemberResponseBody200Result = postRestrictChatMemberResponseBody200Result}
+mkPostRestrictChatMemberResponseBody200 ok result = PostRestrictChatMemberResponseBody200{ok = ok,
+                                                                                          result = result}
 -- | > POST /restrictChatMember
 -- 
 -- The same as 'postRestrictChatMember' but accepts an explicit configuration.
@@ -131,9 +131,9 @@ postRestrictChatMemberWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP 
   -> PostRestrictChatMemberRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostRestrictChatMemberResponse) -- ^ Monadic computation which returns the result of the operation
 postRestrictChatMemberWithConfiguration config
-                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostRestrictChatMemberResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostRestrictChatMemberResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                       PostRestrictChatMemberResponseBody200)
-                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostRestrictChatMemberResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/restrictChatMember") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /restrictChatMember

@@ -6,8 +6,8 @@ instance Show PassportElementErrorSelfie
 instance Eq PassportElementErrorSelfie
 instance FromJSON PassportElementErrorSelfie
 instance ToJSON PassportElementErrorSelfie
-data PassportElementErrorSelfieType
-instance Show PassportElementErrorSelfieType
-instance Eq PassportElementErrorSelfieType
-instance FromJSON PassportElementErrorSelfieType
-instance ToJSON PassportElementErrorSelfieType
+data Type
+instance Show Type
+instance Eq Type
+instance FromJSON Type
+instance ToJSON Type

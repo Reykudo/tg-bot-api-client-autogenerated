@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultDocument
 module TgBotAPI.Types.InlineQueryResultDocument where
@@ -24,92 +25,91 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
-import {-# SOURCE #-} TgBotAPI.Types.InputMessageContent
-import {-# SOURCE #-} TgBotAPI.Types.MessageEntity
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
+import  {-# SOURCE #-}  TgBotAPI.Types.InputMessageContent (InputMessageContent)
+import  {-# SOURCE #-}  TgBotAPI.Types.MessageEntity (MessageEntity)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultDocument@ in the specification.
 -- 
 -- Represents a link to a file. By default, this file will be sent by the user with an optional caption. Alternatively, you can use *input\\_message\\_content* to send a message with the specified content instead of the file. Currently, only **.PDF** and **.ZIP** files can be sent using this method.
 data InlineQueryResultDocument = InlineQueryResultDocument {
   -- | caption: *Optional*. Caption of the document to be sent, 0-1024 characters after entities parsing
-  inlineQueryResultDocumentCaption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  caption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | caption_entities: *Optional*. List of special entities that appear in the caption, which can be specified instead of *parse\\_mode*
-  , inlineQueryResultDocumentCaptionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
+  , captionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | description: *Optional*. Short description of the result
-  , inlineQueryResultDocumentDescription :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , description :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | document_url: A valid URL for the file
-  , inlineQueryResultDocumentDocumentUrl :: Data.Text.Internal.Text
+  , documentUrl :: Data.Text.Internal.Text
   -- | id: Unique identifier for this result, 1-64 bytes
-  , inlineQueryResultDocumentId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
-  , inlineQueryResultDocumentInputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
+  , inputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
   -- | mime_type: Mime type of the content of the file, either “application\/pdf” or “application\/zip”
-  , inlineQueryResultDocumentMimeType :: InlineQueryResultDocumentMimeType
+  , mimeType :: MimeType
   -- | parse_mode: *Optional*. Mode for parsing entities in the document caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
-  , inlineQueryResultDocumentParseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultDocumentReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_height: *Optional*. Thumbnail height
-  , inlineQueryResultDocumentThumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | thumb_url: *Optional*. URL of the thumbnail (jpeg only) for the file
-  , inlineQueryResultDocumentThumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , thumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb_width: *Optional*. Thumbnail width
-  , inlineQueryResultDocumentThumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | title: Title for the result
-  , inlineQueryResultDocumentTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   -- | type: Type of the result, must be *document*
-  , inlineQueryResultDocumentType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultDocument
-    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentCaption obj : "caption_entities" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentCaptionEntities obj : "description" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentDescription obj : "document_url" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentDocumentUrl obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentId obj : "input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentInputMessageContent obj : "mime_type" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentMimeType obj : "parse_mode" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentParseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentReplyMarkup obj : "thumb_height" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentThumbHeight obj : "thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentThumbUrl obj : "thumb_width" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentThumbWidth obj : "title" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentTitle obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentCaption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentCaptionEntities obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentDescription obj) GHC.Base.<> (("document_url" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentDocumentUrl obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentId obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentInputMessageContent obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentMimeType obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentParseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentReplyMarkup obj) GHC.Base.<> (("thumb_height" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentThumbHeight obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentThumbUrl obj) GHC.Base.<> (("thumb_width" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentThumbWidth obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentTitle obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= inlineQueryResultDocumentType obj))))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= caption obj : "caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj : "description" Data.Aeson.Types.ToJSON..= description obj : "document_url" Data.Aeson.Types.ToJSON..= documentUrl obj : "id" Data.Aeson.Types.ToJSON..= id obj : "input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj : "mime_type" Data.Aeson.Types.ToJSON..= mimeType obj : "parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "thumb_height" Data.Aeson.Types.ToJSON..= thumbHeight obj : "thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj : "thumb_width" Data.Aeson.Types.ToJSON..= thumbWidth obj : "title" Data.Aeson.Types.ToJSON..= title obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= caption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("document_url" Data.Aeson.Types.ToJSON..= documentUrl obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= mimeType obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("thumb_height" Data.Aeson.Types.ToJSON..= thumbHeight obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj) GHC.Base.<> (("thumb_width" Data.Aeson.Types.ToJSON..= thumbWidth obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= title obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj))))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultDocument
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultDocument" (\obj -> (((((((((((((GHC.Base.pure InlineQueryResultDocument GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption_entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "document_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "input_message_content")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "mime_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parse_mode")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_width")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'InlineQueryResultDocument' with all required fields.
-mkInlineQueryResultDocument :: Data.Text.Internal.Text -- ^ 'inlineQueryResultDocumentDocumentUrl'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultDocumentId'
-  -> InlineQueryResultDocumentMimeType -- ^ 'inlineQueryResultDocumentMimeType'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultDocumentTitle'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultDocumentType'
+mkInlineQueryResultDocument :: Data.Text.Internal.Text -- ^ 'documentUrl'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> MimeType -- ^ 'mimeType'
+  -> Data.Text.Internal.Text -- ^ 'title'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> InlineQueryResultDocument
-mkInlineQueryResultDocument inlineQueryResultDocumentDocumentUrl inlineQueryResultDocumentId inlineQueryResultDocumentMimeType inlineQueryResultDocumentTitle inlineQueryResultDocumentType = InlineQueryResultDocument{inlineQueryResultDocumentCaption = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentCaptionEntities = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentDescription = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentDocumentUrl = inlineQueryResultDocumentDocumentUrl,
-                                                                                                                                                                                                                        inlineQueryResultDocumentId = inlineQueryResultDocumentId,
-                                                                                                                                                                                                                        inlineQueryResultDocumentInputMessageContent = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentMimeType = inlineQueryResultDocumentMimeType,
-                                                                                                                                                                                                                        inlineQueryResultDocumentParseMode = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentThumbHeight = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentThumbUrl = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentThumbWidth = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                        inlineQueryResultDocumentTitle = inlineQueryResultDocumentTitle,
-                                                                                                                                                                                                                        inlineQueryResultDocumentType = inlineQueryResultDocumentType}
+mkInlineQueryResultDocument documentUrl id mimeType title type' = InlineQueryResultDocument{caption = GHC.Maybe.Nothing,
+                                                                                            captionEntities = GHC.Maybe.Nothing,
+                                                                                            description = GHC.Maybe.Nothing,
+                                                                                            documentUrl = documentUrl,
+                                                                                            id = id,
+                                                                                            inputMessageContent = GHC.Maybe.Nothing,
+                                                                                            mimeType = mimeType,
+                                                                                            parseMode = GHC.Maybe.Nothing,
+                                                                                            replyMarkup = GHC.Maybe.Nothing,
+                                                                                            thumbHeight = GHC.Maybe.Nothing,
+                                                                                            thumbUrl = GHC.Maybe.Nothing,
+                                                                                            thumbWidth = GHC.Maybe.Nothing,
+                                                                                            title = title,
+                                                                                            type' = type'}
 -- | Defines the enum schema located at @components.schemas.InlineQueryResultDocument.properties.mime_type@ in the specification.
 -- 
 -- Mime type of the content of the file, either “application\/pdf” or “application\/zip”
-data InlineQueryResultDocumentMimeType =
-   InlineQueryResultDocumentMimeTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | InlineQueryResultDocumentMimeTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | InlineQueryResultDocumentMimeTypeEnumApplicationPdf -- ^ Represents the JSON value @"application/pdf"@
-  | InlineQueryResultDocumentMimeTypeEnumApplicationZip -- ^ Represents the JSON value @"application/zip"@
+data MimeType =
+   MimeTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | MimeTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | MimeTypeEnumApplicationPdf -- ^ Represents the JSON value @"application/pdf"@
+  | MimeTypeEnumApplicationZip -- ^ Represents the JSON value @"application/zip"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultDocumentMimeType
-    where toJSON (InlineQueryResultDocumentMimeTypeOther val) = val
-          toJSON (InlineQueryResultDocumentMimeTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (InlineQueryResultDocumentMimeTypeEnumApplicationPdf) = "application/pdf"
-          toJSON (InlineQueryResultDocumentMimeTypeEnumApplicationZip) = "application/zip"
-instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultDocumentMimeType
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "application/pdf" -> InlineQueryResultDocumentMimeTypeEnumApplicationPdf
-                                            | val GHC.Classes.== "application/zip" -> InlineQueryResultDocumentMimeTypeEnumApplicationZip
-                                            | GHC.Base.otherwise -> InlineQueryResultDocumentMimeTypeOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON MimeType
+    where toJSON (MimeTypeOther val) = val
+          toJSON (MimeTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (MimeTypeEnumApplicationPdf) = "application/pdf"
+          toJSON (MimeTypeEnumApplicationZip) = "application/zip"
+instance Data.Aeson.Types.FromJSON.FromJSON MimeType
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "application/pdf" -> MimeTypeEnumApplicationPdf
+                                            | val GHC.Classes.== "application/zip" -> MimeTypeEnumApplicationZip
+                                            | GHC.Base.otherwise -> MimeTypeOther val)

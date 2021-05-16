@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ChatPermissions
 module TgBotAPI.Types.ChatPermissions where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,35 +37,35 @@ import TgBotAPI.TypeAlias
 -- Describes actions that a non-administrator user is allowed to take in a chat.
 data ChatPermissions = ChatPermissions {
   -- | can_add_web_page_previews: *Optional*. True, if the user is allowed to add web page previews to their messages, implies can\\_send\\_media\\_messages
-  chatPermissionsCanAddWebPagePreviews :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  canAddWebPagePreviews :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_change_info: *Optional*. True, if the user is allowed to change the chat title, photo and other settings. Ignored in public supergroups
-  , chatPermissionsCanChangeInfo :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canChangeInfo :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_invite_users: *Optional*. True, if the user is allowed to invite new users to the chat
-  , chatPermissionsCanInviteUsers :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canInviteUsers :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_pin_messages: *Optional*. True, if the user is allowed to pin messages. Ignored in public supergroups
-  , chatPermissionsCanPinMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canPinMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_send_media_messages: *Optional*. True, if the user is allowed to send audios, documents, photos, videos, video notes and voice notes, implies can\\_send\\_messages
-  , chatPermissionsCanSendMediaMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canSendMediaMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_send_messages: *Optional*. True, if the user is allowed to send text messages, contacts, locations and venues
-  , chatPermissionsCanSendMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canSendMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_send_other_messages: *Optional*. True, if the user is allowed to send animations, games, stickers and use inline bots, implies can\\_send\\_media\\_messages
-  , chatPermissionsCanSendOtherMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canSendOtherMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_send_polls: *Optional*. True, if the user is allowed to send polls, implies can\\_send\\_messages
-  , chatPermissionsCanSendPolls :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canSendPolls :: (GHC.Maybe.Maybe GHC.Types.Bool)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatPermissions
-    where toJSON obj = Data.Aeson.Types.Internal.object ("can_add_web_page_previews" Data.Aeson.Types.ToJSON..= chatPermissionsCanAddWebPagePreviews obj : "can_change_info" Data.Aeson.Types.ToJSON..= chatPermissionsCanChangeInfo obj : "can_invite_users" Data.Aeson.Types.ToJSON..= chatPermissionsCanInviteUsers obj : "can_pin_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanPinMessages obj : "can_send_media_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendMediaMessages obj : "can_send_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendMessages obj : "can_send_other_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendOtherMessages obj : "can_send_polls" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendPolls obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("can_add_web_page_previews" Data.Aeson.Types.ToJSON..= chatPermissionsCanAddWebPagePreviews obj) GHC.Base.<> (("can_change_info" Data.Aeson.Types.ToJSON..= chatPermissionsCanChangeInfo obj) GHC.Base.<> (("can_invite_users" Data.Aeson.Types.ToJSON..= chatPermissionsCanInviteUsers obj) GHC.Base.<> (("can_pin_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanPinMessages obj) GHC.Base.<> (("can_send_media_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendMediaMessages obj) GHC.Base.<> (("can_send_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendMessages obj) GHC.Base.<> (("can_send_other_messages" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendOtherMessages obj) GHC.Base.<> ("can_send_polls" Data.Aeson.Types.ToJSON..= chatPermissionsCanSendPolls obj))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("can_add_web_page_previews" Data.Aeson.Types.ToJSON..= canAddWebPagePreviews obj : "can_change_info" Data.Aeson.Types.ToJSON..= canChangeInfo obj : "can_invite_users" Data.Aeson.Types.ToJSON..= canInviteUsers obj : "can_pin_messages" Data.Aeson.Types.ToJSON..= canPinMessages obj : "can_send_media_messages" Data.Aeson.Types.ToJSON..= canSendMediaMessages obj : "can_send_messages" Data.Aeson.Types.ToJSON..= canSendMessages obj : "can_send_other_messages" Data.Aeson.Types.ToJSON..= canSendOtherMessages obj : "can_send_polls" Data.Aeson.Types.ToJSON..= canSendPolls obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("can_add_web_page_previews" Data.Aeson.Types.ToJSON..= canAddWebPagePreviews obj) GHC.Base.<> (("can_change_info" Data.Aeson.Types.ToJSON..= canChangeInfo obj) GHC.Base.<> (("can_invite_users" Data.Aeson.Types.ToJSON..= canInviteUsers obj) GHC.Base.<> (("can_pin_messages" Data.Aeson.Types.ToJSON..= canPinMessages obj) GHC.Base.<> (("can_send_media_messages" Data.Aeson.Types.ToJSON..= canSendMediaMessages obj) GHC.Base.<> (("can_send_messages" Data.Aeson.Types.ToJSON..= canSendMessages obj) GHC.Base.<> (("can_send_other_messages" Data.Aeson.Types.ToJSON..= canSendOtherMessages obj) GHC.Base.<> ("can_send_polls" Data.Aeson.Types.ToJSON..= canSendPolls obj))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON ChatPermissions
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChatPermissions" (\obj -> (((((((GHC.Base.pure ChatPermissions GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_add_web_page_previews")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_change_info")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_invite_users")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_pin_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_send_media_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_send_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_send_other_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_send_polls"))
 -- | Create a new 'ChatPermissions' with all required fields.
 mkChatPermissions :: ChatPermissions
-mkChatPermissions = ChatPermissions{chatPermissionsCanAddWebPagePreviews = GHC.Maybe.Nothing,
-                                    chatPermissionsCanChangeInfo = GHC.Maybe.Nothing,
-                                    chatPermissionsCanInviteUsers = GHC.Maybe.Nothing,
-                                    chatPermissionsCanPinMessages = GHC.Maybe.Nothing,
-                                    chatPermissionsCanSendMediaMessages = GHC.Maybe.Nothing,
-                                    chatPermissionsCanSendMessages = GHC.Maybe.Nothing,
-                                    chatPermissionsCanSendOtherMessages = GHC.Maybe.Nothing,
-                                    chatPermissionsCanSendPolls = GHC.Maybe.Nothing}
+mkChatPermissions = ChatPermissions{canAddWebPagePreviews = GHC.Maybe.Nothing,
+                                    canChangeInfo = GHC.Maybe.Nothing,
+                                    canInviteUsers = GHC.Maybe.Nothing,
+                                    canPinMessages = GHC.Maybe.Nothing,
+                                    canSendMediaMessages = GHC.Maybe.Nothing,
+                                    canSendMessages = GHC.Maybe.Nothing,
+                                    canSendOtherMessages = GHC.Maybe.Nothing,
+                                    canSendPolls = GHC.Maybe.Nothing}
