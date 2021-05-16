@@ -28,6 +28,7 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
+import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to send a game. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postSendGame :: forall m . TgBotAPI.Common.MonadHTTP m => PostSendGameRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSendGameResponse) -- ^ Monadic computation which returns the result of the operation
-postSendGame body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+postSendGame body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                                        PostSendGameResponseBody200)
-                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                            | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendGame") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/sendGame.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -89,7 +90,7 @@ mkPostSendGameRequestBody postSendGameRequestBodyChatId postSendGameRequestBodyG
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendGameResponseError' is used.
 data PostSendGameResponse =
-   PostSendGameResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
+   PostSendGameResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
   | PostSendGameResponse200 PostSendGameResponseBody200 -- ^ 
   | PostSendGameResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -121,9 +122,9 @@ postSendGameWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBot
   -> PostSendGameRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSendGameResponse) -- ^ Monadic computation which returns the result of the operation
 postSendGameWithConfiguration config
-                              body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                              body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendGameResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                                                         PostSendGameResponseBody200)
-                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendGameResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                           Error)
                                                                                                                                                                             | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendGame") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /sendGame

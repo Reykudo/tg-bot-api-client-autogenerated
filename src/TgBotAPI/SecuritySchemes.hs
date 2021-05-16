@@ -7,6 +7,7 @@ module TgBotAPI.SecuritySchemes where
 
 import qualified Data.Text.Internal
 import qualified GHC.Base
+import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Show
 import qualified Network.HTTP.Client as Network.HTTP.Client.Request

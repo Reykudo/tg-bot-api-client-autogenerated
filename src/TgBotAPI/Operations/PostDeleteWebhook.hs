@@ -28,6 +28,7 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
+import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to remove webhook integration if you decide to switch back to [getUpdates](https:\/\/core.telegram.org\/bots\/api\/\#getupdates). Returns *True* on success.
 postDeleteWebhook :: forall m . TgBotAPI.Common.MonadHTTP m => PostDeleteWebhookRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostDeleteWebhookResponse) -- ^ Monadic computation which returns the result of the operation
-postDeleteWebhook body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostDeleteWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+postDeleteWebhook body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostDeleteWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                                                       PostDeleteWebhookResponseBody200)
-                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                      | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/deleteWebhook") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/deleteWebhook.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -72,7 +73,7 @@ mkPostDeleteWebhookRequestBody = PostDeleteWebhookRequestBody{postDeleteWebhookR
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostDeleteWebhookResponseError' is used.
 data PostDeleteWebhookResponse =
-   PostDeleteWebhookResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
+   PostDeleteWebhookResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
   | PostDeleteWebhookResponse200 PostDeleteWebhookResponseBody200 -- ^ 
   | PostDeleteWebhookResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -104,9 +105,9 @@ postDeleteWebhookWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => 
   -> PostDeleteWebhookRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostDeleteWebhookResponse) -- ^ Monadic computation which returns the result of the operation
 postDeleteWebhookWithConfiguration config
-                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostDeleteWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostDeleteWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                                                                        PostDeleteWebhookResponseBody200)
-                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteWebhookResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/deleteWebhook") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /deleteWebhook

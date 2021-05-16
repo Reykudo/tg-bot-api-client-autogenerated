@@ -28,6 +28,7 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
+import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method for your bot to leave a group, supergroup or channel. Returns *True* on success.
 postLeaveChat :: forall m . TgBotAPI.Common.MonadHTTP m => PostLeaveChatRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostLeaveChatResponse) -- ^ Monadic computation which returns the result of the operation
-postLeaveChat body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostLeaveChatResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+postLeaveChat body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostLeaveChatResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                                           PostLeaveChatResponseBody200)
-                                                                                                                                                             | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                                                                                                                                             | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                             Error)
                                                                                                                                                              | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/leaveChat") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/leaveChat.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -87,7 +88,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostLeaveChatRequestBodyChatIdVarian
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostLeaveChatResponseError' is used.
 data PostLeaveChatResponse =
-   PostLeaveChatResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
+   PostLeaveChatResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
   | PostLeaveChatResponse200 PostLeaveChatResponseBody200 -- ^ 
   | PostLeaveChatResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -119,9 +120,9 @@ postLeaveChatWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBo
   -> PostLeaveChatRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostLeaveChatResponse) -- ^ Monadic computation which returns the result of the operation
 postLeaveChatWithConfiguration config
-                               body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostLeaveChatResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                               body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostLeaveChatResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                                                                            PostLeaveChatResponseBody200)
-                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
+                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostLeaveChatResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
                                                                                                                                                                                                                                                                                                                                                                              Error)
                                                                                                                                                                               | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/leaveChat") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /leaveChat

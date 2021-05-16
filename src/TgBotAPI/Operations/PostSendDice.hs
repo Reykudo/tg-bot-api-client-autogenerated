@@ -25,6 +25,7 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
+import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -60,16 +61,16 @@ postSendDice body =
                              if
                                  | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) ->
                                    PostSendDiceResponse200
-                                     Data.Functor.<$> ( Data.Aeson.eitherDecodeStrict body ::
+                                     Data.Functor.<$> ( (Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) ::
                                                           Data.Either.Either
-                                                            GHC.Base.String
+                                                            Data.Text.Text
                                                             PostSendDiceResponseBody200
                                                       )
                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) ->
                                    PostSendDiceResponseDefault
-                                     Data.Functor.<$> ( Data.Aeson.eitherDecodeStrict body ::
+                                     Data.Functor.<$> ( (Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) ::
                                                           Data.Either.Either
-                                                            GHC.Base.String
+                                                            Data.Text.Text
                                                             Error
                                                       )
                                  | GHC.Base.otherwise -> Data.Either.Left "Missing default response type"
@@ -235,7 +236,7 @@ mkPostSendDiceRequestBodyReplyMarkup =
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendDiceResponseError' is used.
 data PostSendDiceResponse
   = -- | Means either no matching case available or a parse error
-    PostSendDiceResponseError GHC.Base.String
+    PostSendDiceResponseError Data.Text.Text
   | -- |
     PostSendDiceResponse200 PostSendDiceResponseBody200
   | -- |
@@ -297,16 +298,16 @@ postSendDiceWithConfiguration
                                if
                                    | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) ->
                                      PostSendDiceResponse200
-                                       Data.Functor.<$> ( Data.Aeson.eitherDecodeStrict body ::
+                                       Data.Functor.<$> ( (Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) ::
                                                             Data.Either.Either
-                                                              GHC.Base.String
+                                                              Data.Text.Text
                                                               PostSendDiceResponseBody200
                                                         )
                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) ->
                                      PostSendDiceResponseDefault
-                                       Data.Functor.<$> ( Data.Aeson.eitherDecodeStrict body ::
+                                       Data.Functor.<$> ( (Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) ::
                                                             Data.Either.Either
-                                                              GHC.Base.String
+                                                              Data.Text.Text
                                                               Error
                                                         )
                                    | GHC.Base.otherwise -> Data.Either.Left "Missing default response type"
