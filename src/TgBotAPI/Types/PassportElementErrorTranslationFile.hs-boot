@@ -1,0 +1,13 @@
+module TgBotAPI.Types.PassportElementErrorTranslationFile where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data PassportElementErrorTranslationFile
+instance Show PassportElementErrorTranslationFile
+instance Eq PassportElementErrorTranslationFile
+instance FromJSON PassportElementErrorTranslationFile
+instance ToJSON PassportElementErrorTranslationFile
+data PassportElementErrorTranslationFileType
+instance Show PassportElementErrorTranslationFileType
+instance Eq PassportElementErrorTranslationFileType
+instance FromJSON PassportElementErrorTranslationFileType
+instance ToJSON PassportElementErrorTranslationFileType

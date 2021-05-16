@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InputInvoiceMessageContent where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InputInvoiceMessageContent
+instance Show InputInvoiceMessageContent
+instance Eq InputInvoiceMessageContent
+instance FromJSON InputInvoiceMessageContent
+instance ToJSON InputInvoiceMessageContent

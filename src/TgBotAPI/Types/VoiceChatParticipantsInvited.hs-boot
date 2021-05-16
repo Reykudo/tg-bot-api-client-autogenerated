@@ -1,0 +1,8 @@
+module TgBotAPI.Types.VoiceChatParticipantsInvited where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data VoiceChatParticipantsInvited
+instance Show VoiceChatParticipantsInvited
+instance Eq VoiceChatParticipantsInvited
+instance FromJSON VoiceChatParticipantsInvited
+instance ToJSON VoiceChatParticipantsInvited

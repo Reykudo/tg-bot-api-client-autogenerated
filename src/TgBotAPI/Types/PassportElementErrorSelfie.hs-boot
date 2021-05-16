@@ -1,0 +1,13 @@
+module TgBotAPI.Types.PassportElementErrorSelfie where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data PassportElementErrorSelfie
+instance Show PassportElementErrorSelfie
+instance Eq PassportElementErrorSelfie
+instance FromJSON PassportElementErrorSelfie
+instance ToJSON PassportElementErrorSelfie
+data PassportElementErrorSelfieType
+instance Show PassportElementErrorSelfieType
+instance Eq PassportElementErrorSelfieType
+instance FromJSON PassportElementErrorSelfieType
+instance ToJSON PassportElementErrorSelfieType

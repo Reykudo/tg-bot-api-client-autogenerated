@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InlineQueryResultCachedGif where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InlineQueryResultCachedGif
+instance Show InlineQueryResultCachedGif
+instance Eq InlineQueryResultCachedGif
+instance FromJSON InlineQueryResultCachedGif
+instance ToJSON InlineQueryResultCachedGif

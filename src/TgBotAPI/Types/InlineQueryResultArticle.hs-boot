@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InlineQueryResultArticle where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InlineQueryResultArticle
+instance Show InlineQueryResultArticle
+instance Eq InlineQueryResultArticle
+instance FromJSON InlineQueryResultArticle
+instance ToJSON InlineQueryResultArticle

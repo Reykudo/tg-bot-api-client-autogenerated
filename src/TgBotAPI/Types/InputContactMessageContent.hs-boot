@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InputContactMessageContent where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InputContactMessageContent
+instance Show InputContactMessageContent
+instance Eq InputContactMessageContent
+instance FromJSON InputContactMessageContent
+instance ToJSON InputContactMessageContent

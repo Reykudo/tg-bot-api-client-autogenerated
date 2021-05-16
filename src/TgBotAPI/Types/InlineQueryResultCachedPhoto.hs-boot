@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InlineQueryResultCachedPhoto where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InlineQueryResultCachedPhoto
+instance Show InlineQueryResultCachedPhoto
+instance Eq InlineQueryResultCachedPhoto
+instance FromJSON InlineQueryResultCachedPhoto
+instance ToJSON InlineQueryResultCachedPhoto

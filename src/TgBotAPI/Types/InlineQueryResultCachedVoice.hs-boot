@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InlineQueryResultCachedVoice where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InlineQueryResultCachedVoice
+instance Show InlineQueryResultCachedVoice
+instance Eq InlineQueryResultCachedVoice
+instance FromJSON InlineQueryResultCachedVoice
+instance ToJSON InlineQueryResultCachedVoice

@@ -1,0 +1,13 @@
+module TgBotAPI.Types.PassportElementErrorDataField where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data PassportElementErrorDataField
+instance Show PassportElementErrorDataField
+instance Eq PassportElementErrorDataField
+instance FromJSON PassportElementErrorDataField
+instance ToJSON PassportElementErrorDataField
+data PassportElementErrorDataFieldType
+instance Show PassportElementErrorDataFieldType
+instance Eq PassportElementErrorDataFieldType
+instance FromJSON PassportElementErrorDataFieldType
+instance ToJSON PassportElementErrorDataFieldType

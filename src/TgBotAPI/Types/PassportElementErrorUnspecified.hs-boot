@@ -1,0 +1,8 @@
+module TgBotAPI.Types.PassportElementErrorUnspecified where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data PassportElementErrorUnspecified
+instance Show PassportElementErrorUnspecified
+instance Eq PassportElementErrorUnspecified
+instance FromJSON PassportElementErrorUnspecified
+instance ToJSON PassportElementErrorUnspecified

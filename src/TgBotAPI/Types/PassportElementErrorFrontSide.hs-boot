@@ -1,0 +1,13 @@
+module TgBotAPI.Types.PassportElementErrorFrontSide where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data PassportElementErrorFrontSide
+instance Show PassportElementErrorFrontSide
+instance Eq PassportElementErrorFrontSide
+instance FromJSON PassportElementErrorFrontSide
+instance ToJSON PassportElementErrorFrontSide
+data PassportElementErrorFrontSideType
+instance Show PassportElementErrorFrontSideType
+instance Eq PassportElementErrorFrontSideType
+instance FromJSON PassportElementErrorFrontSideType
+instance ToJSON PassportElementErrorFrontSideType

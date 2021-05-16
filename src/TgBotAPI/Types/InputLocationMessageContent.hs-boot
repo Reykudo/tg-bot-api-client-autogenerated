@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InputLocationMessageContent where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InputLocationMessageContent
+instance Show InputLocationMessageContent
+instance Eq InputLocationMessageContent
+instance FromJSON InputLocationMessageContent
+instance ToJSON InputLocationMessageContent

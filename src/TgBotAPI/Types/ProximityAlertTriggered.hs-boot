@@ -1,0 +1,8 @@
+module TgBotAPI.Types.ProximityAlertTriggered where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data ProximityAlertTriggered
+instance Show ProximityAlertTriggered
+instance Eq ProximityAlertTriggered
+instance FromJSON ProximityAlertTriggered
+instance ToJSON ProximityAlertTriggered

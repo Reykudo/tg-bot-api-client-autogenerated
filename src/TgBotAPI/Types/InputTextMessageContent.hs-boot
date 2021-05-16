@@ -1,0 +1,8 @@
+module TgBotAPI.Types.InputTextMessageContent where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data InputTextMessageContent
+instance Show InputTextMessageContent
+instance Eq InputTextMessageContent
+instance FromJSON InputTextMessageContent
+instance ToJSON InputTextMessageContent

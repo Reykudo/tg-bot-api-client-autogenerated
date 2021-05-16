@@ -1,0 +1,13 @@
+module TgBotAPI.Types.EncryptedPassportElement where
+import Data.Aeson
+import qualified Data.Aeson as Data.Aeson.Types.Internal
+data EncryptedPassportElement
+instance Show EncryptedPassportElement
+instance Eq EncryptedPassportElement
+instance FromJSON EncryptedPassportElement
+instance ToJSON EncryptedPassportElement
+data EncryptedPassportElementType
+instance Show EncryptedPassportElementType
+instance Eq EncryptedPassportElementType
+instance FromJSON EncryptedPassportElementType
+instance ToJSON EncryptedPassportElementType
