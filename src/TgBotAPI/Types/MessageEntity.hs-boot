@@ -6,8 +6,8 @@ instance Show MessageEntity
 instance Eq MessageEntity
 instance FromJSON MessageEntity
 instance ToJSON MessageEntity
-data MessageEntityType
-instance Show MessageEntityType
-instance Eq MessageEntityType
-instance FromJSON MessageEntityType
-instance ToJSON MessageEntityType
+data Type
+instance Show Type
+instance Eq Type
+instance FromJSON Type
+instance ToJSON Type

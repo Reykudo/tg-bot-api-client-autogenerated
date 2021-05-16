@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema WebhookInfo
 module TgBotAPI.Types.WebhookInfo where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,38 +37,38 @@ import TgBotAPI.TypeAlias
 -- Contains information about the current status of a webhook.
 data WebhookInfo = WebhookInfo {
   -- | allowed_updates: *Optional*. A list of update types the bot is subscribed to. Defaults to all update types except *chat\\_member*
-  webhookInfoAllowedUpdates :: (GHC.Maybe.Maybe ([Data.Text.Internal.Text]))
+  allowedUpdates :: (GHC.Maybe.Maybe ([Data.Text.Internal.Text]))
   -- | has_custom_certificate: True, if a custom certificate was provided for webhook certificate checks
-  , webhookInfoHasCustomCertificate :: GHC.Types.Bool
+  , hasCustomCertificate :: GHC.Types.Bool
   -- | ip_address: *Optional*. Currently used webhook IP address
-  , webhookInfoIpAddress :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , ipAddress :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | last_error_date: *Optional*. Unix time for the most recent error that happened when trying to deliver an update via webhook
-  , webhookInfoLastErrorDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , lastErrorDate :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | last_error_message: *Optional*. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
-  , webhookInfoLastErrorMessage :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , lastErrorMessage :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | max_connections: *Optional*. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
-  , webhookInfoMaxConnections :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , maxConnections :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | pending_update_count: Number of updates awaiting delivery
-  , webhookInfoPendingUpdateCount :: GHC.Types.Int
+  , pendingUpdateCount :: GHC.Types.Int
   -- | url: Webhook URL, may be empty if webhook is not set up
-  , webhookInfoUrl :: Data.Text.Internal.Text
+  , url :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON WebhookInfo
-    where toJSON obj = Data.Aeson.Types.Internal.object ("allowed_updates" Data.Aeson.Types.ToJSON..= webhookInfoAllowedUpdates obj : "has_custom_certificate" Data.Aeson.Types.ToJSON..= webhookInfoHasCustomCertificate obj : "ip_address" Data.Aeson.Types.ToJSON..= webhookInfoIpAddress obj : "last_error_date" Data.Aeson.Types.ToJSON..= webhookInfoLastErrorDate obj : "last_error_message" Data.Aeson.Types.ToJSON..= webhookInfoLastErrorMessage obj : "max_connections" Data.Aeson.Types.ToJSON..= webhookInfoMaxConnections obj : "pending_update_count" Data.Aeson.Types.ToJSON..= webhookInfoPendingUpdateCount obj : "url" Data.Aeson.Types.ToJSON..= webhookInfoUrl obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allowed_updates" Data.Aeson.Types.ToJSON..= webhookInfoAllowedUpdates obj) GHC.Base.<> (("has_custom_certificate" Data.Aeson.Types.ToJSON..= webhookInfoHasCustomCertificate obj) GHC.Base.<> (("ip_address" Data.Aeson.Types.ToJSON..= webhookInfoIpAddress obj) GHC.Base.<> (("last_error_date" Data.Aeson.Types.ToJSON..= webhookInfoLastErrorDate obj) GHC.Base.<> (("last_error_message" Data.Aeson.Types.ToJSON..= webhookInfoLastErrorMessage obj) GHC.Base.<> (("max_connections" Data.Aeson.Types.ToJSON..= webhookInfoMaxConnections obj) GHC.Base.<> (("pending_update_count" Data.Aeson.Types.ToJSON..= webhookInfoPendingUpdateCount obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= webhookInfoUrl obj))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("allowed_updates" Data.Aeson.Types.ToJSON..= allowedUpdates obj : "has_custom_certificate" Data.Aeson.Types.ToJSON..= hasCustomCertificate obj : "ip_address" Data.Aeson.Types.ToJSON..= ipAddress obj : "last_error_date" Data.Aeson.Types.ToJSON..= lastErrorDate obj : "last_error_message" Data.Aeson.Types.ToJSON..= lastErrorMessage obj : "max_connections" Data.Aeson.Types.ToJSON..= maxConnections obj : "pending_update_count" Data.Aeson.Types.ToJSON..= pendingUpdateCount obj : "url" Data.Aeson.Types.ToJSON..= url obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allowed_updates" Data.Aeson.Types.ToJSON..= allowedUpdates obj) GHC.Base.<> (("has_custom_certificate" Data.Aeson.Types.ToJSON..= hasCustomCertificate obj) GHC.Base.<> (("ip_address" Data.Aeson.Types.ToJSON..= ipAddress obj) GHC.Base.<> (("last_error_date" Data.Aeson.Types.ToJSON..= lastErrorDate obj) GHC.Base.<> (("last_error_message" Data.Aeson.Types.ToJSON..= lastErrorMessage obj) GHC.Base.<> (("max_connections" Data.Aeson.Types.ToJSON..= maxConnections obj) GHC.Base.<> (("pending_update_count" Data.Aeson.Types.ToJSON..= pendingUpdateCount obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= url obj))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON WebhookInfo
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "WebhookInfo" (\obj -> (((((((GHC.Base.pure WebhookInfo GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "allowed_updates")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "has_custom_certificate")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "ip_address")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_error_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_error_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "max_connections")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "pending_update_count")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "url"))
 -- | Create a new 'WebhookInfo' with all required fields.
-mkWebhookInfo :: GHC.Types.Bool -- ^ 'webhookInfoHasCustomCertificate'
-  -> GHC.Types.Int -- ^ 'webhookInfoPendingUpdateCount'
-  -> Data.Text.Internal.Text -- ^ 'webhookInfoUrl'
+mkWebhookInfo :: GHC.Types.Bool -- ^ 'hasCustomCertificate'
+  -> GHC.Types.Int -- ^ 'pendingUpdateCount'
+  -> Data.Text.Internal.Text -- ^ 'url'
   -> WebhookInfo
-mkWebhookInfo webhookInfoHasCustomCertificate webhookInfoPendingUpdateCount webhookInfoUrl = WebhookInfo{webhookInfoAllowedUpdates = GHC.Maybe.Nothing,
-                                                                                                         webhookInfoHasCustomCertificate = webhookInfoHasCustomCertificate,
-                                                                                                         webhookInfoIpAddress = GHC.Maybe.Nothing,
-                                                                                                         webhookInfoLastErrorDate = GHC.Maybe.Nothing,
-                                                                                                         webhookInfoLastErrorMessage = GHC.Maybe.Nothing,
-                                                                                                         webhookInfoMaxConnections = GHC.Maybe.Nothing,
-                                                                                                         webhookInfoPendingUpdateCount = webhookInfoPendingUpdateCount,
-                                                                                                         webhookInfoUrl = webhookInfoUrl}
+mkWebhookInfo hasCustomCertificate pendingUpdateCount url = WebhookInfo{allowedUpdates = GHC.Maybe.Nothing,
+                                                                        hasCustomCertificate = hasCustomCertificate,
+                                                                        ipAddress = GHC.Maybe.Nothing,
+                                                                        lastErrorDate = GHC.Maybe.Nothing,
+                                                                        lastErrorMessage = GHC.Maybe.Nothing,
+                                                                        maxConnections = GHC.Maybe.Nothing,
+                                                                        pendingUpdateCount = pendingUpdateCount,
+                                                                        url = url}

@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postGetUserProfilePhotos
 module TgBotAPI.Operations.PostGetUserProfilePhotos where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to get a list of profile pictures for a user. Returns a [UserProfilePhotos](https:\/\/core.telegram.org\/bots\/api\/\#userprofilephotos) object.
 postGetUserProfilePhotos :: forall m . TgBotAPI.Common.MonadHTTP m => PostGetUserProfilePhotosRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostGetUserProfilePhotosResponse) -- ^ Monadic computation which returns the result of the operation
-postGetUserProfilePhotos body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostGetUserProfilePhotosResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postGetUserProfilePhotos body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostGetUserProfilePhotosResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                            PostGetUserProfilePhotosResponseBody200)
-                                                                                                                                                                                   | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                   | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                              Error)
                                                                                                                                                                                    | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/getUserProfilePhotos") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/getUserProfilePhotos.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -63,29 +63,29 @@ data PostGetUserProfilePhotosRequestBody = PostGetUserProfilePhotosRequestBody {
   -- 
   -- * Maxium  of 100.0
   -- * Minimum  of 1.0
-  postGetUserProfilePhotosRequestBodyLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
+  limit :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | offset: Sequential number of the first photo to be returned. By default, all photos are returned.
-  , postGetUserProfilePhotosRequestBodyOffset :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , offset :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | user_id: Unique identifier of the target user
-  , postGetUserProfilePhotosRequestBodyUserId :: GHC.Types.Int
+  , userId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetUserProfilePhotosRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("limit" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosRequestBodyLimit obj : "offset" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosRequestBodyOffset obj : "user_id" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosRequestBodyUserId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("limit" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosRequestBodyLimit obj) GHC.Base.<> (("offset" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosRequestBodyOffset obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosRequestBodyUserId obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("limit" Data.Aeson.Types.ToJSON..= limit obj : "offset" Data.Aeson.Types.ToJSON..= offset obj : "user_id" Data.Aeson.Types.ToJSON..= userId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("limit" Data.Aeson.Types.ToJSON..= limit obj) GHC.Base.<> (("offset" Data.Aeson.Types.ToJSON..= offset obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= userId obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetUserProfilePhotosRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetUserProfilePhotosRequestBody" (\obj -> ((GHC.Base.pure PostGetUserProfilePhotosRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "limit")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "offset")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostGetUserProfilePhotosRequestBody' with all required fields.
-mkPostGetUserProfilePhotosRequestBody :: GHC.Types.Int -- ^ 'postGetUserProfilePhotosRequestBodyUserId'
+mkPostGetUserProfilePhotosRequestBody :: GHC.Types.Int -- ^ 'userId'
   -> PostGetUserProfilePhotosRequestBody
-mkPostGetUserProfilePhotosRequestBody postGetUserProfilePhotosRequestBodyUserId = PostGetUserProfilePhotosRequestBody{postGetUserProfilePhotosRequestBodyLimit = GHC.Maybe.Nothing,
-                                                                                                                      postGetUserProfilePhotosRequestBodyOffset = GHC.Maybe.Nothing,
-                                                                                                                      postGetUserProfilePhotosRequestBodyUserId = postGetUserProfilePhotosRequestBodyUserId}
+mkPostGetUserProfilePhotosRequestBody userId = PostGetUserProfilePhotosRequestBody{limit = GHC.Maybe.Nothing,
+                                                                                   offset = GHC.Maybe.Nothing,
+                                                                                   userId = userId}
 -- | Represents a response of the operation 'postGetUserProfilePhotos'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostGetUserProfilePhotosResponseError' is used.
 data PostGetUserProfilePhotosResponse =
-   PostGetUserProfilePhotosResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostGetUserProfilePhotosResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostGetUserProfilePhotosResponse200 PostGetUserProfilePhotosResponseBody200 -- ^ 
   | PostGetUserProfilePhotosResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -94,22 +94,22 @@ data PostGetUserProfilePhotosResponse =
 -- 
 data PostGetUserProfilePhotosResponseBody200 = PostGetUserProfilePhotosResponseBody200 {
   -- | ok
-  postGetUserProfilePhotosResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represent a user\'s profile pictures.
-  , postGetUserProfilePhotosResponseBody200Result :: UserProfilePhotos
+  , result :: UserProfilePhotos
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetUserProfilePhotosResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postGetUserProfilePhotosResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetUserProfilePhotosResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetUserProfilePhotosResponseBody200" (\obj -> (GHC.Base.pure PostGetUserProfilePhotosResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostGetUserProfilePhotosResponseBody200' with all required fields.
-mkPostGetUserProfilePhotosResponseBody200 :: GHC.Types.Bool -- ^ 'postGetUserProfilePhotosResponseBody200Ok'
-  -> UserProfilePhotos -- ^ 'postGetUserProfilePhotosResponseBody200Result'
+mkPostGetUserProfilePhotosResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> UserProfilePhotos -- ^ 'result'
   -> PostGetUserProfilePhotosResponseBody200
-mkPostGetUserProfilePhotosResponseBody200 postGetUserProfilePhotosResponseBody200Ok postGetUserProfilePhotosResponseBody200Result = PostGetUserProfilePhotosResponseBody200{postGetUserProfilePhotosResponseBody200Ok = postGetUserProfilePhotosResponseBody200Ok,
-                                                                                                                                                                            postGetUserProfilePhotosResponseBody200Result = postGetUserProfilePhotosResponseBody200Result}
+mkPostGetUserProfilePhotosResponseBody200 ok result = PostGetUserProfilePhotosResponseBody200{ok = ok,
+                                                                                              result = result}
 -- | > POST /getUserProfilePhotos
 -- 
 -- The same as 'postGetUserProfilePhotos' but accepts an explicit configuration.
@@ -117,9 +117,9 @@ postGetUserProfilePhotosWithConfiguration :: forall m . TgBotAPI.Common.MonadHTT
   -> PostGetUserProfilePhotosRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostGetUserProfilePhotosResponse) -- ^ Monadic computation which returns the result of the operation
 postGetUserProfilePhotosWithConfiguration config
-                                          body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostGetUserProfilePhotosResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                          body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostGetUserProfilePhotosResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                             PostGetUserProfilePhotosResponseBody200)
-                                                                                                                                                                                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetUserProfilePhotosResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                               Error)
                                                                                                                                                                                                     | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/getUserProfilePhotos") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /getUserProfilePhotos

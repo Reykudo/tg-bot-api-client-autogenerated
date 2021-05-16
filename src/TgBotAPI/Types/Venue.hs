@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Venue
 module TgBotAPI.Types.Venue where
@@ -24,49 +25,48 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.Location
+import  {-# SOURCE #-}  TgBotAPI.Types.Location (Location)
 
 -- | Defines the object schema located at @components.schemas.Venue@ in the specification.
 -- 
 -- This object represents a venue.
 data Venue = Venue {
   -- | address: Address of the venue
-  venueAddress :: Data.Text.Internal.Text
+  address :: Data.Text.Internal.Text
   -- | foursquare_id: *Optional*. Foursquare identifier of the venue
-  , venueFoursquareId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , foursquareId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | foursquare_type: *Optional*. Foursquare type of the venue. (For example, “arts\\_entertainment\/default”, “arts\\_entertainment\/aquarium” or “food\/icecream”.)
-  , venueFoursquareType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , foursquareType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | google_place_id: *Optional*. Google Places identifier of the venue
-  , venueGooglePlaceId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , googlePlaceId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | google_place_type: *Optional*. Google Places type of the venue. (See [supported types](https:\/\/developers.google.com\/places\/web-service\/supported_types).)
-  , venueGooglePlaceType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , googlePlaceType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | location: This object represents a point on the map.
-  , venueLocation :: Location
+  , location :: Location
   -- | title: Name of the venue
-  , venueTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Venue
-    where toJSON obj = Data.Aeson.Types.Internal.object ("address" Data.Aeson.Types.ToJSON..= venueAddress obj : "foursquare_id" Data.Aeson.Types.ToJSON..= venueFoursquareId obj : "foursquare_type" Data.Aeson.Types.ToJSON..= venueFoursquareType obj : "google_place_id" Data.Aeson.Types.ToJSON..= venueGooglePlaceId obj : "google_place_type" Data.Aeson.Types.ToJSON..= venueGooglePlaceType obj : "location" Data.Aeson.Types.ToJSON..= venueLocation obj : "title" Data.Aeson.Types.ToJSON..= venueTitle obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("address" Data.Aeson.Types.ToJSON..= venueAddress obj) GHC.Base.<> (("foursquare_id" Data.Aeson.Types.ToJSON..= venueFoursquareId obj) GHC.Base.<> (("foursquare_type" Data.Aeson.Types.ToJSON..= venueFoursquareType obj) GHC.Base.<> (("google_place_id" Data.Aeson.Types.ToJSON..= venueGooglePlaceId obj) GHC.Base.<> (("google_place_type" Data.Aeson.Types.ToJSON..= venueGooglePlaceType obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= venueLocation obj) GHC.Base.<> ("title" Data.Aeson.Types.ToJSON..= venueTitle obj)))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("address" Data.Aeson.Types.ToJSON..= address obj : "foursquare_id" Data.Aeson.Types.ToJSON..= foursquareId obj : "foursquare_type" Data.Aeson.Types.ToJSON..= foursquareType obj : "google_place_id" Data.Aeson.Types.ToJSON..= googlePlaceId obj : "google_place_type" Data.Aeson.Types.ToJSON..= googlePlaceType obj : "location" Data.Aeson.Types.ToJSON..= location obj : "title" Data.Aeson.Types.ToJSON..= title obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("address" Data.Aeson.Types.ToJSON..= address obj) GHC.Base.<> (("foursquare_id" Data.Aeson.Types.ToJSON..= foursquareId obj) GHC.Base.<> (("foursquare_type" Data.Aeson.Types.ToJSON..= foursquareType obj) GHC.Base.<> (("google_place_id" Data.Aeson.Types.ToJSON..= googlePlaceId obj) GHC.Base.<> (("google_place_type" Data.Aeson.Types.ToJSON..= googlePlaceType obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= location obj) GHC.Base.<> ("title" Data.Aeson.Types.ToJSON..= title obj)))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Venue
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Venue" (\obj -> ((((((GHC.Base.pure Venue GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "address")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "foursquare_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "foursquare_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "google_place_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "google_place_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title"))
 -- | Create a new 'Venue' with all required fields.
-mkVenue :: Data.Text.Internal.Text -- ^ 'venueAddress'
-  -> Location -- ^ 'venueLocation'
-  -> Data.Text.Internal.Text -- ^ 'venueTitle'
+mkVenue :: Data.Text.Internal.Text -- ^ 'address'
+  -> Location -- ^ 'location'
+  -> Data.Text.Internal.Text -- ^ 'title'
   -> Venue
-mkVenue venueAddress venueLocation venueTitle = Venue{venueAddress = venueAddress,
-                                                      venueFoursquareId = GHC.Maybe.Nothing,
-                                                      venueFoursquareType = GHC.Maybe.Nothing,
-                                                      venueGooglePlaceId = GHC.Maybe.Nothing,
-                                                      venueGooglePlaceType = GHC.Maybe.Nothing,
-                                                      venueLocation = venueLocation,
-                                                      venueTitle = venueTitle}
+mkVenue address location title = Venue{address = address,
+                                       foursquareId = GHC.Maybe.Nothing,
+                                       foursquareType = GHC.Maybe.Nothing,
+                                       googlePlaceId = GHC.Maybe.Nothing,
+                                       googlePlaceType = GHC.Maybe.Nothing,
+                                       location = location,
+                                       title = title}

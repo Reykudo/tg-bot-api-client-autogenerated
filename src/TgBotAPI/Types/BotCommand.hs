@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema BotCommand
 module TgBotAPI.Types.BotCommand where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,19 +37,19 @@ import TgBotAPI.TypeAlias
 -- This object represents a bot command.
 data BotCommand = BotCommand {
   -- | command: Text of the command, 1-32 characters. Can contain only lowercase English letters, digits and underscores.
-  botCommandCommand :: Data.Text.Internal.Text
+  command :: Data.Text.Internal.Text
   -- | description: Description of the command, 3-256 characters.
-  , botCommandDescription :: Data.Text.Internal.Text
+  , description :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON BotCommand
-    where toJSON obj = Data.Aeson.Types.Internal.object ("command" Data.Aeson.Types.ToJSON..= botCommandCommand obj : "description" Data.Aeson.Types.ToJSON..= botCommandDescription obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("command" Data.Aeson.Types.ToJSON..= botCommandCommand obj) GHC.Base.<> ("description" Data.Aeson.Types.ToJSON..= botCommandDescription obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("command" Data.Aeson.Types.ToJSON..= command obj : "description" Data.Aeson.Types.ToJSON..= description obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("command" Data.Aeson.Types.ToJSON..= command obj) GHC.Base.<> ("description" Data.Aeson.Types.ToJSON..= description obj))
 instance Data.Aeson.Types.FromJSON.FromJSON BotCommand
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "BotCommand" (\obj -> (GHC.Base.pure BotCommand GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "command")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "description"))
 -- | Create a new 'BotCommand' with all required fields.
-mkBotCommand :: Data.Text.Internal.Text -- ^ 'botCommandCommand'
-  -> Data.Text.Internal.Text -- ^ 'botCommandDescription'
+mkBotCommand :: Data.Text.Internal.Text -- ^ 'command'
+  -> Data.Text.Internal.Text -- ^ 'description'
   -> BotCommand
-mkBotCommand botCommandCommand botCommandDescription = BotCommand{botCommandCommand = botCommandCommand,
-                                                                  botCommandDescription = botCommandDescription}
+mkBotCommand command description = BotCommand{command = command,
+                                              description = description}

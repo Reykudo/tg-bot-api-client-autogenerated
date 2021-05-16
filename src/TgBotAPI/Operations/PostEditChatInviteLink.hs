@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postEditChatInviteLink
 module TgBotAPI.Operations.PostEditChatInviteLink where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns the edited invite link as a [ChatInviteLink](https:\/\/core.telegram.org\/bots\/api\/\#chatinvitelink) object.
 postEditChatInviteLink :: forall m . TgBotAPI.Common.MonadHTTP m => PostEditChatInviteLinkRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostEditChatInviteLinkResponse) -- ^ Monadic computation which returns the result of the operation
-postEditChatInviteLink body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostEditChatInviteLinkResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postEditChatInviteLink body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostEditChatInviteLinkResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                      PostEditChatInviteLinkResponseBody200)
-                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                        Error)
                                                                                                                                                                                | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/editChatInviteLink") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/editChatInviteLink.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,47 +58,47 @@ postEditChatInviteLink body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.
 -- 
 data PostEditChatInviteLinkRequestBody = PostEditChatInviteLinkRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  postEditChatInviteLinkRequestBodyChatId :: PostEditChatInviteLinkRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | expire_date: Point in time (Unix timestamp) when the link will expire
-  , postEditChatInviteLinkRequestBodyExpireDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , expireDate :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | invite_link: The invite link to edit
-  , postEditChatInviteLinkRequestBodyInviteLink :: Data.Text.Internal.Text
+  , inviteLink :: Data.Text.Internal.Text
   -- | member_limit: Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
-  , postEditChatInviteLinkRequestBodyMemberLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , memberLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostEditChatInviteLinkRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyChatId obj : "expire_date" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyExpireDate obj : "invite_link" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyInviteLink obj : "member_limit" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyMemberLimit obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyChatId obj) GHC.Base.<> (("expire_date" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyExpireDate obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyInviteLink obj) GHC.Base.<> ("member_limit" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkRequestBodyMemberLimit obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "expire_date" Data.Aeson.Types.ToJSON..= expireDate obj : "invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj : "member_limit" Data.Aeson.Types.ToJSON..= memberLimit obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("expire_date" Data.Aeson.Types.ToJSON..= expireDate obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj) GHC.Base.<> ("member_limit" Data.Aeson.Types.ToJSON..= memberLimit obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostEditChatInviteLinkRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostEditChatInviteLinkRequestBody" (\obj -> (((GHC.Base.pure PostEditChatInviteLinkRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "expire_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "invite_link")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "member_limit"))
 -- | Create a new 'PostEditChatInviteLinkRequestBody' with all required fields.
-mkPostEditChatInviteLinkRequestBody :: PostEditChatInviteLinkRequestBodyChatIdVariants -- ^ 'postEditChatInviteLinkRequestBodyChatId'
-  -> Data.Text.Internal.Text -- ^ 'postEditChatInviteLinkRequestBodyInviteLink'
+mkPostEditChatInviteLinkRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> Data.Text.Internal.Text -- ^ 'inviteLink'
   -> PostEditChatInviteLinkRequestBody
-mkPostEditChatInviteLinkRequestBody postEditChatInviteLinkRequestBodyChatId postEditChatInviteLinkRequestBodyInviteLink = PostEditChatInviteLinkRequestBody{postEditChatInviteLinkRequestBodyChatId = postEditChatInviteLinkRequestBodyChatId,
-                                                                                                                                                            postEditChatInviteLinkRequestBodyExpireDate = GHC.Maybe.Nothing,
-                                                                                                                                                            postEditChatInviteLinkRequestBodyInviteLink = postEditChatInviteLinkRequestBodyInviteLink,
-                                                                                                                                                            postEditChatInviteLinkRequestBodyMemberLimit = GHC.Maybe.Nothing}
+mkPostEditChatInviteLinkRequestBody chatId inviteLink = PostEditChatInviteLinkRequestBody{chatId = chatId,
+                                                                                          expireDate = GHC.Maybe.Nothing,
+                                                                                          inviteLink = inviteLink,
+                                                                                          memberLimit = GHC.Maybe.Nothing}
 -- | Defines the oneOf schema located at @paths.\/editChatInviteLink.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostEditChatInviteLinkRequestBodyChatIdVariants =
-   PostEditChatInviteLinkRequestBodyChatIdInt GHC.Types.Int
-  | PostEditChatInviteLinkRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostEditChatInviteLinkRequestBodyChatIdVariants
-    where toJSON (PostEditChatInviteLinkRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostEditChatInviteLinkRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostEditChatInviteLinkRequestBodyChatIdVariants
-    where parseJSON val = case (PostEditChatInviteLinkRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostEditChatInviteLinkRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postEditChatInviteLink'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostEditChatInviteLinkResponseError' is used.
 data PostEditChatInviteLinkResponse =
-   PostEditChatInviteLinkResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostEditChatInviteLinkResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostEditChatInviteLinkResponse200 PostEditChatInviteLinkResponseBody200 -- ^ 
   | PostEditChatInviteLinkResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -107,22 +107,22 @@ data PostEditChatInviteLinkResponse =
 -- 
 data PostEditChatInviteLinkResponseBody200 = PostEditChatInviteLinkResponseBody200 {
   -- | ok
-  postEditChatInviteLinkResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: Represents an invite link for a chat.
-  , postEditChatInviteLinkResponseBody200Result :: ChatInviteLink
+  , result :: ChatInviteLink
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostEditChatInviteLinkResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postEditChatInviteLinkResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostEditChatInviteLinkResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostEditChatInviteLinkResponseBody200" (\obj -> (GHC.Base.pure PostEditChatInviteLinkResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostEditChatInviteLinkResponseBody200' with all required fields.
-mkPostEditChatInviteLinkResponseBody200 :: GHC.Types.Bool -- ^ 'postEditChatInviteLinkResponseBody200Ok'
-  -> ChatInviteLink -- ^ 'postEditChatInviteLinkResponseBody200Result'
+mkPostEditChatInviteLinkResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> ChatInviteLink -- ^ 'result'
   -> PostEditChatInviteLinkResponseBody200
-mkPostEditChatInviteLinkResponseBody200 postEditChatInviteLinkResponseBody200Ok postEditChatInviteLinkResponseBody200Result = PostEditChatInviteLinkResponseBody200{postEditChatInviteLinkResponseBody200Ok = postEditChatInviteLinkResponseBody200Ok,
-                                                                                                                                                                    postEditChatInviteLinkResponseBody200Result = postEditChatInviteLinkResponseBody200Result}
+mkPostEditChatInviteLinkResponseBody200 ok result = PostEditChatInviteLinkResponseBody200{ok = ok,
+                                                                                          result = result}
 -- | > POST /editChatInviteLink
 -- 
 -- The same as 'postEditChatInviteLink' but accepts an explicit configuration.
@@ -130,9 +130,9 @@ postEditChatInviteLinkWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP 
   -> PostEditChatInviteLinkRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostEditChatInviteLinkResponse) -- ^ Monadic computation which returns the result of the operation
 postEditChatInviteLinkWithConfiguration config
-                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostEditChatInviteLinkResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostEditChatInviteLinkResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                       PostEditChatInviteLinkResponseBody200)
-                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditChatInviteLinkResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/editChatInviteLink") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /editChatInviteLink

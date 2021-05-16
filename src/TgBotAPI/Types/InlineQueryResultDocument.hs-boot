@@ -6,8 +6,8 @@ instance Show InlineQueryResultDocument
 instance Eq InlineQueryResultDocument
 instance FromJSON InlineQueryResultDocument
 instance ToJSON InlineQueryResultDocument
-data InlineQueryResultDocumentMimeType
-instance Show InlineQueryResultDocumentMimeType
-instance Eq InlineQueryResultDocumentMimeType
-instance FromJSON InlineQueryResultDocumentMimeType
-instance ToJSON InlineQueryResultDocumentMimeType
+data MimeType
+instance Show MimeType
+instance Eq MimeType
+instance FromJSON MimeType
+instance ToJSON MimeType

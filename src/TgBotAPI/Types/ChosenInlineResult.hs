@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ChosenInlineResult
 module TgBotAPI.Types.ChosenInlineResult where
@@ -24,44 +25,43 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.Location
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.Location (Location)
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.ChosenInlineResult@ in the specification.
 -- 
 -- Represents a [result](https:\/\/core.telegram.org\/bots\/api\/\#inlinequeryresult) of an inline query that was chosen by the user and sent to their chat partner.
 data ChosenInlineResult = ChosenInlineResult {
   -- | from: This object represents a Telegram user or bot.
-  chosenInlineResultFrom :: User
+  from :: User
   -- | inline_message_id: *Optional*. Identifier of the sent inline message. Available only if there is an [inline keyboard](https:\/\/core.telegram.org\/bots\/api\/\#inlinekeyboardmarkup) attached to the message. Will be also received in [callback queries](https:\/\/core.telegram.org\/bots\/api\/\#callbackquery) and can be used to [edit](https:\/\/core.telegram.org\/bots\/api\/\#updating-messages) the message.
-  , chosenInlineResultInlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , inlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | location: This object represents a point on the map.
-  , chosenInlineResultLocation :: (GHC.Maybe.Maybe Location)
+  , location :: (GHC.Maybe.Maybe Location)
   -- | query: The query that was used to obtain the result
-  , chosenInlineResultQuery :: Data.Text.Internal.Text
+  , query :: Data.Text.Internal.Text
   -- | result_id: The unique identifier for the result that was chosen
-  , chosenInlineResultResultId :: Data.Text.Internal.Text
+  , resultId :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChosenInlineResult
-    where toJSON obj = Data.Aeson.Types.Internal.object ("from" Data.Aeson.Types.ToJSON..= chosenInlineResultFrom obj : "inline_message_id" Data.Aeson.Types.ToJSON..= chosenInlineResultInlineMessageId obj : "location" Data.Aeson.Types.ToJSON..= chosenInlineResultLocation obj : "query" Data.Aeson.Types.ToJSON..= chosenInlineResultQuery obj : "result_id" Data.Aeson.Types.ToJSON..= chosenInlineResultResultId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("from" Data.Aeson.Types.ToJSON..= chosenInlineResultFrom obj) GHC.Base.<> (("inline_message_id" Data.Aeson.Types.ToJSON..= chosenInlineResultInlineMessageId obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= chosenInlineResultLocation obj) GHC.Base.<> (("query" Data.Aeson.Types.ToJSON..= chosenInlineResultQuery obj) GHC.Base.<> ("result_id" Data.Aeson.Types.ToJSON..= chosenInlineResultResultId obj)))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("from" Data.Aeson.Types.ToJSON..= from obj : "inline_message_id" Data.Aeson.Types.ToJSON..= inlineMessageId obj : "location" Data.Aeson.Types.ToJSON..= location obj : "query" Data.Aeson.Types.ToJSON..= query obj : "result_id" Data.Aeson.Types.ToJSON..= resultId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("from" Data.Aeson.Types.ToJSON..= from obj) GHC.Base.<> (("inline_message_id" Data.Aeson.Types.ToJSON..= inlineMessageId obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= location obj) GHC.Base.<> (("query" Data.Aeson.Types.ToJSON..= query obj) GHC.Base.<> ("result_id" Data.Aeson.Types.ToJSON..= resultId obj)))))
 instance Data.Aeson.Types.FromJSON.FromJSON ChosenInlineResult
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChosenInlineResult" (\obj -> ((((GHC.Base.pure ChosenInlineResult GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result_id"))
 -- | Create a new 'ChosenInlineResult' with all required fields.
-mkChosenInlineResult :: User -- ^ 'chosenInlineResultFrom'
-  -> Data.Text.Internal.Text -- ^ 'chosenInlineResultQuery'
-  -> Data.Text.Internal.Text -- ^ 'chosenInlineResultResultId'
+mkChosenInlineResult :: User -- ^ 'from'
+  -> Data.Text.Internal.Text -- ^ 'query'
+  -> Data.Text.Internal.Text -- ^ 'resultId'
   -> ChosenInlineResult
-mkChosenInlineResult chosenInlineResultFrom chosenInlineResultQuery chosenInlineResultResultId = ChosenInlineResult{chosenInlineResultFrom = chosenInlineResultFrom,
-                                                                                                                    chosenInlineResultInlineMessageId = GHC.Maybe.Nothing,
-                                                                                                                    chosenInlineResultLocation = GHC.Maybe.Nothing,
-                                                                                                                    chosenInlineResultQuery = chosenInlineResultQuery,
-                                                                                                                    chosenInlineResultResultId = chosenInlineResultResultId}
+mkChosenInlineResult from query resultId = ChosenInlineResult{from = from,
+                                                              inlineMessageId = GHC.Maybe.Nothing,
+                                                              location = GHC.Maybe.Nothing,
+                                                              query = query,
+                                                              resultId = resultId}

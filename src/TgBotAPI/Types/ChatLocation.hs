@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ChatLocation
 module TgBotAPI.Types.ChatLocation where
@@ -24,33 +25,32 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.Location
+import  {-# SOURCE #-}  TgBotAPI.Types.Location (Location)
 
 -- | Defines the object schema located at @components.schemas.ChatLocation@ in the specification.
 -- 
 -- Represents a location to which a chat is connected.
 data ChatLocation = ChatLocation {
   -- | address: Location address; 1-64 characters, as defined by the chat owner
-  chatLocationAddress :: Data.Text.Internal.Text
+  address :: Data.Text.Internal.Text
   -- | location: This object represents a point on the map.
-  , chatLocationLocation :: Location
+  , location :: Location
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatLocation
-    where toJSON obj = Data.Aeson.Types.Internal.object ("address" Data.Aeson.Types.ToJSON..= chatLocationAddress obj : "location" Data.Aeson.Types.ToJSON..= chatLocationLocation obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("address" Data.Aeson.Types.ToJSON..= chatLocationAddress obj) GHC.Base.<> ("location" Data.Aeson.Types.ToJSON..= chatLocationLocation obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("address" Data.Aeson.Types.ToJSON..= address obj : "location" Data.Aeson.Types.ToJSON..= location obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("address" Data.Aeson.Types.ToJSON..= address obj) GHC.Base.<> ("location" Data.Aeson.Types.ToJSON..= location obj))
 instance Data.Aeson.Types.FromJSON.FromJSON ChatLocation
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChatLocation" (\obj -> (GHC.Base.pure ChatLocation GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "address")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "location"))
 -- | Create a new 'ChatLocation' with all required fields.
-mkChatLocation :: Data.Text.Internal.Text -- ^ 'chatLocationAddress'
-  -> Location -- ^ 'chatLocationLocation'
+mkChatLocation :: Data.Text.Internal.Text -- ^ 'address'
+  -> Location -- ^ 'location'
   -> ChatLocation
-mkChatLocation chatLocationAddress chatLocationLocation = ChatLocation{chatLocationAddress = chatLocationAddress,
-                                                                       chatLocationLocation = chatLocationLocation}
+mkChatLocation address location = ChatLocation{address = address,
+                                               location = location}

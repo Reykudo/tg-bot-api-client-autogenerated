@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PassportData
 module TgBotAPI.Types.PassportData where
@@ -24,34 +25,33 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.EncryptedCredentials
-import {-# SOURCE #-} TgBotAPI.Types.EncryptedPassportElement
+import  {-# SOURCE #-}  TgBotAPI.Types.EncryptedCredentials (EncryptedCredentials)
+import  {-# SOURCE #-}  TgBotAPI.Types.EncryptedPassportElement (EncryptedPassportElement)
 
 -- | Defines the object schema located at @components.schemas.PassportData@ in the specification.
 -- 
 -- Contains information about Telegram Passport data shared with the bot by the user.
 data PassportData = PassportData {
   -- | credentials: Contains data required for decrypting and authenticating [EncryptedPassportElement](https:\/\/core.telegram.org\/bots\/api\/\#encryptedpassportelement). See the [Telegram Passport Documentation](https:\/\/core.telegram.org\/passport\#receiving-information) for a complete description of the data decryption and authentication processes.
-  passportDataCredentials :: EncryptedCredentials
+  credentials :: EncryptedCredentials
   -- | data: Array with information about documents and other Telegram Passport elements that was shared with the bot
-  , passportDataData :: ([EncryptedPassportElement])
+  , data' :: ([EncryptedPassportElement])
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PassportData
-    where toJSON obj = Data.Aeson.Types.Internal.object ("credentials" Data.Aeson.Types.ToJSON..= passportDataCredentials obj : "data" Data.Aeson.Types.ToJSON..= passportDataData obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("credentials" Data.Aeson.Types.ToJSON..= passportDataCredentials obj) GHC.Base.<> ("data" Data.Aeson.Types.ToJSON..= passportDataData obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("credentials" Data.Aeson.Types.ToJSON..= credentials obj : "data" Data.Aeson.Types.ToJSON..= data' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("credentials" Data.Aeson.Types.ToJSON..= credentials obj) GHC.Base.<> ("data" Data.Aeson.Types.ToJSON..= data' obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PassportData
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PassportData" (\obj -> (GHC.Base.pure PassportData GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "credentials")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "data"))
 -- | Create a new 'PassportData' with all required fields.
-mkPassportData :: EncryptedCredentials -- ^ 'passportDataCredentials'
-  -> [EncryptedPassportElement] -- ^ 'passportDataData'
+mkPassportData :: EncryptedCredentials -- ^ 'credentials'
+  -> [EncryptedPassportElement] -- ^ 'data''
   -> PassportData
-mkPassportData passportDataCredentials passportDataData = PassportData{passportDataCredentials = passportDataCredentials,
-                                                                       passportDataData = passportDataData}
+mkPassportData credentials data' = PassportData{credentials = credentials,
+                                                data' = data'}

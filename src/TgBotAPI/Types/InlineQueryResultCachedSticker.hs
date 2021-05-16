@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultCachedSticker
 module TgBotAPI.Types.InlineQueryResultCachedSticker where
@@ -24,44 +25,43 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
-import {-# SOURCE #-} TgBotAPI.Types.InputMessageContent
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
+import  {-# SOURCE #-}  TgBotAPI.Types.InputMessageContent (InputMessageContent)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultCachedSticker@ in the specification.
 -- 
 -- Represents a link to a sticker stored on the Telegram servers. By default, this sticker will be sent by the user. Alternatively, you can use *input\\_message\\_content* to send a message with the specified content instead of the sticker.
 data InlineQueryResultCachedSticker = InlineQueryResultCachedSticker {
   -- | id: Unique identifier for this result, 1-64 bytes
-  inlineQueryResultCachedStickerId :: Data.Text.Internal.Text
+  id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
-  , inlineQueryResultCachedStickerInputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
+  , inputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultCachedStickerReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | sticker_file_id: A valid file identifier of the sticker
-  , inlineQueryResultCachedStickerStickerFileId :: Data.Text.Internal.Text
+  , stickerFileId :: Data.Text.Internal.Text
   -- | type: Type of the result, must be *sticker*
-  , inlineQueryResultCachedStickerType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultCachedSticker
-    where toJSON obj = Data.Aeson.Types.Internal.object ("id" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerId obj : "input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerInputMessageContent obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerReplyMarkup obj : "sticker_file_id" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerStickerFileId obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerId obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerInputMessageContent obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerReplyMarkup obj) GHC.Base.<> (("sticker_file_id" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerStickerFileId obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= inlineQueryResultCachedStickerType obj)))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("id" Data.Aeson.Types.ToJSON..= id obj : "input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "sticker_file_id" Data.Aeson.Types.ToJSON..= stickerFileId obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("sticker_file_id" Data.Aeson.Types.ToJSON..= stickerFileId obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj)))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultCachedSticker
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultCachedSticker" (\obj -> ((((GHC.Base.pure InlineQueryResultCachedSticker GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "input_message_content")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "sticker_file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'InlineQueryResultCachedSticker' with all required fields.
-mkInlineQueryResultCachedSticker :: Data.Text.Internal.Text -- ^ 'inlineQueryResultCachedStickerId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultCachedStickerStickerFileId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultCachedStickerType'
+mkInlineQueryResultCachedSticker :: Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'stickerFileId'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> InlineQueryResultCachedSticker
-mkInlineQueryResultCachedSticker inlineQueryResultCachedStickerId inlineQueryResultCachedStickerStickerFileId inlineQueryResultCachedStickerType = InlineQueryResultCachedSticker{inlineQueryResultCachedStickerId = inlineQueryResultCachedStickerId,
-                                                                                                                                                                                  inlineQueryResultCachedStickerInputMessageContent = GHC.Maybe.Nothing,
-                                                                                                                                                                                  inlineQueryResultCachedStickerReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                                                  inlineQueryResultCachedStickerStickerFileId = inlineQueryResultCachedStickerStickerFileId,
-                                                                                                                                                                                  inlineQueryResultCachedStickerType = inlineQueryResultCachedStickerType}
+mkInlineQueryResultCachedSticker id stickerFileId type' = InlineQueryResultCachedSticker{id = id,
+                                                                                         inputMessageContent = GHC.Maybe.Nothing,
+                                                                                         replyMarkup = GHC.Maybe.Nothing,
+                                                                                         stickerFileId = stickerFileId,
+                                                                                         type' = type'}

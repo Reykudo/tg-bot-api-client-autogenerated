@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetChatStickerSet
 module TgBotAPI.Operations.PostSetChatStickerSet where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat for this to work and must have the appropriate admin rights. Use the field *can\\_set\\_sticker\\_set* optionally returned in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat) requests to check if the bot can use this method. Returns *True* on success.
 postSetChatStickerSet :: forall m . TgBotAPI.Common.MonadHTTP m => PostSetChatStickerSetRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetChatStickerSetResponse) -- ^ Monadic computation which returns the result of the operation
-postSetChatStickerSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetChatStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetChatStickerSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetChatStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                   PostSetChatStickerSetResponseBody200)
-                                                                                                                                                                             | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                             | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                     Error)
                                                                                                                                                                              | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setChatStickerSet") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/setChatStickerSet.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,41 +58,41 @@ postSetChatStickerSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.E
 -- 
 data PostSetChatStickerSetRequestBody = PostSetChatStickerSetRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-  postSetChatStickerSetRequestBodyChatId :: PostSetChatStickerSetRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | sticker_set_name: Name of the sticker set to be set as the group sticker set
-  , postSetChatStickerSetRequestBodyStickerSetName :: Data.Text.Internal.Text
+  , stickerSetName :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatStickerSetRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postSetChatStickerSetRequestBodyChatId obj : "sticker_set_name" Data.Aeson.Types.ToJSON..= postSetChatStickerSetRequestBodyStickerSetName obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postSetChatStickerSetRequestBodyChatId obj) GHC.Base.<> ("sticker_set_name" Data.Aeson.Types.ToJSON..= postSetChatStickerSetRequestBodyStickerSetName obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "sticker_set_name" Data.Aeson.Types.ToJSON..= stickerSetName obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> ("sticker_set_name" Data.Aeson.Types.ToJSON..= stickerSetName obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatStickerSetRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetChatStickerSetRequestBody" (\obj -> (GHC.Base.pure PostSetChatStickerSetRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "sticker_set_name"))
 -- | Create a new 'PostSetChatStickerSetRequestBody' with all required fields.
-mkPostSetChatStickerSetRequestBody :: PostSetChatStickerSetRequestBodyChatIdVariants -- ^ 'postSetChatStickerSetRequestBodyChatId'
-  -> Data.Text.Internal.Text -- ^ 'postSetChatStickerSetRequestBodyStickerSetName'
+mkPostSetChatStickerSetRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> Data.Text.Internal.Text -- ^ 'stickerSetName'
   -> PostSetChatStickerSetRequestBody
-mkPostSetChatStickerSetRequestBody postSetChatStickerSetRequestBodyChatId postSetChatStickerSetRequestBodyStickerSetName = PostSetChatStickerSetRequestBody{postSetChatStickerSetRequestBodyChatId = postSetChatStickerSetRequestBodyChatId,
-                                                                                                                                                            postSetChatStickerSetRequestBodyStickerSetName = postSetChatStickerSetRequestBodyStickerSetName}
+mkPostSetChatStickerSetRequestBody chatId stickerSetName = PostSetChatStickerSetRequestBody{chatId = chatId,
+                                                                                            stickerSetName = stickerSetName}
 -- | Defines the oneOf schema located at @paths.\/setChatStickerSet.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-data PostSetChatStickerSetRequestBodyChatIdVariants =
-   PostSetChatStickerSetRequestBodyChatIdInt GHC.Types.Int
-  | PostSetChatStickerSetRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatStickerSetRequestBodyChatIdVariants
-    where toJSON (PostSetChatStickerSetRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostSetChatStickerSetRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatStickerSetRequestBodyChatIdVariants
-    where parseJSON val = case (PostSetChatStickerSetRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostSetChatStickerSetRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postSetChatStickerSet'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetChatStickerSetResponseError' is used.
 data PostSetChatStickerSetResponse =
-   PostSetChatStickerSetResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetChatStickerSetResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetChatStickerSetResponse200 PostSetChatStickerSetResponseBody200 -- ^ 
   | PostSetChatStickerSetResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -101,22 +101,22 @@ data PostSetChatStickerSetResponse =
 -- 
 data PostSetChatStickerSetResponseBody200 = PostSetChatStickerSetResponseBody200 {
   -- | ok
-  postSetChatStickerSetResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetChatStickerSetResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatStickerSetResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetChatStickerSetResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetChatStickerSetResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetChatStickerSetResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetChatStickerSetResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatStickerSetResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetChatStickerSetResponseBody200" (\obj -> (GHC.Base.pure PostSetChatStickerSetResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetChatStickerSetResponseBody200' with all required fields.
-mkPostSetChatStickerSetResponseBody200 :: GHC.Types.Bool -- ^ 'postSetChatStickerSetResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetChatStickerSetResponseBody200Result'
+mkPostSetChatStickerSetResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetChatStickerSetResponseBody200
-mkPostSetChatStickerSetResponseBody200 postSetChatStickerSetResponseBody200Ok postSetChatStickerSetResponseBody200Result = PostSetChatStickerSetResponseBody200{postSetChatStickerSetResponseBody200Ok = postSetChatStickerSetResponseBody200Ok,
-                                                                                                                                                                postSetChatStickerSetResponseBody200Result = postSetChatStickerSetResponseBody200Result}
+mkPostSetChatStickerSetResponseBody200 ok result = PostSetChatStickerSetResponseBody200{ok = ok,
+                                                                                        result = result}
 -- | > POST /setChatStickerSet
 -- 
 -- The same as 'postSetChatStickerSet' but accepts an explicit configuration.
@@ -124,9 +124,9 @@ postSetChatStickerSetWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m
   -> PostSetChatStickerSetRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSetChatStickerSetResponse) -- ^ Monadic computation which returns the result of the operation
 postSetChatStickerSetWithConfiguration config
-                                       body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetChatStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                       body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetChatStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                    PostSetChatStickerSetResponseBody200)
-                                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatStickerSetResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                      Error)
                                                                                                                                                                                               | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setChatStickerSet") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /setChatStickerSet

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema File
 module TgBotAPI.Types.File where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -39,25 +39,25 @@ import TgBotAPI.TypeAlias
 -- Maximum file size to download is 20 MB
 data File = File {
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
-  fileFileId :: Data.Text.Internal.Text
+  fileId :: Data.Text.Internal.Text
   -- | file_path: *Optional*. File path. Use \`https:\/\/api.telegram.org\/file\/bot\<token>\/\<file_path>\` to get the file.
-  , fileFilePath :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , filePath :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | file_size: *Optional*. File size, if known
-  , fileFileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , fileFileUniqueId :: Data.Text.Internal.Text
+  , fileUniqueId :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON File
-    where toJSON obj = Data.Aeson.Types.Internal.object ("file_id" Data.Aeson.Types.ToJSON..= fileFileId obj : "file_path" Data.Aeson.Types.ToJSON..= fileFilePath obj : "file_size" Data.Aeson.Types.ToJSON..= fileFileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileFileUniqueId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_id" Data.Aeson.Types.ToJSON..= fileFileId obj) GHC.Base.<> (("file_path" Data.Aeson.Types.ToJSON..= fileFilePath obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileFileSize obj) GHC.Base.<> ("file_unique_id" Data.Aeson.Types.ToJSON..= fileFileUniqueId obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("file_id" Data.Aeson.Types.ToJSON..= fileId obj : "file_path" Data.Aeson.Types.ToJSON..= filePath obj : "file_size" Data.Aeson.Types.ToJSON..= fileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_id" Data.Aeson.Types.ToJSON..= fileId obj) GHC.Base.<> (("file_path" Data.Aeson.Types.ToJSON..= filePath obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileSize obj) GHC.Base.<> ("file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON File
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "File" (\obj -> (((GHC.Base.pure File GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_path")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id"))
 -- | Create a new 'File' with all required fields.
-mkFile :: Data.Text.Internal.Text -- ^ 'fileFileId'
-  -> Data.Text.Internal.Text -- ^ 'fileFileUniqueId'
+mkFile :: Data.Text.Internal.Text -- ^ 'fileId'
+  -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
   -> File
-mkFile fileFileId fileFileUniqueId = File{fileFileId = fileFileId,
-                                          fileFilePath = GHC.Maybe.Nothing,
-                                          fileFileSize = GHC.Maybe.Nothing,
-                                          fileFileUniqueId = fileFileUniqueId}
+mkFile fileId fileUniqueId = File{fileId = fileId,
+                                  filePath = GHC.Maybe.Nothing,
+                                  fileSize = GHC.Maybe.Nothing,
+                                  fileUniqueId = fileUniqueId}

@@ -6,8 +6,8 @@ instance Show PassportElementErrorTranslationFile
 instance Eq PassportElementErrorTranslationFile
 instance FromJSON PassportElementErrorTranslationFile
 instance ToJSON PassportElementErrorTranslationFile
-data PassportElementErrorTranslationFileType
-instance Show PassportElementErrorTranslationFileType
-instance Eq PassportElementErrorTranslationFileType
-instance FromJSON PassportElementErrorTranslationFileType
-instance ToJSON PassportElementErrorTranslationFileType
+data Type
+instance Show Type
+instance Eq Type
+instance FromJSON Type
+instance ToJSON Type

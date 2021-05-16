@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postDeleteMessage
 module TgBotAPI.Operations.PostDeleteMessage where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -56,9 +56,9 @@ import TgBotAPI.Types
 -- Returns *True* on success.
 postDeleteMessage :: forall m . TgBotAPI.Common.MonadHTTP m => PostDeleteMessageRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostDeleteMessageResponse) -- ^ Monadic computation which returns the result of the operation
-postDeleteMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostDeleteMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postDeleteMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostDeleteMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                       PostDeleteMessageResponseBody200)
-                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                      | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/deleteMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/deleteMessage.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -66,41 +66,41 @@ postDeleteMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Eithe
 -- 
 data PostDeleteMessageRequestBody = PostDeleteMessageRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  postDeleteMessageRequestBodyChatId :: PostDeleteMessageRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | message_id: Identifier of the message to delete
-  , postDeleteMessageRequestBodyMessageId :: GHC.Types.Int
+  , messageId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostDeleteMessageRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postDeleteMessageRequestBodyChatId obj : "message_id" Data.Aeson.Types.ToJSON..= postDeleteMessageRequestBodyMessageId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postDeleteMessageRequestBodyChatId obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= postDeleteMessageRequestBodyMessageId obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= messageId obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostDeleteMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostDeleteMessageRequestBody" (\obj -> (GHC.Base.pure PostDeleteMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'PostDeleteMessageRequestBody' with all required fields.
-mkPostDeleteMessageRequestBody :: PostDeleteMessageRequestBodyChatIdVariants -- ^ 'postDeleteMessageRequestBodyChatId'
-  -> GHC.Types.Int -- ^ 'postDeleteMessageRequestBodyMessageId'
+mkPostDeleteMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> GHC.Types.Int -- ^ 'messageId'
   -> PostDeleteMessageRequestBody
-mkPostDeleteMessageRequestBody postDeleteMessageRequestBodyChatId postDeleteMessageRequestBodyMessageId = PostDeleteMessageRequestBody{postDeleteMessageRequestBodyChatId = postDeleteMessageRequestBodyChatId,
-                                                                                                                                       postDeleteMessageRequestBodyMessageId = postDeleteMessageRequestBodyMessageId}
+mkPostDeleteMessageRequestBody chatId messageId = PostDeleteMessageRequestBody{chatId = chatId,
+                                                                               messageId = messageId}
 -- | Defines the oneOf schema located at @paths.\/deleteMessage.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostDeleteMessageRequestBodyChatIdVariants =
-   PostDeleteMessageRequestBodyChatIdInt GHC.Types.Int
-  | PostDeleteMessageRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostDeleteMessageRequestBodyChatIdVariants
-    where toJSON (PostDeleteMessageRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostDeleteMessageRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostDeleteMessageRequestBodyChatIdVariants
-    where parseJSON val = case (PostDeleteMessageRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostDeleteMessageRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postDeleteMessage'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostDeleteMessageResponseError' is used.
 data PostDeleteMessageResponse =
-   PostDeleteMessageResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostDeleteMessageResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostDeleteMessageResponse200 PostDeleteMessageResponseBody200 -- ^ 
   | PostDeleteMessageResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -109,22 +109,22 @@ data PostDeleteMessageResponse =
 -- 
 data PostDeleteMessageResponseBody200 = PostDeleteMessageResponseBody200 {
   -- | ok
-  postDeleteMessageResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postDeleteMessageResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostDeleteMessageResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postDeleteMessageResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postDeleteMessageResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postDeleteMessageResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postDeleteMessageResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostDeleteMessageResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostDeleteMessageResponseBody200" (\obj -> (GHC.Base.pure PostDeleteMessageResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostDeleteMessageResponseBody200' with all required fields.
-mkPostDeleteMessageResponseBody200 :: GHC.Types.Bool -- ^ 'postDeleteMessageResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postDeleteMessageResponseBody200Result'
+mkPostDeleteMessageResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostDeleteMessageResponseBody200
-mkPostDeleteMessageResponseBody200 postDeleteMessageResponseBody200Ok postDeleteMessageResponseBody200Result = PostDeleteMessageResponseBody200{postDeleteMessageResponseBody200Ok = postDeleteMessageResponseBody200Ok,
-                                                                                                                                                postDeleteMessageResponseBody200Result = postDeleteMessageResponseBody200Result}
+mkPostDeleteMessageResponseBody200 ok result = PostDeleteMessageResponseBody200{ok = ok,
+                                                                                result = result}
 -- | > POST /deleteMessage
 -- 
 -- The same as 'postDeleteMessage' but accepts an explicit configuration.
@@ -132,9 +132,9 @@ postDeleteMessageWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => 
   -> PostDeleteMessageRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostDeleteMessageResponse) -- ^ Monadic computation which returns the result of the operation
 postDeleteMessageWithConfiguration config
-                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostDeleteMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostDeleteMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                        PostDeleteMessageResponseBody200)
-                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/deleteMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /deleteMessage

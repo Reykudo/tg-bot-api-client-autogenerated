@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSendInvoice
 module TgBotAPI.Operations.PostSendInvoice where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to send invoices. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postSendInvoice :: forall m . TgBotAPI.Common.MonadHTTP m => PostSendInvoiceRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSendInvoiceResponse) -- ^ Monadic computation which returns the result of the operation
-postSendInvoice body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendInvoiceResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendInvoice body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendInvoiceResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                 PostSendInvoiceResponseBody200)
-                                                                                                                                                                 | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                 | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                   Error)
                                                                                                                                                                  | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendInvoice") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/sendInvoice.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,118 +58,118 @@ postSendInvoice body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.
 -- 
 data PostSendInvoiceRequestBody = PostSendInvoiceRequestBody {
   -- | allow_sending_without_reply: Pass *True*, if the message should be sent even if the specified replied-to message is not found
-  postSendInvoiceRequestBodyAllowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  allowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  , postSendInvoiceRequestBodyChatId :: PostSendInvoiceRequestBodyChatIdVariants
+  , chatId :: ChatIdVariants
   -- | currency: Three-letter ISO 4217 currency code, see [more on currencies](\/bots\/payments\#supported-currencies)
-  , postSendInvoiceRequestBodyCurrency :: Data.Text.Internal.Text
+  , currency :: Data.Text.Internal.Text
   -- | description: Product description, 1-255 characters
-  , postSendInvoiceRequestBodyDescription :: Data.Text.Internal.Text
+  , description :: Data.Text.Internal.Text
   -- | disable_notification: Sends the message [silently](https:\/\/telegram.org\/blog\/channels-2-0\#silent-messages). Users will receive a notification with no sound.
-  , postSendInvoiceRequestBodyDisableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | is_flexible: Pass *True*, if the final price depends on the shipping method
-  , postSendInvoiceRequestBodyIsFlexible :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , isFlexible :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | max_tip_amount: The maximum accepted amount for tips in the *smallest units* of the currency (integer, **not** float\/double). For example, for a maximum tip of \`US\$ 1.45\` pass \`max_tip_amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
-  , postSendInvoiceRequestBodyMaxTipAmount :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , maxTipAmount :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | need_email: Pass *True*, if you require the user\'s email address to complete the order
-  , postSendInvoiceRequestBodyNeedEmail :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , needEmail :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | need_name: Pass *True*, if you require the user\'s full name to complete the order
-  , postSendInvoiceRequestBodyNeedName :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , needName :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | need_phone_number: Pass *True*, if you require the user\'s phone number to complete the order
-  , postSendInvoiceRequestBodyNeedPhoneNumber :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , needPhoneNumber :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | need_shipping_address: Pass *True*, if you require the user\'s shipping address to complete the order
-  , postSendInvoiceRequestBodyNeedShippingAddress :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , needShippingAddress :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | payload: Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-  , postSendInvoiceRequestBodyPayload :: Data.Text.Internal.Text
+  , payload :: Data.Text.Internal.Text
   -- | photo_height: Photo height
-  , postSendInvoiceRequestBodyPhotoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | photo_size: Photo size
-  , postSendInvoiceRequestBodyPhotoSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoSize :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | photo_url: URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
-  , postSendInvoiceRequestBodyPhotoUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , photoUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | photo_width: Photo width
-  , postSendInvoiceRequestBodyPhotoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | prices: Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
-  , postSendInvoiceRequestBodyPrices :: ([LabeledPrice])
+  , prices :: ([LabeledPrice])
   -- | provider_data: A JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
-  , postSendInvoiceRequestBodyProviderData :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , providerData :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | provider_token: Payments provider token, obtained via [Botfather](https:\/\/t.me\/botfather)
-  , postSendInvoiceRequestBodyProviderToken :: Data.Text.Internal.Text
+  , providerToken :: Data.Text.Internal.Text
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , postSendInvoiceRequestBodyReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , postSendInvoiceRequestBodyReplyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | send_email_to_provider: Pass *True*, if user\'s email address should be sent to provider
-  , postSendInvoiceRequestBodySendEmailToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , sendEmailToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | send_phone_number_to_provider: Pass *True*, if user\'s phone number should be sent to provider
-  , postSendInvoiceRequestBodySendPhoneNumberToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , sendPhoneNumberToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | start_parameter: Unique deep-linking parameter. If left empty, **forwarded copies** of the sent message will have a *Pay* button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a *URL* button with a deep link to the bot (instead of a *Pay* button), with the value used as the start parameter
-  , postSendInvoiceRequestBodyStartParameter :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , startParameter :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | suggested_tip_amounts: A JSON-serialized array of suggested amounts of tips in the *smallest units* of the currency (integer, **not** float\/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed *max\\_tip\\_amount*.
-  , postSendInvoiceRequestBodySuggestedTipAmounts :: (GHC.Maybe.Maybe ([GHC.Types.Int]))
+  , suggestedTipAmounts :: (GHC.Maybe.Maybe ([GHC.Types.Int]))
   -- | title: Product name, 1-32 characters
-  , postSendInvoiceRequestBodyTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendInvoiceRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyAllowSendingWithoutReply obj : "chat_id" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyChatId obj : "currency" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyCurrency obj : "description" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyDescription obj : "disable_notification" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyDisableNotification obj : "is_flexible" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyIsFlexible obj : "max_tip_amount" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyMaxTipAmount obj : "need_email" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedEmail obj : "need_name" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedName obj : "need_phone_number" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedPhoneNumber obj : "need_shipping_address" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedShippingAddress obj : "payload" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPayload obj : "photo_height" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoHeight obj : "photo_size" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoSize obj : "photo_url" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoUrl obj : "photo_width" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoWidth obj : "prices" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPrices obj : "provider_data" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyProviderData obj : "provider_token" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyProviderToken obj : "reply_markup" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyReplyMarkup obj : "reply_to_message_id" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyReplyToMessageId obj : "send_email_to_provider" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodySendEmailToProvider obj : "send_phone_number_to_provider" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodySendPhoneNumberToProvider obj : "start_parameter" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyStartParameter obj : "suggested_tip_amounts" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodySuggestedTipAmounts obj : "title" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyTitle obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyAllowSendingWithoutReply obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyChatId obj) GHC.Base.<> (("currency" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyCurrency obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyDescription obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyDisableNotification obj) GHC.Base.<> (("is_flexible" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyIsFlexible obj) GHC.Base.<> (("max_tip_amount" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyMaxTipAmount obj) GHC.Base.<> (("need_email" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedEmail obj) GHC.Base.<> (("need_name" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedName obj) GHC.Base.<> (("need_phone_number" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedPhoneNumber obj) GHC.Base.<> (("need_shipping_address" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyNeedShippingAddress obj) GHC.Base.<> (("payload" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPayload obj) GHC.Base.<> (("photo_height" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoHeight obj) GHC.Base.<> (("photo_size" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoSize obj) GHC.Base.<> (("photo_url" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoUrl obj) GHC.Base.<> (("photo_width" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPhotoWidth obj) GHC.Base.<> (("prices" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyPrices obj) GHC.Base.<> (("provider_data" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyProviderData obj) GHC.Base.<> (("provider_token" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyProviderToken obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyReplyMarkup obj) GHC.Base.<> (("reply_to_message_id" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyReplyToMessageId obj) GHC.Base.<> (("send_email_to_provider" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodySendEmailToProvider obj) GHC.Base.<> (("send_phone_number_to_provider" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodySendPhoneNumberToProvider obj) GHC.Base.<> (("start_parameter" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyStartParameter obj) GHC.Base.<> (("suggested_tip_amounts" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodySuggestedTipAmounts obj) GHC.Base.<> ("title" Data.Aeson.Types.ToJSON..= postSendInvoiceRequestBodyTitle obj))))))))))))))))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= allowSendingWithoutReply obj : "chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "currency" Data.Aeson.Types.ToJSON..= currency obj : "description" Data.Aeson.Types.ToJSON..= description obj : "disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj : "is_flexible" Data.Aeson.Types.ToJSON..= isFlexible obj : "max_tip_amount" Data.Aeson.Types.ToJSON..= maxTipAmount obj : "need_email" Data.Aeson.Types.ToJSON..= needEmail obj : "need_name" Data.Aeson.Types.ToJSON..= needName obj : "need_phone_number" Data.Aeson.Types.ToJSON..= needPhoneNumber obj : "need_shipping_address" Data.Aeson.Types.ToJSON..= needShippingAddress obj : "payload" Data.Aeson.Types.ToJSON..= payload obj : "photo_height" Data.Aeson.Types.ToJSON..= photoHeight obj : "photo_size" Data.Aeson.Types.ToJSON..= photoSize obj : "photo_url" Data.Aeson.Types.ToJSON..= photoUrl obj : "photo_width" Data.Aeson.Types.ToJSON..= photoWidth obj : "prices" Data.Aeson.Types.ToJSON..= prices obj : "provider_data" Data.Aeson.Types.ToJSON..= providerData obj : "provider_token" Data.Aeson.Types.ToJSON..= providerToken obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "reply_to_message_id" Data.Aeson.Types.ToJSON..= replyToMessageId obj : "send_email_to_provider" Data.Aeson.Types.ToJSON..= sendEmailToProvider obj : "send_phone_number_to_provider" Data.Aeson.Types.ToJSON..= sendPhoneNumberToProvider obj : "start_parameter" Data.Aeson.Types.ToJSON..= startParameter obj : "suggested_tip_amounts" Data.Aeson.Types.ToJSON..= suggestedTipAmounts obj : "title" Data.Aeson.Types.ToJSON..= title obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allow_sending_without_reply" Data.Aeson.Types.ToJSON..= allowSendingWithoutReply obj) GHC.Base.<> (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("currency" Data.Aeson.Types.ToJSON..= currency obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("disable_notification" Data.Aeson.Types.ToJSON..= disableNotification obj) GHC.Base.<> (("is_flexible" Data.Aeson.Types.ToJSON..= isFlexible obj) GHC.Base.<> (("max_tip_amount" Data.Aeson.Types.ToJSON..= maxTipAmount obj) GHC.Base.<> (("need_email" Data.Aeson.Types.ToJSON..= needEmail obj) GHC.Base.<> (("need_name" Data.Aeson.Types.ToJSON..= needName obj) GHC.Base.<> (("need_phone_number" Data.Aeson.Types.ToJSON..= needPhoneNumber obj) GHC.Base.<> (("need_shipping_address" Data.Aeson.Types.ToJSON..= needShippingAddress obj) GHC.Base.<> (("payload" Data.Aeson.Types.ToJSON..= payload obj) GHC.Base.<> (("photo_height" Data.Aeson.Types.ToJSON..= photoHeight obj) GHC.Base.<> (("photo_size" Data.Aeson.Types.ToJSON..= photoSize obj) GHC.Base.<> (("photo_url" Data.Aeson.Types.ToJSON..= photoUrl obj) GHC.Base.<> (("photo_width" Data.Aeson.Types.ToJSON..= photoWidth obj) GHC.Base.<> (("prices" Data.Aeson.Types.ToJSON..= prices obj) GHC.Base.<> (("provider_data" Data.Aeson.Types.ToJSON..= providerData obj) GHC.Base.<> (("provider_token" Data.Aeson.Types.ToJSON..= providerToken obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("reply_to_message_id" Data.Aeson.Types.ToJSON..= replyToMessageId obj) GHC.Base.<> (("send_email_to_provider" Data.Aeson.Types.ToJSON..= sendEmailToProvider obj) GHC.Base.<> (("send_phone_number_to_provider" Data.Aeson.Types.ToJSON..= sendPhoneNumberToProvider obj) GHC.Base.<> (("start_parameter" Data.Aeson.Types.ToJSON..= startParameter obj) GHC.Base.<> (("suggested_tip_amounts" Data.Aeson.Types.ToJSON..= suggestedTipAmounts obj) GHC.Base.<> ("title" Data.Aeson.Types.ToJSON..= title obj))))))))))))))))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendInvoiceRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendInvoiceRequestBody" (\obj -> (((((((((((((((((((((((((GHC.Base.pure PostSendInvoiceRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "allow_sending_without_reply")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "currency")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "is_flexible")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "max_tip_amount")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "need_email")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "need_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "need_phone_number")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "need_shipping_address")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "payload")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo_height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo_width")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "prices")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "provider_data")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "provider_token")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_to_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "send_email_to_provider")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "send_phone_number_to_provider")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "start_parameter")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "suggested_tip_amounts")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title"))
 -- | Create a new 'PostSendInvoiceRequestBody' with all required fields.
-mkPostSendInvoiceRequestBody :: PostSendInvoiceRequestBodyChatIdVariants -- ^ 'postSendInvoiceRequestBodyChatId'
-  -> Data.Text.Internal.Text -- ^ 'postSendInvoiceRequestBodyCurrency'
-  -> Data.Text.Internal.Text -- ^ 'postSendInvoiceRequestBodyDescription'
-  -> Data.Text.Internal.Text -- ^ 'postSendInvoiceRequestBodyPayload'
-  -> [LabeledPrice] -- ^ 'postSendInvoiceRequestBodyPrices'
-  -> Data.Text.Internal.Text -- ^ 'postSendInvoiceRequestBodyProviderToken'
-  -> Data.Text.Internal.Text -- ^ 'postSendInvoiceRequestBodyTitle'
+mkPostSendInvoiceRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> Data.Text.Internal.Text -- ^ 'currency'
+  -> Data.Text.Internal.Text -- ^ 'description'
+  -> Data.Text.Internal.Text -- ^ 'payload'
+  -> [LabeledPrice] -- ^ 'prices'
+  -> Data.Text.Internal.Text -- ^ 'providerToken'
+  -> Data.Text.Internal.Text -- ^ 'title'
   -> PostSendInvoiceRequestBody
-mkPostSendInvoiceRequestBody postSendInvoiceRequestBodyChatId postSendInvoiceRequestBodyCurrency postSendInvoiceRequestBodyDescription postSendInvoiceRequestBodyPayload postSendInvoiceRequestBodyPrices postSendInvoiceRequestBodyProviderToken postSendInvoiceRequestBodyTitle = PostSendInvoiceRequestBody{postSendInvoiceRequestBodyAllowSendingWithoutReply = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyChatId = postSendInvoiceRequestBodyChatId,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyCurrency = postSendInvoiceRequestBodyCurrency,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyDescription = postSendInvoiceRequestBodyDescription,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyDisableNotification = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyIsFlexible = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyMaxTipAmount = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyNeedEmail = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyNeedName = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyNeedPhoneNumber = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyNeedShippingAddress = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyPayload = postSendInvoiceRequestBodyPayload,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyPhotoHeight = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyPhotoSize = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyPhotoUrl = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyPhotoWidth = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyPrices = postSendInvoiceRequestBodyPrices,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyProviderData = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyProviderToken = postSendInvoiceRequestBodyProviderToken,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyReplyToMessageId = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodySendEmailToProvider = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodySendPhoneNumberToProvider = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyStartParameter = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodySuggestedTipAmounts = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                                                                                                               postSendInvoiceRequestBodyTitle = postSendInvoiceRequestBodyTitle}
+mkPostSendInvoiceRequestBody chatId currency description payload prices providerToken title = PostSendInvoiceRequestBody{allowSendingWithoutReply = GHC.Maybe.Nothing,
+                                                                                                                         chatId = chatId,
+                                                                                                                         currency = currency,
+                                                                                                                         description = description,
+                                                                                                                         disableNotification = GHC.Maybe.Nothing,
+                                                                                                                         isFlexible = GHC.Maybe.Nothing,
+                                                                                                                         maxTipAmount = GHC.Maybe.Nothing,
+                                                                                                                         needEmail = GHC.Maybe.Nothing,
+                                                                                                                         needName = GHC.Maybe.Nothing,
+                                                                                                                         needPhoneNumber = GHC.Maybe.Nothing,
+                                                                                                                         needShippingAddress = GHC.Maybe.Nothing,
+                                                                                                                         payload = payload,
+                                                                                                                         photoHeight = GHC.Maybe.Nothing,
+                                                                                                                         photoSize = GHC.Maybe.Nothing,
+                                                                                                                         photoUrl = GHC.Maybe.Nothing,
+                                                                                                                         photoWidth = GHC.Maybe.Nothing,
+                                                                                                                         prices = prices,
+                                                                                                                         providerData = GHC.Maybe.Nothing,
+                                                                                                                         providerToken = providerToken,
+                                                                                                                         replyMarkup = GHC.Maybe.Nothing,
+                                                                                                                         replyToMessageId = GHC.Maybe.Nothing,
+                                                                                                                         sendEmailToProvider = GHC.Maybe.Nothing,
+                                                                                                                         sendPhoneNumberToProvider = GHC.Maybe.Nothing,
+                                                                                                                         startParameter = GHC.Maybe.Nothing,
+                                                                                                                         suggestedTipAmounts = GHC.Maybe.Nothing,
+                                                                                                                         title = title}
 -- | Defines the oneOf schema located at @paths.\/sendInvoice.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostSendInvoiceRequestBodyChatIdVariants =
-   PostSendInvoiceRequestBodyChatIdInt GHC.Types.Int
-  | PostSendInvoiceRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSendInvoiceRequestBodyChatIdVariants
-    where toJSON (PostSendInvoiceRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostSendInvoiceRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostSendInvoiceRequestBodyChatIdVariants
-    where parseJSON val = case (PostSendInvoiceRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostSendInvoiceRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postSendInvoice'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendInvoiceResponseError' is used.
 data PostSendInvoiceResponse =
-   PostSendInvoiceResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSendInvoiceResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSendInvoiceResponse200 PostSendInvoiceResponseBody200 -- ^ 
   | PostSendInvoiceResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -178,22 +178,22 @@ data PostSendInvoiceResponse =
 -- 
 data PostSendInvoiceResponseBody200 = PostSendInvoiceResponseBody200 {
   -- | ok
-  postSendInvoiceResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a message.
-  , postSendInvoiceResponseBody200Result :: Message
+  , result :: Message
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendInvoiceResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSendInvoiceResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSendInvoiceResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSendInvoiceResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSendInvoiceResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendInvoiceResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendInvoiceResponseBody200" (\obj -> (GHC.Base.pure PostSendInvoiceResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSendInvoiceResponseBody200' with all required fields.
-mkPostSendInvoiceResponseBody200 :: GHC.Types.Bool -- ^ 'postSendInvoiceResponseBody200Ok'
-  -> Message -- ^ 'postSendInvoiceResponseBody200Result'
+mkPostSendInvoiceResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Message -- ^ 'result'
   -> PostSendInvoiceResponseBody200
-mkPostSendInvoiceResponseBody200 postSendInvoiceResponseBody200Ok postSendInvoiceResponseBody200Result = PostSendInvoiceResponseBody200{postSendInvoiceResponseBody200Ok = postSendInvoiceResponseBody200Ok,
-                                                                                                                                        postSendInvoiceResponseBody200Result = postSendInvoiceResponseBody200Result}
+mkPostSendInvoiceResponseBody200 ok result = PostSendInvoiceResponseBody200{ok = ok,
+                                                                            result = result}
 -- | > POST /sendInvoice
 -- 
 -- The same as 'postSendInvoice' but accepts an explicit configuration.
@@ -201,9 +201,9 @@ postSendInvoiceWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => Tg
   -> PostSendInvoiceRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSendInvoiceResponse) -- ^ Monadic computation which returns the result of the operation
 postSendInvoiceWithConfiguration config
-                                 body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendInvoiceResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                 body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendInvoiceResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                  PostSendInvoiceResponseBody200)
-                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendInvoiceResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                    Error)
                                                                                                                                                                                   | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendInvoice") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /sendInvoice

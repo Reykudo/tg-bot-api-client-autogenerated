@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postDeleteStickerFromSet
 module TgBotAPI.Operations.PostDeleteStickerFromSet where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to delete a sticker from a set created by the bot. Returns *True* on success.
 postDeleteStickerFromSet :: forall m . TgBotAPI.Common.MonadHTTP m => PostDeleteStickerFromSetRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostDeleteStickerFromSetResponse) -- ^ Monadic computation which returns the result of the operation
-postDeleteStickerFromSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostDeleteStickerFromSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postDeleteStickerFromSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostDeleteStickerFromSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                            PostDeleteStickerFromSetResponseBody200)
-                                                                                                                                                                                   | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                   | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                              Error)
                                                                                                                                                                                    | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/deleteStickerFromSet") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/deleteStickerFromSet.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,23 +58,23 @@ postDeleteStickerFromSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Dat
 -- 
 data PostDeleteStickerFromSetRequestBody = PostDeleteStickerFromSetRequestBody {
   -- | sticker: File identifier of the sticker
-  postDeleteStickerFromSetRequestBodySticker :: Data.Text.Internal.Text
+  sticker :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostDeleteStickerFromSetRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("sticker" Data.Aeson.Types.ToJSON..= postDeleteStickerFromSetRequestBodySticker obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("sticker" Data.Aeson.Types.ToJSON..= postDeleteStickerFromSetRequestBodySticker obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("sticker" Data.Aeson.Types.ToJSON..= sticker obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("sticker" Data.Aeson.Types.ToJSON..= sticker obj)
 instance Data.Aeson.Types.FromJSON.FromJSON PostDeleteStickerFromSetRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostDeleteStickerFromSetRequestBody" (\obj -> GHC.Base.pure PostDeleteStickerFromSetRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "sticker"))
 -- | Create a new 'PostDeleteStickerFromSetRequestBody' with all required fields.
-mkPostDeleteStickerFromSetRequestBody :: Data.Text.Internal.Text -- ^ 'postDeleteStickerFromSetRequestBodySticker'
+mkPostDeleteStickerFromSetRequestBody :: Data.Text.Internal.Text -- ^ 'sticker'
   -> PostDeleteStickerFromSetRequestBody
-mkPostDeleteStickerFromSetRequestBody postDeleteStickerFromSetRequestBodySticker = PostDeleteStickerFromSetRequestBody{postDeleteStickerFromSetRequestBodySticker = postDeleteStickerFromSetRequestBodySticker}
+mkPostDeleteStickerFromSetRequestBody sticker = PostDeleteStickerFromSetRequestBody{sticker = sticker}
 -- | Represents a response of the operation 'postDeleteStickerFromSet'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostDeleteStickerFromSetResponseError' is used.
 data PostDeleteStickerFromSetResponse =
-   PostDeleteStickerFromSetResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostDeleteStickerFromSetResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostDeleteStickerFromSetResponse200 PostDeleteStickerFromSetResponseBody200 -- ^ 
   | PostDeleteStickerFromSetResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -83,22 +83,22 @@ data PostDeleteStickerFromSetResponse =
 -- 
 data PostDeleteStickerFromSetResponseBody200 = PostDeleteStickerFromSetResponseBody200 {
   -- | ok
-  postDeleteStickerFromSetResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postDeleteStickerFromSetResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostDeleteStickerFromSetResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postDeleteStickerFromSetResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postDeleteStickerFromSetResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postDeleteStickerFromSetResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postDeleteStickerFromSetResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostDeleteStickerFromSetResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostDeleteStickerFromSetResponseBody200" (\obj -> (GHC.Base.pure PostDeleteStickerFromSetResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostDeleteStickerFromSetResponseBody200' with all required fields.
-mkPostDeleteStickerFromSetResponseBody200 :: GHC.Types.Bool -- ^ 'postDeleteStickerFromSetResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postDeleteStickerFromSetResponseBody200Result'
+mkPostDeleteStickerFromSetResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostDeleteStickerFromSetResponseBody200
-mkPostDeleteStickerFromSetResponseBody200 postDeleteStickerFromSetResponseBody200Ok postDeleteStickerFromSetResponseBody200Result = PostDeleteStickerFromSetResponseBody200{postDeleteStickerFromSetResponseBody200Ok = postDeleteStickerFromSetResponseBody200Ok,
-                                                                                                                                                                            postDeleteStickerFromSetResponseBody200Result = postDeleteStickerFromSetResponseBody200Result}
+mkPostDeleteStickerFromSetResponseBody200 ok result = PostDeleteStickerFromSetResponseBody200{ok = ok,
+                                                                                              result = result}
 -- | > POST /deleteStickerFromSet
 -- 
 -- The same as 'postDeleteStickerFromSet' but accepts an explicit configuration.
@@ -106,9 +106,9 @@ postDeleteStickerFromSetWithConfiguration :: forall m . TgBotAPI.Common.MonadHTT
   -> PostDeleteStickerFromSetRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostDeleteStickerFromSetResponse) -- ^ Monadic computation which returns the result of the operation
 postDeleteStickerFromSetWithConfiguration config
-                                          body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostDeleteStickerFromSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                          body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostDeleteStickerFromSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                             PostDeleteStickerFromSetResponseBody200)
-                                                                                                                                                                                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                    | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostDeleteStickerFromSetResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                               Error)
                                                                                                                                                                                                     | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/deleteStickerFromSet") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /deleteStickerFromSet

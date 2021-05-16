@@ -6,8 +6,8 @@ instance Show PassportElementError
 instance Eq PassportElementError
 instance FromJSON PassportElementError
 instance ToJSON PassportElementError
-data PassportElementErrorType
-instance Show PassportElementErrorType
-instance Eq PassportElementErrorType
-instance FromJSON PassportElementErrorType
-instance ToJSON PassportElementErrorType
+data Type
+instance Show Type
+instance Eq Type
+instance FromJSON Type
+instance ToJSON Type

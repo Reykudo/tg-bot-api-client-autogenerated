@@ -6,8 +6,8 @@ instance Show MaskPosition
 instance Eq MaskPosition
 instance FromJSON MaskPosition
 instance ToJSON MaskPosition
-data MaskPositionPoint
-instance Show MaskPositionPoint
-instance Eq MaskPositionPoint
-instance FromJSON MaskPositionPoint
-instance ToJSON MaskPositionPoint
+data Point
+instance Show Point
+instance Eq Point
+instance FromJSON Point
+instance ToJSON Point

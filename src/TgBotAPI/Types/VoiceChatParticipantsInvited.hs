@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema VoiceChatParticipantsInvited
 module TgBotAPI.Types.VoiceChatParticipantsInvited where
@@ -24,28 +25,27 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.VoiceChatParticipantsInvited@ in the specification.
 -- 
 -- This object represents a service message about new members invited to a voice chat.
 data VoiceChatParticipantsInvited = VoiceChatParticipantsInvited {
   -- | users: *Optional*. New members that were invited to the voice chat
-  voiceChatParticipantsInvitedUsers :: (GHC.Maybe.Maybe ([User]))
+  users :: (GHC.Maybe.Maybe ([User]))
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatParticipantsInvited
-    where toJSON obj = Data.Aeson.Types.Internal.object ("users" Data.Aeson.Types.ToJSON..= voiceChatParticipantsInvitedUsers obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("users" Data.Aeson.Types.ToJSON..= voiceChatParticipantsInvitedUsers obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("users" Data.Aeson.Types.ToJSON..= users obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("users" Data.Aeson.Types.ToJSON..= users obj)
 instance Data.Aeson.Types.FromJSON.FromJSON VoiceChatParticipantsInvited
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VoiceChatParticipantsInvited" (\obj -> GHC.Base.pure VoiceChatParticipantsInvited GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "users"))
 -- | Create a new 'VoiceChatParticipantsInvited' with all required fields.
 mkVoiceChatParticipantsInvited :: VoiceChatParticipantsInvited
-mkVoiceChatParticipantsInvited = VoiceChatParticipantsInvited{voiceChatParticipantsInvitedUsers = GHC.Maybe.Nothing}
+mkVoiceChatParticipantsInvited = VoiceChatParticipantsInvited{users = GHC.Maybe.Nothing}

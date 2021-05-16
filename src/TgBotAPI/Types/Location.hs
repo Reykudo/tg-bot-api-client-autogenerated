@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Location
 module TgBotAPI.Types.Location where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,31 +37,31 @@ import TgBotAPI.TypeAlias
 -- This object represents a point on the map.
 data Location = Location {
   -- | heading: *Optional*. The direction in which user is moving, in degrees; 1-360. For active live locations only.
-  locationHeading :: (GHC.Maybe.Maybe GHC.Types.Int)
+  heading :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | horizontal_accuracy: *Optional*. The radius of uncertainty for the location, measured in meters; 0-1500
-  , locationHorizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
+  , horizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | latitude: Latitude as defined by sender
-  , locationLatitude :: GHC.Types.Double
+  , latitude :: GHC.Types.Double
   -- | live_period: *Optional*. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.
-  , locationLivePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , livePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | longitude: Longitude as defined by sender
-  , locationLongitude :: GHC.Types.Double
+  , longitude :: GHC.Types.Double
   -- | proximity_alert_radius: *Optional*. Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
-  , locationProximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Location
-    where toJSON obj = Data.Aeson.Types.Internal.object ("heading" Data.Aeson.Types.ToJSON..= locationHeading obj : "horizontal_accuracy" Data.Aeson.Types.ToJSON..= locationHorizontalAccuracy obj : "latitude" Data.Aeson.Types.ToJSON..= locationLatitude obj : "live_period" Data.Aeson.Types.ToJSON..= locationLivePeriod obj : "longitude" Data.Aeson.Types.ToJSON..= locationLongitude obj : "proximity_alert_radius" Data.Aeson.Types.ToJSON..= locationProximityAlertRadius obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("heading" Data.Aeson.Types.ToJSON..= locationHeading obj) GHC.Base.<> (("horizontal_accuracy" Data.Aeson.Types.ToJSON..= locationHorizontalAccuracy obj) GHC.Base.<> (("latitude" Data.Aeson.Types.ToJSON..= locationLatitude obj) GHC.Base.<> (("live_period" Data.Aeson.Types.ToJSON..= locationLivePeriod obj) GHC.Base.<> (("longitude" Data.Aeson.Types.ToJSON..= locationLongitude obj) GHC.Base.<> ("proximity_alert_radius" Data.Aeson.Types.ToJSON..= locationProximityAlertRadius obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("heading" Data.Aeson.Types.ToJSON..= heading obj : "horizontal_accuracy" Data.Aeson.Types.ToJSON..= horizontalAccuracy obj : "latitude" Data.Aeson.Types.ToJSON..= latitude obj : "live_period" Data.Aeson.Types.ToJSON..= livePeriod obj : "longitude" Data.Aeson.Types.ToJSON..= longitude obj : "proximity_alert_radius" Data.Aeson.Types.ToJSON..= proximityAlertRadius obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("heading" Data.Aeson.Types.ToJSON..= heading obj) GHC.Base.<> (("horizontal_accuracy" Data.Aeson.Types.ToJSON..= horizontalAccuracy obj) GHC.Base.<> (("latitude" Data.Aeson.Types.ToJSON..= latitude obj) GHC.Base.<> (("live_period" Data.Aeson.Types.ToJSON..= livePeriod obj) GHC.Base.<> (("longitude" Data.Aeson.Types.ToJSON..= longitude obj) GHC.Base.<> ("proximity_alert_radius" Data.Aeson.Types.ToJSON..= proximityAlertRadius obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Location
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Location" (\obj -> (((((GHC.Base.pure Location GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "heading")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "horizontal_accuracy")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "latitude")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "live_period")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "longitude")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "proximity_alert_radius"))
 -- | Create a new 'Location' with all required fields.
-mkLocation :: GHC.Types.Double -- ^ 'locationLatitude'
-  -> GHC.Types.Double -- ^ 'locationLongitude'
+mkLocation :: GHC.Types.Double -- ^ 'latitude'
+  -> GHC.Types.Double -- ^ 'longitude'
   -> Location
-mkLocation locationLatitude locationLongitude = Location{locationHeading = GHC.Maybe.Nothing,
-                                                         locationHorizontalAccuracy = GHC.Maybe.Nothing,
-                                                         locationLatitude = locationLatitude,
-                                                         locationLivePeriod = GHC.Maybe.Nothing,
-                                                         locationLongitude = locationLongitude,
-                                                         locationProximityAlertRadius = GHC.Maybe.Nothing}
+mkLocation latitude longitude = Location{heading = GHC.Maybe.Nothing,
+                                         horizontalAccuracy = GHC.Maybe.Nothing,
+                                         latitude = latitude,
+                                         livePeriod = GHC.Maybe.Nothing,
+                                         longitude = longitude,
+                                         proximityAlertRadius = GHC.Maybe.Nothing}

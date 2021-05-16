@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ChatInviteLink
 module TgBotAPI.Types.ChatInviteLink where
@@ -24,47 +25,46 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.ChatInviteLink@ in the specification.
 -- 
 -- Represents an invite link for a chat.
 data ChatInviteLink = ChatInviteLink {
   -- | creator: This object represents a Telegram user or bot.
-  chatInviteLinkCreator :: User
+  creator :: User
   -- | expire_date: *Optional*. Point in time (Unix timestamp) when the link will expire or has been expired
-  , chatInviteLinkExpireDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , expireDate :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | invite_link: The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
-  , chatInviteLinkInviteLink :: Data.Text.Internal.Text
+  , inviteLink :: Data.Text.Internal.Text
   -- | is_primary: True, if the link is primary
-  , chatInviteLinkIsPrimary :: GHC.Types.Bool
+  , isPrimary :: GHC.Types.Bool
   -- | is_revoked: True, if the link is revoked
-  , chatInviteLinkIsRevoked :: GHC.Types.Bool
+  , isRevoked :: GHC.Types.Bool
   -- | member_limit: *Optional*. Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
-  , chatInviteLinkMemberLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , memberLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatInviteLink
-    where toJSON obj = Data.Aeson.Types.Internal.object ("creator" Data.Aeson.Types.ToJSON..= chatInviteLinkCreator obj : "expire_date" Data.Aeson.Types.ToJSON..= chatInviteLinkExpireDate obj : "invite_link" Data.Aeson.Types.ToJSON..= chatInviteLinkInviteLink obj : "is_primary" Data.Aeson.Types.ToJSON..= chatInviteLinkIsPrimary obj : "is_revoked" Data.Aeson.Types.ToJSON..= chatInviteLinkIsRevoked obj : "member_limit" Data.Aeson.Types.ToJSON..= chatInviteLinkMemberLimit obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("creator" Data.Aeson.Types.ToJSON..= chatInviteLinkCreator obj) GHC.Base.<> (("expire_date" Data.Aeson.Types.ToJSON..= chatInviteLinkExpireDate obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= chatInviteLinkInviteLink obj) GHC.Base.<> (("is_primary" Data.Aeson.Types.ToJSON..= chatInviteLinkIsPrimary obj) GHC.Base.<> (("is_revoked" Data.Aeson.Types.ToJSON..= chatInviteLinkIsRevoked obj) GHC.Base.<> ("member_limit" Data.Aeson.Types.ToJSON..= chatInviteLinkMemberLimit obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("creator" Data.Aeson.Types.ToJSON..= creator obj : "expire_date" Data.Aeson.Types.ToJSON..= expireDate obj : "invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj : "is_primary" Data.Aeson.Types.ToJSON..= isPrimary obj : "is_revoked" Data.Aeson.Types.ToJSON..= isRevoked obj : "member_limit" Data.Aeson.Types.ToJSON..= memberLimit obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("creator" Data.Aeson.Types.ToJSON..= creator obj) GHC.Base.<> (("expire_date" Data.Aeson.Types.ToJSON..= expireDate obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj) GHC.Base.<> (("is_primary" Data.Aeson.Types.ToJSON..= isPrimary obj) GHC.Base.<> (("is_revoked" Data.Aeson.Types.ToJSON..= isRevoked obj) GHC.Base.<> ("member_limit" Data.Aeson.Types.ToJSON..= memberLimit obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON ChatInviteLink
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChatInviteLink" (\obj -> (((((GHC.Base.pure ChatInviteLink GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "creator")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "expire_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "invite_link")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "is_primary")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "is_revoked")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "member_limit"))
 -- | Create a new 'ChatInviteLink' with all required fields.
-mkChatInviteLink :: User -- ^ 'chatInviteLinkCreator'
-  -> Data.Text.Internal.Text -- ^ 'chatInviteLinkInviteLink'
-  -> GHC.Types.Bool -- ^ 'chatInviteLinkIsPrimary'
-  -> GHC.Types.Bool -- ^ 'chatInviteLinkIsRevoked'
+mkChatInviteLink :: User -- ^ 'creator'
+  -> Data.Text.Internal.Text -- ^ 'inviteLink'
+  -> GHC.Types.Bool -- ^ 'isPrimary'
+  -> GHC.Types.Bool -- ^ 'isRevoked'
   -> ChatInviteLink
-mkChatInviteLink chatInviteLinkCreator chatInviteLinkInviteLink chatInviteLinkIsPrimary chatInviteLinkIsRevoked = ChatInviteLink{chatInviteLinkCreator = chatInviteLinkCreator,
-                                                                                                                                 chatInviteLinkExpireDate = GHC.Maybe.Nothing,
-                                                                                                                                 chatInviteLinkInviteLink = chatInviteLinkInviteLink,
-                                                                                                                                 chatInviteLinkIsPrimary = chatInviteLinkIsPrimary,
-                                                                                                                                 chatInviteLinkIsRevoked = chatInviteLinkIsRevoked,
-                                                                                                                                 chatInviteLinkMemberLimit = GHC.Maybe.Nothing}
+mkChatInviteLink creator inviteLink isPrimary isRevoked = ChatInviteLink{creator = creator,
+                                                                         expireDate = GHC.Maybe.Nothing,
+                                                                         inviteLink = inviteLink,
+                                                                         isPrimary = isPrimary,
+                                                                         isRevoked = isRevoked,
+                                                                         memberLimit = GHC.Maybe.Nothing}

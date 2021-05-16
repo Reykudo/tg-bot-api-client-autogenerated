@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema GameHighScore
 module TgBotAPI.Types.GameHighScore where
@@ -24,37 +25,36 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.GameHighScore@ in the specification.
 -- 
 -- This object represents one row of the high scores table for a game.
 data GameHighScore = GameHighScore {
   -- | position: Position in high score table for the game
-  gameHighScorePosition :: GHC.Types.Int
+  position :: GHC.Types.Int
   -- | score: Score
-  , gameHighScoreScore :: GHC.Types.Int
+  , score :: GHC.Types.Int
   -- | user: This object represents a Telegram user or bot.
-  , gameHighScoreUser :: User
+  , user :: User
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON GameHighScore
-    where toJSON obj = Data.Aeson.Types.Internal.object ("position" Data.Aeson.Types.ToJSON..= gameHighScorePosition obj : "score" Data.Aeson.Types.ToJSON..= gameHighScoreScore obj : "user" Data.Aeson.Types.ToJSON..= gameHighScoreUser obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("position" Data.Aeson.Types.ToJSON..= gameHighScorePosition obj) GHC.Base.<> (("score" Data.Aeson.Types.ToJSON..= gameHighScoreScore obj) GHC.Base.<> ("user" Data.Aeson.Types.ToJSON..= gameHighScoreUser obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("position" Data.Aeson.Types.ToJSON..= position obj : "score" Data.Aeson.Types.ToJSON..= score obj : "user" Data.Aeson.Types.ToJSON..= user obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("position" Data.Aeson.Types.ToJSON..= position obj) GHC.Base.<> (("score" Data.Aeson.Types.ToJSON..= score obj) GHC.Base.<> ("user" Data.Aeson.Types.ToJSON..= user obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON GameHighScore
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "GameHighScore" (\obj -> ((GHC.Base.pure GameHighScore GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "position")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "score")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user"))
 -- | Create a new 'GameHighScore' with all required fields.
-mkGameHighScore :: GHC.Types.Int -- ^ 'gameHighScorePosition'
-  -> GHC.Types.Int -- ^ 'gameHighScoreScore'
-  -> User -- ^ 'gameHighScoreUser'
+mkGameHighScore :: GHC.Types.Int -- ^ 'position'
+  -> GHC.Types.Int -- ^ 'score'
+  -> User -- ^ 'user'
   -> GameHighScore
-mkGameHighScore gameHighScorePosition gameHighScoreScore gameHighScoreUser = GameHighScore{gameHighScorePosition = gameHighScorePosition,
-                                                                                           gameHighScoreScore = gameHighScoreScore,
-                                                                                           gameHighScoreUser = gameHighScoreUser}
+mkGameHighScore position score user = GameHighScore{position = position,
+                                                    score = score,
+                                                    user = user}

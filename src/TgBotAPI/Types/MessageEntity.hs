@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema MessageEntity
 module TgBotAPI.Types.MessageEntity where
@@ -24,103 +25,102 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.MessageEntity@ in the specification.
 -- 
 -- This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc.
 data MessageEntity = MessageEntity {
   -- | language: *Optional*. For “pre” only, the programming language of the entity text
-  messageEntityLanguage :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  language :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | length: Length of the entity in UTF-16 code units
-  , messageEntityLength :: GHC.Types.Int
+  , length :: GHC.Types.Int
   -- | offset: Offset in UTF-16 code units to the start of the entity
-  , messageEntityOffset :: GHC.Types.Int
+  , offset :: GHC.Types.Int
   -- | type: Type of the entity. Can be “mention” (\`\@username\`), “hashtag” (\`\#hashtag\`), “cashtag” (\`\$USD\`), “bot\\_command” (\`\/start\@jobs_bot\`), “url” (\`https:\/\/telegram.org\`), “email” (\`do-not-reply\@telegram.org\`), “phone\\_number” (\`+1-212-555-0123\`), “bold” (**bold text**), “italic” (*italic text*), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text\\_link” (for clickable text URLs), “text\\_mention” (for users [without usernames](https:\/\/telegram.org\/blog\/edit\#new-mentions))
-  , messageEntityType :: MessageEntityType
+  , type' :: Type
   -- | url: *Optional*. For “text\\_link” only, url that will be opened after user taps on the text
-  , messageEntityUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , url :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | user: This object represents a Telegram user or bot.
-  , messageEntityUser :: (GHC.Maybe.Maybe User)
+  , user :: (GHC.Maybe.Maybe User)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON MessageEntity
-    where toJSON obj = Data.Aeson.Types.Internal.object ("language" Data.Aeson.Types.ToJSON..= messageEntityLanguage obj : "length" Data.Aeson.Types.ToJSON..= messageEntityLength obj : "offset" Data.Aeson.Types.ToJSON..= messageEntityOffset obj : "type" Data.Aeson.Types.ToJSON..= messageEntityType obj : "url" Data.Aeson.Types.ToJSON..= messageEntityUrl obj : "user" Data.Aeson.Types.ToJSON..= messageEntityUser obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("language" Data.Aeson.Types.ToJSON..= messageEntityLanguage obj) GHC.Base.<> (("length" Data.Aeson.Types.ToJSON..= messageEntityLength obj) GHC.Base.<> (("offset" Data.Aeson.Types.ToJSON..= messageEntityOffset obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= messageEntityType obj) GHC.Base.<> (("url" Data.Aeson.Types.ToJSON..= messageEntityUrl obj) GHC.Base.<> ("user" Data.Aeson.Types.ToJSON..= messageEntityUser obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("language" Data.Aeson.Types.ToJSON..= language obj : "length" Data.Aeson.Types.ToJSON..= length obj : "offset" Data.Aeson.Types.ToJSON..= offset obj : "type" Data.Aeson.Types.ToJSON..= type' obj : "url" Data.Aeson.Types.ToJSON..= url obj : "user" Data.Aeson.Types.ToJSON..= user obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("language" Data.Aeson.Types.ToJSON..= language obj) GHC.Base.<> (("length" Data.Aeson.Types.ToJSON..= length obj) GHC.Base.<> (("offset" Data.Aeson.Types.ToJSON..= offset obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= type' obj) GHC.Base.<> (("url" Data.Aeson.Types.ToJSON..= url obj) GHC.Base.<> ("user" Data.Aeson.Types.ToJSON..= user obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON MessageEntity
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "MessageEntity" (\obj -> (((((GHC.Base.pure MessageEntity GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "language")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "length")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "offset")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "user"))
 -- | Create a new 'MessageEntity' with all required fields.
-mkMessageEntity :: GHC.Types.Int -- ^ 'messageEntityLength'
-  -> GHC.Types.Int -- ^ 'messageEntityOffset'
-  -> MessageEntityType -- ^ 'messageEntityType'
+mkMessageEntity :: GHC.Types.Int -- ^ 'length'
+  -> GHC.Types.Int -- ^ 'offset'
+  -> Type -- ^ 'type''
   -> MessageEntity
-mkMessageEntity messageEntityLength messageEntityOffset messageEntityType = MessageEntity{messageEntityLanguage = GHC.Maybe.Nothing,
-                                                                                          messageEntityLength = messageEntityLength,
-                                                                                          messageEntityOffset = messageEntityOffset,
-                                                                                          messageEntityType = messageEntityType,
-                                                                                          messageEntityUrl = GHC.Maybe.Nothing,
-                                                                                          messageEntityUser = GHC.Maybe.Nothing}
+mkMessageEntity length offset type' = MessageEntity{language = GHC.Maybe.Nothing,
+                                                    length = length,
+                                                    offset = offset,
+                                                    type' = type',
+                                                    url = GHC.Maybe.Nothing,
+                                                    user = GHC.Maybe.Nothing}
 -- | Defines the enum schema located at @components.schemas.MessageEntity.properties.type@ in the specification.
 -- 
 -- Type of the entity. Can be “mention” (\`\@username\`), “hashtag” (\`\#hashtag\`), “cashtag” (\`\$USD\`), “bot\\_command” (\`\/start\@jobs_bot\`), “url” (\`https:\/\/telegram.org\`), “email” (\`do-not-reply\@telegram.org\`), “phone\\_number” (\`+1-212-555-0123\`), “bold” (**bold text**), “italic” (*italic text*), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text\\_link” (for clickable text URLs), “text\\_mention” (for users [without usernames](https:\/\/telegram.org\/blog\/edit\#new-mentions))
-data MessageEntityType =
-   MessageEntityTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | MessageEntityTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | MessageEntityTypeEnumMention -- ^ Represents the JSON value @"mention"@
-  | MessageEntityTypeEnumHashtag -- ^ Represents the JSON value @"hashtag"@
-  | MessageEntityTypeEnumCashtag -- ^ Represents the JSON value @"cashtag"@
-  | MessageEntityTypeEnumBotCommand -- ^ Represents the JSON value @"bot_command"@
-  | MessageEntityTypeEnumUrl -- ^ Represents the JSON value @"url"@
-  | MessageEntityTypeEnumEmail -- ^ Represents the JSON value @"email"@
-  | MessageEntityTypeEnumPhoneNumber -- ^ Represents the JSON value @"phone_number"@
-  | MessageEntityTypeEnumBold -- ^ Represents the JSON value @"bold"@
-  | MessageEntityTypeEnumItalic -- ^ Represents the JSON value @"italic"@
-  | MessageEntityTypeEnumUnderline -- ^ Represents the JSON value @"underline"@
-  | MessageEntityTypeEnumStrikethrough -- ^ Represents the JSON value @"strikethrough"@
-  | MessageEntityTypeEnumCode -- ^ Represents the JSON value @"code"@
-  | MessageEntityTypeEnumPre -- ^ Represents the JSON value @"pre"@
-  | MessageEntityTypeEnumTextLink -- ^ Represents the JSON value @"text_link"@
-  | MessageEntityTypeEnumTextMention -- ^ Represents the JSON value @"text_mention"@
+data Type =
+   TypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | TypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | TypeEnumMention -- ^ Represents the JSON value @"mention"@
+  | TypeEnumHashtag -- ^ Represents the JSON value @"hashtag"@
+  | TypeEnumCashtag -- ^ Represents the JSON value @"cashtag"@
+  | TypeEnumBotCommand -- ^ Represents the JSON value @"bot_command"@
+  | TypeEnumUrl -- ^ Represents the JSON value @"url"@
+  | TypeEnumEmail -- ^ Represents the JSON value @"email"@
+  | TypeEnumPhoneNumber -- ^ Represents the JSON value @"phone_number"@
+  | TypeEnumBold -- ^ Represents the JSON value @"bold"@
+  | TypeEnumItalic -- ^ Represents the JSON value @"italic"@
+  | TypeEnumUnderline -- ^ Represents the JSON value @"underline"@
+  | TypeEnumStrikethrough -- ^ Represents the JSON value @"strikethrough"@
+  | TypeEnumCode -- ^ Represents the JSON value @"code"@
+  | TypeEnumPre -- ^ Represents the JSON value @"pre"@
+  | TypeEnumTextLink -- ^ Represents the JSON value @"text_link"@
+  | TypeEnumTextMention -- ^ Represents the JSON value @"text_mention"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON MessageEntityType
-    where toJSON (MessageEntityTypeOther val) = val
-          toJSON (MessageEntityTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (MessageEntityTypeEnumMention) = "mention"
-          toJSON (MessageEntityTypeEnumHashtag) = "hashtag"
-          toJSON (MessageEntityTypeEnumCashtag) = "cashtag"
-          toJSON (MessageEntityTypeEnumBotCommand) = "bot_command"
-          toJSON (MessageEntityTypeEnumUrl) = "url"
-          toJSON (MessageEntityTypeEnumEmail) = "email"
-          toJSON (MessageEntityTypeEnumPhoneNumber) = "phone_number"
-          toJSON (MessageEntityTypeEnumBold) = "bold"
-          toJSON (MessageEntityTypeEnumItalic) = "italic"
-          toJSON (MessageEntityTypeEnumUnderline) = "underline"
-          toJSON (MessageEntityTypeEnumStrikethrough) = "strikethrough"
-          toJSON (MessageEntityTypeEnumCode) = "code"
-          toJSON (MessageEntityTypeEnumPre) = "pre"
-          toJSON (MessageEntityTypeEnumTextLink) = "text_link"
-          toJSON (MessageEntityTypeEnumTextMention) = "text_mention"
-instance Data.Aeson.Types.FromJSON.FromJSON MessageEntityType
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "mention" -> MessageEntityTypeEnumMention
-                                            | val GHC.Classes.== "hashtag" -> MessageEntityTypeEnumHashtag
-                                            | val GHC.Classes.== "cashtag" -> MessageEntityTypeEnumCashtag
-                                            | val GHC.Classes.== "bot_command" -> MessageEntityTypeEnumBotCommand
-                                            | val GHC.Classes.== "url" -> MessageEntityTypeEnumUrl
-                                            | val GHC.Classes.== "email" -> MessageEntityTypeEnumEmail
-                                            | val GHC.Classes.== "phone_number" -> MessageEntityTypeEnumPhoneNumber
-                                            | val GHC.Classes.== "bold" -> MessageEntityTypeEnumBold
-                                            | val GHC.Classes.== "italic" -> MessageEntityTypeEnumItalic
-                                            | val GHC.Classes.== "underline" -> MessageEntityTypeEnumUnderline
-                                            | val GHC.Classes.== "strikethrough" -> MessageEntityTypeEnumStrikethrough
-                                            | val GHC.Classes.== "code" -> MessageEntityTypeEnumCode
-                                            | val GHC.Classes.== "pre" -> MessageEntityTypeEnumPre
-                                            | val GHC.Classes.== "text_link" -> MessageEntityTypeEnumTextLink
-                                            | val GHC.Classes.== "text_mention" -> MessageEntityTypeEnumTextMention
-                                            | GHC.Base.otherwise -> MessageEntityTypeOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON Type
+    where toJSON (TypeOther val) = val
+          toJSON (TypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (TypeEnumMention) = "mention"
+          toJSON (TypeEnumHashtag) = "hashtag"
+          toJSON (TypeEnumCashtag) = "cashtag"
+          toJSON (TypeEnumBotCommand) = "bot_command"
+          toJSON (TypeEnumUrl) = "url"
+          toJSON (TypeEnumEmail) = "email"
+          toJSON (TypeEnumPhoneNumber) = "phone_number"
+          toJSON (TypeEnumBold) = "bold"
+          toJSON (TypeEnumItalic) = "italic"
+          toJSON (TypeEnumUnderline) = "underline"
+          toJSON (TypeEnumStrikethrough) = "strikethrough"
+          toJSON (TypeEnumCode) = "code"
+          toJSON (TypeEnumPre) = "pre"
+          toJSON (TypeEnumTextLink) = "text_link"
+          toJSON (TypeEnumTextMention) = "text_mention"
+instance Data.Aeson.Types.FromJSON.FromJSON Type
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "mention" -> TypeEnumMention
+                                            | val GHC.Classes.== "hashtag" -> TypeEnumHashtag
+                                            | val GHC.Classes.== "cashtag" -> TypeEnumCashtag
+                                            | val GHC.Classes.== "bot_command" -> TypeEnumBotCommand
+                                            | val GHC.Classes.== "url" -> TypeEnumUrl
+                                            | val GHC.Classes.== "email" -> TypeEnumEmail
+                                            | val GHC.Classes.== "phone_number" -> TypeEnumPhoneNumber
+                                            | val GHC.Classes.== "bold" -> TypeEnumBold
+                                            | val GHC.Classes.== "italic" -> TypeEnumItalic
+                                            | val GHC.Classes.== "underline" -> TypeEnumUnderline
+                                            | val GHC.Classes.== "strikethrough" -> TypeEnumStrikethrough
+                                            | val GHC.Classes.== "code" -> TypeEnumCode
+                                            | val GHC.Classes.== "pre" -> TypeEnumPre
+                                            | val GHC.Classes.== "text_link" -> TypeEnumTextLink
+                                            | val GHC.Classes.== "text_mention" -> TypeEnumTextMention
+                                            | GHC.Base.otherwise -> TypeOther val)

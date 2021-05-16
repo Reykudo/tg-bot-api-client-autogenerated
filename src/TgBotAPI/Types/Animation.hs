@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Animation
 module TgBotAPI.Types.Animation where
@@ -24,57 +25,56 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.PhotoSize
+import  {-# SOURCE #-}  TgBotAPI.Types.PhotoSize (PhotoSize)
 
 -- | Defines the object schema located at @components.schemas.Animation@ in the specification.
 -- 
 -- This object represents an animation file (GIF or H.264\/MPEG-4 AVC video without sound).
 data Animation = Animation {
   -- | duration: Duration of the video in seconds as defined by sender
-  animationDuration :: GHC.Types.Int
+  duration :: GHC.Types.Int
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
-  , animationFileId :: Data.Text.Internal.Text
+  , fileId :: Data.Text.Internal.Text
   -- | file_name: *Optional*. Original animation filename as defined by sender
-  , animationFileName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , fileName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | file_size: *Optional*. File size
-  , animationFileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , animationFileUniqueId :: Data.Text.Internal.Text
+  , fileUniqueId :: Data.Text.Internal.Text
   -- | height: Video height as defined by sender
-  , animationHeight :: GHC.Types.Int
+  , height :: GHC.Types.Int
   -- | mime_type: *Optional*. MIME type of the file as defined by sender
-  , animationMimeType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , mimeType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb: This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
-  , animationThumb :: (GHC.Maybe.Maybe PhotoSize)
+  , thumb :: (GHC.Maybe.Maybe PhotoSize)
   -- | width: Video width as defined by sender
-  , animationWidth :: GHC.Types.Int
+  , width :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Animation
-    where toJSON obj = Data.Aeson.Types.Internal.object ("duration" Data.Aeson.Types.ToJSON..= animationDuration obj : "file_id" Data.Aeson.Types.ToJSON..= animationFileId obj : "file_name" Data.Aeson.Types.ToJSON..= animationFileName obj : "file_size" Data.Aeson.Types.ToJSON..= animationFileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= animationFileUniqueId obj : "height" Data.Aeson.Types.ToJSON..= animationHeight obj : "mime_type" Data.Aeson.Types.ToJSON..= animationMimeType obj : "thumb" Data.Aeson.Types.ToJSON..= animationThumb obj : "width" Data.Aeson.Types.ToJSON..= animationWidth obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("duration" Data.Aeson.Types.ToJSON..= animationDuration obj) GHC.Base.<> (("file_id" Data.Aeson.Types.ToJSON..= animationFileId obj) GHC.Base.<> (("file_name" Data.Aeson.Types.ToJSON..= animationFileName obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= animationFileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= animationFileUniqueId obj) GHC.Base.<> (("height" Data.Aeson.Types.ToJSON..= animationHeight obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= animationMimeType obj) GHC.Base.<> (("thumb" Data.Aeson.Types.ToJSON..= animationThumb obj) GHC.Base.<> ("width" Data.Aeson.Types.ToJSON..= animationWidth obj)))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("duration" Data.Aeson.Types.ToJSON..= duration obj : "file_id" Data.Aeson.Types.ToJSON..= fileId obj : "file_name" Data.Aeson.Types.ToJSON..= fileName obj : "file_size" Data.Aeson.Types.ToJSON..= fileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj : "height" Data.Aeson.Types.ToJSON..= height obj : "mime_type" Data.Aeson.Types.ToJSON..= mimeType obj : "thumb" Data.Aeson.Types.ToJSON..= thumb obj : "width" Data.Aeson.Types.ToJSON..= width obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("duration" Data.Aeson.Types.ToJSON..= duration obj) GHC.Base.<> (("file_id" Data.Aeson.Types.ToJSON..= fileId obj) GHC.Base.<> (("file_name" Data.Aeson.Types.ToJSON..= fileName obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj) GHC.Base.<> (("height" Data.Aeson.Types.ToJSON..= height obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= mimeType obj) GHC.Base.<> (("thumb" Data.Aeson.Types.ToJSON..= thumb obj) GHC.Base.<> ("width" Data.Aeson.Types.ToJSON..= width obj)))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Animation
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Animation" (\obj -> ((((((((GHC.Base.pure Animation GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "mime_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "width"))
 -- | Create a new 'Animation' with all required fields.
-mkAnimation :: GHC.Types.Int -- ^ 'animationDuration'
-  -> Data.Text.Internal.Text -- ^ 'animationFileId'
-  -> Data.Text.Internal.Text -- ^ 'animationFileUniqueId'
-  -> GHC.Types.Int -- ^ 'animationHeight'
-  -> GHC.Types.Int -- ^ 'animationWidth'
+mkAnimation :: GHC.Types.Int -- ^ 'duration'
+  -> Data.Text.Internal.Text -- ^ 'fileId'
+  -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
+  -> GHC.Types.Int -- ^ 'height'
+  -> GHC.Types.Int -- ^ 'width'
   -> Animation
-mkAnimation animationDuration animationFileId animationFileUniqueId animationHeight animationWidth = Animation{animationDuration = animationDuration,
-                                                                                                               animationFileId = animationFileId,
-                                                                                                               animationFileName = GHC.Maybe.Nothing,
-                                                                                                               animationFileSize = GHC.Maybe.Nothing,
-                                                                                                               animationFileUniqueId = animationFileUniqueId,
-                                                                                                               animationHeight = animationHeight,
-                                                                                                               animationMimeType = GHC.Maybe.Nothing,
-                                                                                                               animationThumb = GHC.Maybe.Nothing,
-                                                                                                               animationWidth = animationWidth}
+mkAnimation duration fileId fileUniqueId height width = Animation{duration = duration,
+                                                                  fileId = fileId,
+                                                                  fileName = GHC.Maybe.Nothing,
+                                                                  fileSize = GHC.Maybe.Nothing,
+                                                                  fileUniqueId = fileUniqueId,
+                                                                  height = height,
+                                                                  mimeType = GHC.Maybe.Nothing,
+                                                                  thumb = GHC.Maybe.Nothing,
+                                                                  width = width}

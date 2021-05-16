@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InputContactMessageContent
 module TgBotAPI.Types.InputContactMessageContent where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,25 +37,25 @@ import TgBotAPI.TypeAlias
 -- Represents the [content](https:\/\/core.telegram.org\/bots\/api\/\#inputmessagecontent) of a contact message to be sent as the result of an inline query.
 data InputContactMessageContent = InputContactMessageContent {
   -- | first_name: Contact\'s first name
-  inputContactMessageContentFirstName :: Data.Text.Internal.Text
+  firstName :: Data.Text.Internal.Text
   -- | last_name: *Optional*. Contact\'s last name
-  , inputContactMessageContentLastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , lastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | phone_number: Contact\'s phone number
-  , inputContactMessageContentPhoneNumber :: Data.Text.Internal.Text
+  , phoneNumber :: Data.Text.Internal.Text
   -- | vcard: *Optional*. Additional data about the contact in the form of a [vCard](https:\/\/en.wikipedia.org\/wiki\/VCard), 0-2048 bytes
-  , inputContactMessageContentVcard :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , vcard :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InputContactMessageContent
-    where toJSON obj = Data.Aeson.Types.Internal.object ("first_name" Data.Aeson.Types.ToJSON..= inputContactMessageContentFirstName obj : "last_name" Data.Aeson.Types.ToJSON..= inputContactMessageContentLastName obj : "phone_number" Data.Aeson.Types.ToJSON..= inputContactMessageContentPhoneNumber obj : "vcard" Data.Aeson.Types.ToJSON..= inputContactMessageContentVcard obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("first_name" Data.Aeson.Types.ToJSON..= inputContactMessageContentFirstName obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= inputContactMessageContentLastName obj) GHC.Base.<> (("phone_number" Data.Aeson.Types.ToJSON..= inputContactMessageContentPhoneNumber obj) GHC.Base.<> ("vcard" Data.Aeson.Types.ToJSON..= inputContactMessageContentVcard obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("first_name" Data.Aeson.Types.ToJSON..= firstName obj : "last_name" Data.Aeson.Types.ToJSON..= lastName obj : "phone_number" Data.Aeson.Types.ToJSON..= phoneNumber obj : "vcard" Data.Aeson.Types.ToJSON..= vcard obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("first_name" Data.Aeson.Types.ToJSON..= firstName obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= lastName obj) GHC.Base.<> (("phone_number" Data.Aeson.Types.ToJSON..= phoneNumber obj) GHC.Base.<> ("vcard" Data.Aeson.Types.ToJSON..= vcard obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON InputContactMessageContent
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InputContactMessageContent" (\obj -> (((GHC.Base.pure InputContactMessageContent GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "first_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "phone_number")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "vcard"))
 -- | Create a new 'InputContactMessageContent' with all required fields.
-mkInputContactMessageContent :: Data.Text.Internal.Text -- ^ 'inputContactMessageContentFirstName'
-  -> Data.Text.Internal.Text -- ^ 'inputContactMessageContentPhoneNumber'
+mkInputContactMessageContent :: Data.Text.Internal.Text -- ^ 'firstName'
+  -> Data.Text.Internal.Text -- ^ 'phoneNumber'
   -> InputContactMessageContent
-mkInputContactMessageContent inputContactMessageContentFirstName inputContactMessageContentPhoneNumber = InputContactMessageContent{inputContactMessageContentFirstName = inputContactMessageContentFirstName,
-                                                                                                                                    inputContactMessageContentLastName = GHC.Maybe.Nothing,
-                                                                                                                                    inputContactMessageContentPhoneNumber = inputContactMessageContentPhoneNumber,
-                                                                                                                                    inputContactMessageContentVcard = GHC.Maybe.Nothing}
+mkInputContactMessageContent firstName phoneNumber = InputContactMessageContent{firstName = firstName,
+                                                                                lastName = GHC.Maybe.Nothing,
+                                                                                phoneNumber = phoneNumber,
+                                                                                vcard = GHC.Maybe.Nothing}

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultVideo
 module TgBotAPI.Types.InlineQueryResultVideo where
@@ -24,16 +25,15 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
-import {-# SOURCE #-} TgBotAPI.Types.InputMessageContent
-import {-# SOURCE #-} TgBotAPI.Types.MessageEntity
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
+import  {-# SOURCE #-}  TgBotAPI.Types.InputMessageContent (InputMessageContent)
+import  {-# SOURCE #-}  TgBotAPI.Types.MessageEntity (MessageEntity)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultVideo@ in the specification.
 -- 
@@ -42,62 +42,62 @@ import {-# SOURCE #-} TgBotAPI.Types.MessageEntity
 -- If an InlineQueryResultVideo message contains an embedded video (e.g., YouTube), you **must** replace its content using *input\\_message\\_content*.
 data InlineQueryResultVideo = InlineQueryResultVideo {
   -- | caption: *Optional*. Caption of the video to be sent, 0-1024 characters after entities parsing
-  inlineQueryResultVideoCaption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  caption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | caption_entities: *Optional*. List of special entities that appear in the caption, which can be specified instead of *parse\\_mode*
-  , inlineQueryResultVideoCaptionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
+  , captionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | description: *Optional*. Short description of the result
-  , inlineQueryResultVideoDescription :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , description :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | id: Unique identifier for this result, 1-64 bytes
-  , inlineQueryResultVideoId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
-  , inlineQueryResultVideoInputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
+  , inputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
   -- | mime_type: Mime type of the content of video url, “text\/html” or “video\/mp4”
-  , inlineQueryResultVideoMimeType :: Data.Text.Internal.Text
+  , mimeType :: Data.Text.Internal.Text
   -- | parse_mode: *Optional*. Mode for parsing entities in the video caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
-  , inlineQueryResultVideoParseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultVideoReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_url: URL of the thumbnail (jpeg only) for the video
-  , inlineQueryResultVideoThumbUrl :: Data.Text.Internal.Text
+  , thumbUrl :: Data.Text.Internal.Text
   -- | title: Title for the result
-  , inlineQueryResultVideoTitle :: Data.Text.Internal.Text
+  , title :: Data.Text.Internal.Text
   -- | type: Type of the result, must be *video*
-  , inlineQueryResultVideoType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   -- | video_duration: *Optional*. Video duration in seconds
-  , inlineQueryResultVideoVideoDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , videoDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | video_height: *Optional*. Video height
-  , inlineQueryResultVideoVideoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , videoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | video_url: A valid URL for the embedded video player or video file
-  , inlineQueryResultVideoVideoUrl :: Data.Text.Internal.Text
+  , videoUrl :: Data.Text.Internal.Text
   -- | video_width: *Optional*. Video width
-  , inlineQueryResultVideoVideoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , videoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultVideo
-    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoCaption obj : "caption_entities" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoCaptionEntities obj : "description" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoDescription obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoId obj : "input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoInputMessageContent obj : "mime_type" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoMimeType obj : "parse_mode" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoParseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoReplyMarkup obj : "thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoThumbUrl obj : "title" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoTitle obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoType obj : "video_duration" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoDuration obj : "video_height" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoHeight obj : "video_url" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoUrl obj : "video_width" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoWidth obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoCaption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoCaptionEntities obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoDescription obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoId obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoInputMessageContent obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoMimeType obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoParseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoReplyMarkup obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoThumbUrl obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoTitle obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoType obj) GHC.Base.<> (("video_duration" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoDuration obj) GHC.Base.<> (("video_height" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoHeight obj) GHC.Base.<> (("video_url" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoUrl obj) GHC.Base.<> ("video_width" Data.Aeson.Types.ToJSON..= inlineQueryResultVideoVideoWidth obj)))))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= caption obj : "caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj : "description" Data.Aeson.Types.ToJSON..= description obj : "id" Data.Aeson.Types.ToJSON..= id obj : "input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj : "mime_type" Data.Aeson.Types.ToJSON..= mimeType obj : "parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj : "title" Data.Aeson.Types.ToJSON..= title obj : "type" Data.Aeson.Types.ToJSON..= type' obj : "video_duration" Data.Aeson.Types.ToJSON..= videoDuration obj : "video_height" Data.Aeson.Types.ToJSON..= videoHeight obj : "video_url" Data.Aeson.Types.ToJSON..= videoUrl obj : "video_width" Data.Aeson.Types.ToJSON..= videoWidth obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= caption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj) GHC.Base.<> (("description" Data.Aeson.Types.ToJSON..= description obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj) GHC.Base.<> (("mime_type" Data.Aeson.Types.ToJSON..= mimeType obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= title obj) GHC.Base.<> (("type" Data.Aeson.Types.ToJSON..= type' obj) GHC.Base.<> (("video_duration" Data.Aeson.Types.ToJSON..= videoDuration obj) GHC.Base.<> (("video_height" Data.Aeson.Types.ToJSON..= videoHeight obj) GHC.Base.<> (("video_url" Data.Aeson.Types.ToJSON..= videoUrl obj) GHC.Base.<> ("video_width" Data.Aeson.Types.ToJSON..= videoWidth obj)))))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultVideo
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultVideo" (\obj -> ((((((((((((((GHC.Base.pure InlineQueryResultVideo GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption_entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "input_message_content")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "mime_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parse_mode")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "thumb_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "video_duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "video_height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "video_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "video_width"))
 -- | Create a new 'InlineQueryResultVideo' with all required fields.
-mkInlineQueryResultVideo :: Data.Text.Internal.Text -- ^ 'inlineQueryResultVideoId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultVideoMimeType'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultVideoThumbUrl'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultVideoTitle'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultVideoType'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultVideoVideoUrl'
+mkInlineQueryResultVideo :: Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'mimeType'
+  -> Data.Text.Internal.Text -- ^ 'thumbUrl'
+  -> Data.Text.Internal.Text -- ^ 'title'
+  -> Data.Text.Internal.Text -- ^ 'type''
+  -> Data.Text.Internal.Text -- ^ 'videoUrl'
   -> InlineQueryResultVideo
-mkInlineQueryResultVideo inlineQueryResultVideoId inlineQueryResultVideoMimeType inlineQueryResultVideoThumbUrl inlineQueryResultVideoTitle inlineQueryResultVideoType inlineQueryResultVideoVideoUrl = InlineQueryResultVideo{inlineQueryResultVideoCaption = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoCaptionEntities = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoDescription = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoId = inlineQueryResultVideoId,
-                                                                                                                                                                                                                               inlineQueryResultVideoInputMessageContent = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoMimeType = inlineQueryResultVideoMimeType,
-                                                                                                                                                                                                                               inlineQueryResultVideoParseMode = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoThumbUrl = inlineQueryResultVideoThumbUrl,
-                                                                                                                                                                                                                               inlineQueryResultVideoTitle = inlineQueryResultVideoTitle,
-                                                                                                                                                                                                                               inlineQueryResultVideoType = inlineQueryResultVideoType,
-                                                                                                                                                                                                                               inlineQueryResultVideoVideoDuration = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoVideoHeight = GHC.Maybe.Nothing,
-                                                                                                                                                                                                                               inlineQueryResultVideoVideoUrl = inlineQueryResultVideoVideoUrl,
-                                                                                                                                                                                                                               inlineQueryResultVideoVideoWidth = GHC.Maybe.Nothing}
+mkInlineQueryResultVideo id mimeType thumbUrl title type' videoUrl = InlineQueryResultVideo{caption = GHC.Maybe.Nothing,
+                                                                                            captionEntities = GHC.Maybe.Nothing,
+                                                                                            description = GHC.Maybe.Nothing,
+                                                                                            id = id,
+                                                                                            inputMessageContent = GHC.Maybe.Nothing,
+                                                                                            mimeType = mimeType,
+                                                                                            parseMode = GHC.Maybe.Nothing,
+                                                                                            replyMarkup = GHC.Maybe.Nothing,
+                                                                                            thumbUrl = thumbUrl,
+                                                                                            title = title,
+                                                                                            type' = type',
+                                                                                            videoDuration = GHC.Maybe.Nothing,
+                                                                                            videoHeight = GHC.Maybe.Nothing,
+                                                                                            videoUrl = videoUrl,
+                                                                                            videoWidth = GHC.Maybe.Nothing}

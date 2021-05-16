@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ChatMemberUpdated
 module TgBotAPI.Types.ChatMemberUpdated where
@@ -24,51 +25,50 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.Chat
-import {-# SOURCE #-} TgBotAPI.Types.ChatInviteLink
-import {-# SOURCE #-} TgBotAPI.Types.ChatMember
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.Chat (Chat)
+import  {-# SOURCE #-}  TgBotAPI.Types.ChatInviteLink (ChatInviteLink)
+import  {-# SOURCE #-}  TgBotAPI.Types.ChatMember (ChatMember)
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.ChatMemberUpdated@ in the specification.
 -- 
 -- This object represents changes in the status of a chat member.
 data ChatMemberUpdated = ChatMemberUpdated {
   -- | chat: This object represents a chat.
-  chatMemberUpdatedChat :: Chat
+  chat :: Chat
   -- | date: Date the change was done in Unix time
-  , chatMemberUpdatedDate :: GHC.Types.Int
+  , date :: GHC.Types.Int
   -- | from: This object represents a Telegram user or bot.
-  , chatMemberUpdatedFrom :: User
+  , from :: User
   -- | invite_link: Represents an invite link for a chat.
-  , chatMemberUpdatedInviteLink :: (GHC.Maybe.Maybe ChatInviteLink)
+  , inviteLink :: (GHC.Maybe.Maybe ChatInviteLink)
   -- | new_chat_member: This object contains information about one member of a chat.
-  , chatMemberUpdatedNewChatMember :: ChatMember
+  , newChatMember :: ChatMember
   -- | old_chat_member: This object contains information about one member of a chat.
-  , chatMemberUpdatedOldChatMember :: ChatMember
+  , oldChatMember :: ChatMember
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatMemberUpdated
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat" Data.Aeson.Types.ToJSON..= chatMemberUpdatedChat obj : "date" Data.Aeson.Types.ToJSON..= chatMemberUpdatedDate obj : "from" Data.Aeson.Types.ToJSON..= chatMemberUpdatedFrom obj : "invite_link" Data.Aeson.Types.ToJSON..= chatMemberUpdatedInviteLink obj : "new_chat_member" Data.Aeson.Types.ToJSON..= chatMemberUpdatedNewChatMember obj : "old_chat_member" Data.Aeson.Types.ToJSON..= chatMemberUpdatedOldChatMember obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat" Data.Aeson.Types.ToJSON..= chatMemberUpdatedChat obj) GHC.Base.<> (("date" Data.Aeson.Types.ToJSON..= chatMemberUpdatedDate obj) GHC.Base.<> (("from" Data.Aeson.Types.ToJSON..= chatMemberUpdatedFrom obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= chatMemberUpdatedInviteLink obj) GHC.Base.<> (("new_chat_member" Data.Aeson.Types.ToJSON..= chatMemberUpdatedNewChatMember obj) GHC.Base.<> ("old_chat_member" Data.Aeson.Types.ToJSON..= chatMemberUpdatedOldChatMember obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat" Data.Aeson.Types.ToJSON..= chat obj : "date" Data.Aeson.Types.ToJSON..= date obj : "from" Data.Aeson.Types.ToJSON..= from obj : "invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj : "new_chat_member" Data.Aeson.Types.ToJSON..= newChatMember obj : "old_chat_member" Data.Aeson.Types.ToJSON..= oldChatMember obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat" Data.Aeson.Types.ToJSON..= chat obj) GHC.Base.<> (("date" Data.Aeson.Types.ToJSON..= date obj) GHC.Base.<> (("from" Data.Aeson.Types.ToJSON..= from obj) GHC.Base.<> (("invite_link" Data.Aeson.Types.ToJSON..= inviteLink obj) GHC.Base.<> (("new_chat_member" Data.Aeson.Types.ToJSON..= newChatMember obj) GHC.Base.<> ("old_chat_member" Data.Aeson.Types.ToJSON..= oldChatMember obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON ChatMemberUpdated
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChatMemberUpdated" (\obj -> (((((GHC.Base.pure ChatMemberUpdated GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "invite_link")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "new_chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "old_chat_member"))
 -- | Create a new 'ChatMemberUpdated' with all required fields.
-mkChatMemberUpdated :: Chat -- ^ 'chatMemberUpdatedChat'
-  -> GHC.Types.Int -- ^ 'chatMemberUpdatedDate'
-  -> User -- ^ 'chatMemberUpdatedFrom'
-  -> ChatMember -- ^ 'chatMemberUpdatedNewChatMember'
-  -> ChatMember -- ^ 'chatMemberUpdatedOldChatMember'
+mkChatMemberUpdated :: Chat -- ^ 'chat'
+  -> GHC.Types.Int -- ^ 'date'
+  -> User -- ^ 'from'
+  -> ChatMember -- ^ 'newChatMember'
+  -> ChatMember -- ^ 'oldChatMember'
   -> ChatMemberUpdated
-mkChatMemberUpdated chatMemberUpdatedChat chatMemberUpdatedDate chatMemberUpdatedFrom chatMemberUpdatedNewChatMember chatMemberUpdatedOldChatMember = ChatMemberUpdated{chatMemberUpdatedChat = chatMemberUpdatedChat,
-                                                                                                                                                                        chatMemberUpdatedDate = chatMemberUpdatedDate,
-                                                                                                                                                                        chatMemberUpdatedFrom = chatMemberUpdatedFrom,
-                                                                                                                                                                        chatMemberUpdatedInviteLink = GHC.Maybe.Nothing,
-                                                                                                                                                                        chatMemberUpdatedNewChatMember = chatMemberUpdatedNewChatMember,
-                                                                                                                                                                        chatMemberUpdatedOldChatMember = chatMemberUpdatedOldChatMember}
+mkChatMemberUpdated chat date from newChatMember oldChatMember = ChatMemberUpdated{chat = chat,
+                                                                                   date = date,
+                                                                                   from = from,
+                                                                                   inviteLink = GHC.Maybe.Nothing,
+                                                                                   newChatMember = newChatMember,
+                                                                                   oldChatMember = oldChatMember}

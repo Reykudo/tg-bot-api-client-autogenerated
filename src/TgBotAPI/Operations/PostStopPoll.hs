@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postStopPoll
 module TgBotAPI.Operations.PostStopPoll where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to stop a poll which was sent by the bot. On success, the stopped [Poll](https:\/\/core.telegram.org\/bots\/api\/\#poll) with the final results is returned.
 postStopPoll :: forall m . TgBotAPI.Common.MonadHTTP m => PostStopPollRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostStopPollResponse) -- ^ Monadic computation which returns the result of the operation
-postStopPoll body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostStopPollResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postStopPoll body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostStopPollResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                        PostStopPollResponseBody200)
-                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                            | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/stopPoll") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/stopPoll.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,44 +58,44 @@ postStopPoll body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.eit
 -- 
 data PostStopPollRequestBody = PostStopPollRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  postStopPollRequestBodyChatId :: PostStopPollRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | message_id: Identifier of the original message with the poll
-  , postStopPollRequestBodyMessageId :: GHC.Types.Int
+  , messageId :: GHC.Types.Int
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , postStopPollRequestBodyReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostStopPollRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postStopPollRequestBodyChatId obj : "message_id" Data.Aeson.Types.ToJSON..= postStopPollRequestBodyMessageId obj : "reply_markup" Data.Aeson.Types.ToJSON..= postStopPollRequestBodyReplyMarkup obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postStopPollRequestBodyChatId obj) GHC.Base.<> (("message_id" Data.Aeson.Types.ToJSON..= postStopPollRequestBodyMessageId obj) GHC.Base.<> ("reply_markup" Data.Aeson.Types.ToJSON..= postStopPollRequestBodyReplyMarkup obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("message_id" Data.Aeson.Types.ToJSON..= messageId obj) GHC.Base.<> ("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON PostStopPollRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostStopPollRequestBody" (\obj -> ((GHC.Base.pure PostStopPollRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup"))
 -- | Create a new 'PostStopPollRequestBody' with all required fields.
-mkPostStopPollRequestBody :: PostStopPollRequestBodyChatIdVariants -- ^ 'postStopPollRequestBodyChatId'
-  -> GHC.Types.Int -- ^ 'postStopPollRequestBodyMessageId'
+mkPostStopPollRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> GHC.Types.Int -- ^ 'messageId'
   -> PostStopPollRequestBody
-mkPostStopPollRequestBody postStopPollRequestBodyChatId postStopPollRequestBodyMessageId = PostStopPollRequestBody{postStopPollRequestBodyChatId = postStopPollRequestBodyChatId,
-                                                                                                                   postStopPollRequestBodyMessageId = postStopPollRequestBodyMessageId,
-                                                                                                                   postStopPollRequestBodyReplyMarkup = GHC.Maybe.Nothing}
+mkPostStopPollRequestBody chatId messageId = PostStopPollRequestBody{chatId = chatId,
+                                                                     messageId = messageId,
+                                                                     replyMarkup = GHC.Maybe.Nothing}
 -- | Defines the oneOf schema located at @paths.\/stopPoll.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostStopPollRequestBodyChatIdVariants =
-   PostStopPollRequestBodyChatIdInt GHC.Types.Int
-  | PostStopPollRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostStopPollRequestBodyChatIdVariants
-    where toJSON (PostStopPollRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostStopPollRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostStopPollRequestBodyChatIdVariants
-    where parseJSON val = case (PostStopPollRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostStopPollRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postStopPoll'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostStopPollResponseError' is used.
 data PostStopPollResponse =
-   PostStopPollResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostStopPollResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostStopPollResponse200 PostStopPollResponseBody200 -- ^ 
   | PostStopPollResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -104,22 +104,22 @@ data PostStopPollResponse =
 -- 
 data PostStopPollResponseBody200 = PostStopPollResponseBody200 {
   -- | ok
-  postStopPollResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object contains information about a poll.
-  , postStopPollResponseBody200Result :: Poll
+  , result :: Poll
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostStopPollResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postStopPollResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postStopPollResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postStopPollResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postStopPollResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostStopPollResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostStopPollResponseBody200" (\obj -> (GHC.Base.pure PostStopPollResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostStopPollResponseBody200' with all required fields.
-mkPostStopPollResponseBody200 :: GHC.Types.Bool -- ^ 'postStopPollResponseBody200Ok'
-  -> Poll -- ^ 'postStopPollResponseBody200Result'
+mkPostStopPollResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Poll -- ^ 'result'
   -> PostStopPollResponseBody200
-mkPostStopPollResponseBody200 postStopPollResponseBody200Ok postStopPollResponseBody200Result = PostStopPollResponseBody200{postStopPollResponseBody200Ok = postStopPollResponseBody200Ok,
-                                                                                                                            postStopPollResponseBody200Result = postStopPollResponseBody200Result}
+mkPostStopPollResponseBody200 ok result = PostStopPollResponseBody200{ok = ok,
+                                                                      result = result}
 -- | > POST /stopPoll
 -- 
 -- The same as 'postStopPoll' but accepts an explicit configuration.
@@ -127,9 +127,9 @@ postStopPollWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBot
   -> PostStopPollRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostStopPollResponse) -- ^ Monadic computation which returns the result of the operation
 postStopPollWithConfiguration config
-                              body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostStopPollResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                              body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostStopPollResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                         PostStopPollResponseBody200)
-                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostStopPollResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                           Error)
                                                                                                                                                                             | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/stopPoll") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /stopPoll

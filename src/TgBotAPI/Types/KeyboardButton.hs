@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema KeyboardButton
 module TgBotAPI.Types.KeyboardButton where
@@ -24,38 +25,37 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.KeyboardButtonPollType
+import  {-# SOURCE #-}  TgBotAPI.Types.KeyboardButtonPollType (KeyboardButtonPollType)
 
 -- | Defines the object schema located at @components.schemas.KeyboardButton@ in the specification.
 -- 
 -- This object represents one button of the reply keyboard. For simple text buttons *String* can be used instead of this object to specify text of the button. Optional fields *request\\_contact*, *request\\_location*, and *request\\_poll* are mutually exclusive.
 data KeyboardButton = KeyboardButton {
   -- | request_contact: *Optional*. If *True*, the user\'s phone number will be sent as a contact when the button is pressed. Available in private chats only
-  keyboardButtonRequestContact :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  requestContact :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | request_location: *Optional*. If *True*, the user\'s current location will be sent when the button is pressed. Available in private chats only
-  , keyboardButtonRequestLocation :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , requestLocation :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | request_poll: This object represents type of a poll, which is allowed to be created and sent when the corresponding button is pressed.
-  , keyboardButtonRequestPoll :: (GHC.Maybe.Maybe KeyboardButtonPollType)
+  , requestPoll :: (GHC.Maybe.Maybe KeyboardButtonPollType)
   -- | text: Text of the button. If none of the optional fields are used, it will be sent as a message when the button is pressed
-  , keyboardButtonText :: Data.Text.Internal.Text
+  , text :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON KeyboardButton
-    where toJSON obj = Data.Aeson.Types.Internal.object ("request_contact" Data.Aeson.Types.ToJSON..= keyboardButtonRequestContact obj : "request_location" Data.Aeson.Types.ToJSON..= keyboardButtonRequestLocation obj : "request_poll" Data.Aeson.Types.ToJSON..= keyboardButtonRequestPoll obj : "text" Data.Aeson.Types.ToJSON..= keyboardButtonText obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("request_contact" Data.Aeson.Types.ToJSON..= keyboardButtonRequestContact obj) GHC.Base.<> (("request_location" Data.Aeson.Types.ToJSON..= keyboardButtonRequestLocation obj) GHC.Base.<> (("request_poll" Data.Aeson.Types.ToJSON..= keyboardButtonRequestPoll obj) GHC.Base.<> ("text" Data.Aeson.Types.ToJSON..= keyboardButtonText obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("request_contact" Data.Aeson.Types.ToJSON..= requestContact obj : "request_location" Data.Aeson.Types.ToJSON..= requestLocation obj : "request_poll" Data.Aeson.Types.ToJSON..= requestPoll obj : "text" Data.Aeson.Types.ToJSON..= text obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("request_contact" Data.Aeson.Types.ToJSON..= requestContact obj) GHC.Base.<> (("request_location" Data.Aeson.Types.ToJSON..= requestLocation obj) GHC.Base.<> (("request_poll" Data.Aeson.Types.ToJSON..= requestPoll obj) GHC.Base.<> ("text" Data.Aeson.Types.ToJSON..= text obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON KeyboardButton
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "KeyboardButton" (\obj -> (((GHC.Base.pure KeyboardButton GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "request_contact")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "request_location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "request_poll")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "text"))
 -- | Create a new 'KeyboardButton' with all required fields.
-mkKeyboardButton :: Data.Text.Internal.Text -- ^ 'keyboardButtonText'
+mkKeyboardButton :: Data.Text.Internal.Text -- ^ 'text'
   -> KeyboardButton
-mkKeyboardButton keyboardButtonText = KeyboardButton{keyboardButtonRequestContact = GHC.Maybe.Nothing,
-                                                     keyboardButtonRequestLocation = GHC.Maybe.Nothing,
-                                                     keyboardButtonRequestPoll = GHC.Maybe.Nothing,
-                                                     keyboardButtonText = keyboardButtonText}
+mkKeyboardButton text = KeyboardButton{requestContact = GHC.Maybe.Nothing,
+                                       requestLocation = GHC.Maybe.Nothing,
+                                       requestPoll = GHC.Maybe.Nothing,
+                                       text = text}

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PreCheckoutQuery
 module TgBotAPI.Types.PreCheckoutQuery where
@@ -24,52 +25,51 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.OrderInfo
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.OrderInfo (OrderInfo)
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.PreCheckoutQuery@ in the specification.
 -- 
 -- This object contains information about an incoming pre-checkout query.
 data PreCheckoutQuery = PreCheckoutQuery {
   -- | currency: Three-letter ISO 4217 [currency](\/bots\/payments\#supported-currencies) code
-  preCheckoutQueryCurrency :: Data.Text.Internal.Text
+  currency :: Data.Text.Internal.Text
   -- | from: This object represents a Telegram user or bot.
-  , preCheckoutQueryFrom :: User
+  , from :: User
   -- | id: Unique query identifier
-  , preCheckoutQueryId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | invoice_payload: Bot specified invoice payload
-  , preCheckoutQueryInvoicePayload :: Data.Text.Internal.Text
+  , invoicePayload :: Data.Text.Internal.Text
   -- | order_info: This object represents information about an order.
-  , preCheckoutQueryOrderInfo :: (GHC.Maybe.Maybe OrderInfo)
+  , orderInfo :: (GHC.Maybe.Maybe OrderInfo)
   -- | shipping_option_id: *Optional*. Identifier of the shipping option chosen by the user
-  , preCheckoutQueryShippingOptionId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , shippingOptionId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | total_amount: Total price in the *smallest units* of the currency (integer, **not** float\/double). For example, for a price of \`US\$ 1.45\` pass \`amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-  , preCheckoutQueryTotalAmount :: GHC.Types.Int
+  , totalAmount :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PreCheckoutQuery
-    where toJSON obj = Data.Aeson.Types.Internal.object ("currency" Data.Aeson.Types.ToJSON..= preCheckoutQueryCurrency obj : "from" Data.Aeson.Types.ToJSON..= preCheckoutQueryFrom obj : "id" Data.Aeson.Types.ToJSON..= preCheckoutQueryId obj : "invoice_payload" Data.Aeson.Types.ToJSON..= preCheckoutQueryInvoicePayload obj : "order_info" Data.Aeson.Types.ToJSON..= preCheckoutQueryOrderInfo obj : "shipping_option_id" Data.Aeson.Types.ToJSON..= preCheckoutQueryShippingOptionId obj : "total_amount" Data.Aeson.Types.ToJSON..= preCheckoutQueryTotalAmount obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("currency" Data.Aeson.Types.ToJSON..= preCheckoutQueryCurrency obj) GHC.Base.<> (("from" Data.Aeson.Types.ToJSON..= preCheckoutQueryFrom obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= preCheckoutQueryId obj) GHC.Base.<> (("invoice_payload" Data.Aeson.Types.ToJSON..= preCheckoutQueryInvoicePayload obj) GHC.Base.<> (("order_info" Data.Aeson.Types.ToJSON..= preCheckoutQueryOrderInfo obj) GHC.Base.<> (("shipping_option_id" Data.Aeson.Types.ToJSON..= preCheckoutQueryShippingOptionId obj) GHC.Base.<> ("total_amount" Data.Aeson.Types.ToJSON..= preCheckoutQueryTotalAmount obj)))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("currency" Data.Aeson.Types.ToJSON..= currency obj : "from" Data.Aeson.Types.ToJSON..= from obj : "id" Data.Aeson.Types.ToJSON..= id obj : "invoice_payload" Data.Aeson.Types.ToJSON..= invoicePayload obj : "order_info" Data.Aeson.Types.ToJSON..= orderInfo obj : "shipping_option_id" Data.Aeson.Types.ToJSON..= shippingOptionId obj : "total_amount" Data.Aeson.Types.ToJSON..= totalAmount obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("currency" Data.Aeson.Types.ToJSON..= currency obj) GHC.Base.<> (("from" Data.Aeson.Types.ToJSON..= from obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("invoice_payload" Data.Aeson.Types.ToJSON..= invoicePayload obj) GHC.Base.<> (("order_info" Data.Aeson.Types.ToJSON..= orderInfo obj) GHC.Base.<> (("shipping_option_id" Data.Aeson.Types.ToJSON..= shippingOptionId obj) GHC.Base.<> ("total_amount" Data.Aeson.Types.ToJSON..= totalAmount obj)))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PreCheckoutQuery
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PreCheckoutQuery" (\obj -> ((((((GHC.Base.pure PreCheckoutQuery GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "currency")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "invoice_payload")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "order_info")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "shipping_option_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "total_amount"))
 -- | Create a new 'PreCheckoutQuery' with all required fields.
-mkPreCheckoutQuery :: Data.Text.Internal.Text -- ^ 'preCheckoutQueryCurrency'
-  -> User -- ^ 'preCheckoutQueryFrom'
-  -> Data.Text.Internal.Text -- ^ 'preCheckoutQueryId'
-  -> Data.Text.Internal.Text -- ^ 'preCheckoutQueryInvoicePayload'
-  -> GHC.Types.Int -- ^ 'preCheckoutQueryTotalAmount'
+mkPreCheckoutQuery :: Data.Text.Internal.Text -- ^ 'currency'
+  -> User -- ^ 'from'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'invoicePayload'
+  -> GHC.Types.Int -- ^ 'totalAmount'
   -> PreCheckoutQuery
-mkPreCheckoutQuery preCheckoutQueryCurrency preCheckoutQueryFrom preCheckoutQueryId preCheckoutQueryInvoicePayload preCheckoutQueryTotalAmount = PreCheckoutQuery{preCheckoutQueryCurrency = preCheckoutQueryCurrency,
-                                                                                                                                                                  preCheckoutQueryFrom = preCheckoutQueryFrom,
-                                                                                                                                                                  preCheckoutQueryId = preCheckoutQueryId,
-                                                                                                                                                                  preCheckoutQueryInvoicePayload = preCheckoutQueryInvoicePayload,
-                                                                                                                                                                  preCheckoutQueryOrderInfo = GHC.Maybe.Nothing,
-                                                                                                                                                                  preCheckoutQueryShippingOptionId = GHC.Maybe.Nothing,
-                                                                                                                                                                  preCheckoutQueryTotalAmount = preCheckoutQueryTotalAmount}
+mkPreCheckoutQuery currency from id invoicePayload totalAmount = PreCheckoutQuery{currency = currency,
+                                                                                  from = from,
+                                                                                  id = id,
+                                                                                  invoicePayload = invoicePayload,
+                                                                                  orderInfo = GHC.Maybe.Nothing,
+                                                                                  shippingOptionId = GHC.Maybe.Nothing,
+                                                                                  totalAmount = totalAmount}

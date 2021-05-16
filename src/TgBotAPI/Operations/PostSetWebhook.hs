@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetWebhook
 module TgBotAPI.Operations.PostSetWebhook where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -49,16 +49,16 @@ import TgBotAPI.Types
 -- 
 -- If you\'d like to make sure that the Webhook request comes from Telegram, we recommend using a secret path in the URL, e.g. \`https:\/\/www.example.com\/\<token>\`. Since nobody else knows your bot\'s token, you can be pretty sure it\'s us.
 postSetWebhook :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetWebhookResponse) -- ^ Monadic computation which returns the result of the operation
-postSetWebhook = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetWebhook = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                         PostSetWebhookResponseBody200)
-                                                                                                                                                          | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                          | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                           Error)
                                                                                                                                                           | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setWebhook") GHC.Base.mempty)
 -- | Represents a response of the operation 'postSetWebhook'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetWebhookResponseError' is used.
 data PostSetWebhookResponse =
-   PostSetWebhookResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetWebhookResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetWebhookResponse200 PostSetWebhookResponseBody200 -- ^ 
   | PostSetWebhookResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -67,30 +67,30 @@ data PostSetWebhookResponse =
 -- 
 data PostSetWebhookResponseBody200 = PostSetWebhookResponseBody200 {
   -- | ok
-  postSetWebhookResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetWebhookResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetWebhookResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetWebhookResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetWebhookResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetWebhookResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetWebhookResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetWebhookResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetWebhookResponseBody200" (\obj -> (GHC.Base.pure PostSetWebhookResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetWebhookResponseBody200' with all required fields.
-mkPostSetWebhookResponseBody200 :: GHC.Types.Bool -- ^ 'postSetWebhookResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetWebhookResponseBody200Result'
+mkPostSetWebhookResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetWebhookResponseBody200
-mkPostSetWebhookResponseBody200 postSetWebhookResponseBody200Ok postSetWebhookResponseBody200Result = PostSetWebhookResponseBody200{postSetWebhookResponseBody200Ok = postSetWebhookResponseBody200Ok,
-                                                                                                                                    postSetWebhookResponseBody200Result = postSetWebhookResponseBody200Result}
+mkPostSetWebhookResponseBody200 ok result = PostSetWebhookResponseBody200{ok = ok,
+                                                                          result = result}
 -- | > POST /setWebhook
 -- 
 -- The same as 'postSetWebhook' but accepts an explicit configuration.
 postSetWebhookWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.Configuration -- ^ The configuration to use in the request
   -> m (Network.HTTP.Client.Types.Response PostSetWebhookResponse) -- ^ Monadic computation which returns the result of the operation
-postSetWebhookWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetWebhookWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetWebhookResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                 PostSetWebhookResponseBody200)
-                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetWebhookResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                   Error)
                                                                                                                                                                                   | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setWebhook") GHC.Base.mempty)
 -- | > POST /setWebhook

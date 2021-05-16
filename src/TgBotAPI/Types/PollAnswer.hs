@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PollAnswer
 module TgBotAPI.Types.PollAnswer where
@@ -24,37 +25,36 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.PollAnswer@ in the specification.
 -- 
 -- This object represents an answer of a user in a non-anonymous poll.
 data PollAnswer = PollAnswer {
   -- | option_ids: 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
-  pollAnswerOptionIds :: ([GHC.Types.Int])
+  optionIds :: ([GHC.Types.Int])
   -- | poll_id: Unique poll identifier
-  , pollAnswerPollId :: Data.Text.Internal.Text
+  , pollId :: Data.Text.Internal.Text
   -- | user: This object represents a Telegram user or bot.
-  , pollAnswerUser :: User
+  , user :: User
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PollAnswer
-    where toJSON obj = Data.Aeson.Types.Internal.object ("option_ids" Data.Aeson.Types.ToJSON..= pollAnswerOptionIds obj : "poll_id" Data.Aeson.Types.ToJSON..= pollAnswerPollId obj : "user" Data.Aeson.Types.ToJSON..= pollAnswerUser obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("option_ids" Data.Aeson.Types.ToJSON..= pollAnswerOptionIds obj) GHC.Base.<> (("poll_id" Data.Aeson.Types.ToJSON..= pollAnswerPollId obj) GHC.Base.<> ("user" Data.Aeson.Types.ToJSON..= pollAnswerUser obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("option_ids" Data.Aeson.Types.ToJSON..= optionIds obj : "poll_id" Data.Aeson.Types.ToJSON..= pollId obj : "user" Data.Aeson.Types.ToJSON..= user obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("option_ids" Data.Aeson.Types.ToJSON..= optionIds obj) GHC.Base.<> (("poll_id" Data.Aeson.Types.ToJSON..= pollId obj) GHC.Base.<> ("user" Data.Aeson.Types.ToJSON..= user obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON PollAnswer
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PollAnswer" (\obj -> ((GHC.Base.pure PollAnswer GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "option_ids")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "poll_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user"))
 -- | Create a new 'PollAnswer' with all required fields.
-mkPollAnswer :: [GHC.Types.Int] -- ^ 'pollAnswerOptionIds'
-  -> Data.Text.Internal.Text -- ^ 'pollAnswerPollId'
-  -> User -- ^ 'pollAnswerUser'
+mkPollAnswer :: [GHC.Types.Int] -- ^ 'optionIds'
+  -> Data.Text.Internal.Text -- ^ 'pollId'
+  -> User -- ^ 'user'
   -> PollAnswer
-mkPollAnswer pollAnswerOptionIds pollAnswerPollId pollAnswerUser = PollAnswer{pollAnswerOptionIds = pollAnswerOptionIds,
-                                                                              pollAnswerPollId = pollAnswerPollId,
-                                                                              pollAnswerUser = pollAnswerUser}
+mkPollAnswer optionIds pollId user = PollAnswer{optionIds = optionIds,
+                                                pollId = pollId,
+                                                user = user}

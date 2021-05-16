@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetChatPermissions
 module TgBotAPI.Operations.PostSetChatPermissions where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to set default chat permissions for all members. The bot must be an administrator in the group or a supergroup for this to work and must have the *can\\_restrict\\_members* admin rights. Returns *True* on success.
 postSetChatPermissions :: forall m . TgBotAPI.Common.MonadHTTP m => PostSetChatPermissionsRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetChatPermissionsResponse) -- ^ Monadic computation which returns the result of the operation
-postSetChatPermissions body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetChatPermissionsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetChatPermissions body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetChatPermissionsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                      PostSetChatPermissionsResponseBody200)
-                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                               | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                        Error)
                                                                                                                                                                                | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setChatPermissions") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/setChatPermissions.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,41 +58,41 @@ postSetChatPermissions body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.
 -- 
 data PostSetChatPermissionsRequestBody = PostSetChatPermissionsRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-  postSetChatPermissionsRequestBodyChatId :: PostSetChatPermissionsRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | permissions: Describes actions that a non-administrator user is allowed to take in a chat.
-  , postSetChatPermissionsRequestBodyPermissions :: ChatPermissions
+  , permissions :: ChatPermissions
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatPermissionsRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postSetChatPermissionsRequestBodyChatId obj : "permissions" Data.Aeson.Types.ToJSON..= postSetChatPermissionsRequestBodyPermissions obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postSetChatPermissionsRequestBodyChatId obj) GHC.Base.<> ("permissions" Data.Aeson.Types.ToJSON..= postSetChatPermissionsRequestBodyPermissions obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "permissions" Data.Aeson.Types.ToJSON..= permissions obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> ("permissions" Data.Aeson.Types.ToJSON..= permissions obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatPermissionsRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetChatPermissionsRequestBody" (\obj -> (GHC.Base.pure PostSetChatPermissionsRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "permissions"))
 -- | Create a new 'PostSetChatPermissionsRequestBody' with all required fields.
-mkPostSetChatPermissionsRequestBody :: PostSetChatPermissionsRequestBodyChatIdVariants -- ^ 'postSetChatPermissionsRequestBodyChatId'
-  -> ChatPermissions -- ^ 'postSetChatPermissionsRequestBodyPermissions'
+mkPostSetChatPermissionsRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> ChatPermissions -- ^ 'permissions'
   -> PostSetChatPermissionsRequestBody
-mkPostSetChatPermissionsRequestBody postSetChatPermissionsRequestBodyChatId postSetChatPermissionsRequestBodyPermissions = PostSetChatPermissionsRequestBody{postSetChatPermissionsRequestBodyChatId = postSetChatPermissionsRequestBodyChatId,
-                                                                                                                                                             postSetChatPermissionsRequestBodyPermissions = postSetChatPermissionsRequestBodyPermissions}
+mkPostSetChatPermissionsRequestBody chatId permissions = PostSetChatPermissionsRequestBody{chatId = chatId,
+                                                                                           permissions = permissions}
 -- | Defines the oneOf schema located at @paths.\/setChatPermissions.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-data PostSetChatPermissionsRequestBodyChatIdVariants =
-   PostSetChatPermissionsRequestBodyChatIdInt GHC.Types.Int
-  | PostSetChatPermissionsRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatPermissionsRequestBodyChatIdVariants
-    where toJSON (PostSetChatPermissionsRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostSetChatPermissionsRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatPermissionsRequestBodyChatIdVariants
-    where parseJSON val = case (PostSetChatPermissionsRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostSetChatPermissionsRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postSetChatPermissions'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetChatPermissionsResponseError' is used.
 data PostSetChatPermissionsResponse =
-   PostSetChatPermissionsResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetChatPermissionsResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetChatPermissionsResponse200 PostSetChatPermissionsResponseBody200 -- ^ 
   | PostSetChatPermissionsResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -101,22 +101,22 @@ data PostSetChatPermissionsResponse =
 -- 
 data PostSetChatPermissionsResponseBody200 = PostSetChatPermissionsResponseBody200 {
   -- | ok
-  postSetChatPermissionsResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetChatPermissionsResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatPermissionsResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetChatPermissionsResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetChatPermissionsResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetChatPermissionsResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetChatPermissionsResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatPermissionsResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetChatPermissionsResponseBody200" (\obj -> (GHC.Base.pure PostSetChatPermissionsResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetChatPermissionsResponseBody200' with all required fields.
-mkPostSetChatPermissionsResponseBody200 :: GHC.Types.Bool -- ^ 'postSetChatPermissionsResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetChatPermissionsResponseBody200Result'
+mkPostSetChatPermissionsResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetChatPermissionsResponseBody200
-mkPostSetChatPermissionsResponseBody200 postSetChatPermissionsResponseBody200Ok postSetChatPermissionsResponseBody200Result = PostSetChatPermissionsResponseBody200{postSetChatPermissionsResponseBody200Ok = postSetChatPermissionsResponseBody200Ok,
-                                                                                                                                                                    postSetChatPermissionsResponseBody200Result = postSetChatPermissionsResponseBody200Result}
+mkPostSetChatPermissionsResponseBody200 ok result = PostSetChatPermissionsResponseBody200{ok = ok,
+                                                                                          result = result}
 -- | > POST /setChatPermissions
 -- 
 -- The same as 'postSetChatPermissions' but accepts an explicit configuration.
@@ -124,9 +124,9 @@ postSetChatPermissionsWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP 
   -> PostSetChatPermissionsRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSetChatPermissionsResponse) -- ^ Monadic computation which returns the result of the operation
 postSetChatPermissionsWithConfiguration config
-                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetChatPermissionsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                        body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetChatPermissionsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                       PostSetChatPermissionsResponseBody200)
-                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatPermissionsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setChatPermissions") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /setChatPermissions

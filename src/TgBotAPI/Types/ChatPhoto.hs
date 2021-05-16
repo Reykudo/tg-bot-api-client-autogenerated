@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ChatPhoto
 module TgBotAPI.Types.ChatPhoto where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,27 +37,27 @@ import TgBotAPI.TypeAlias
 -- This object represents a chat photo.
 data ChatPhoto = ChatPhoto {
   -- | big_file_id: File identifier of big (640x640) chat photo. This file\\_id can be used only for photo download and only for as long as the photo is not changed.
-  chatPhotoBigFileId :: Data.Text.Internal.Text
+  bigFileId :: Data.Text.Internal.Text
   -- | big_file_unique_id: Unique file identifier of big (640x640) chat photo, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , chatPhotoBigFileUniqueId :: Data.Text.Internal.Text
+  , bigFileUniqueId :: Data.Text.Internal.Text
   -- | small_file_id: File identifier of small (160x160) chat photo. This file\\_id can be used only for photo download and only for as long as the photo is not changed.
-  , chatPhotoSmallFileId :: Data.Text.Internal.Text
+  , smallFileId :: Data.Text.Internal.Text
   -- | small_file_unique_id: Unique file identifier of small (160x160) chat photo, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , chatPhotoSmallFileUniqueId :: Data.Text.Internal.Text
+  , smallFileUniqueId :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatPhoto
-    where toJSON obj = Data.Aeson.Types.Internal.object ("big_file_id" Data.Aeson.Types.ToJSON..= chatPhotoBigFileId obj : "big_file_unique_id" Data.Aeson.Types.ToJSON..= chatPhotoBigFileUniqueId obj : "small_file_id" Data.Aeson.Types.ToJSON..= chatPhotoSmallFileId obj : "small_file_unique_id" Data.Aeson.Types.ToJSON..= chatPhotoSmallFileUniqueId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("big_file_id" Data.Aeson.Types.ToJSON..= chatPhotoBigFileId obj) GHC.Base.<> (("big_file_unique_id" Data.Aeson.Types.ToJSON..= chatPhotoBigFileUniqueId obj) GHC.Base.<> (("small_file_id" Data.Aeson.Types.ToJSON..= chatPhotoSmallFileId obj) GHC.Base.<> ("small_file_unique_id" Data.Aeson.Types.ToJSON..= chatPhotoSmallFileUniqueId obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("big_file_id" Data.Aeson.Types.ToJSON..= bigFileId obj : "big_file_unique_id" Data.Aeson.Types.ToJSON..= bigFileUniqueId obj : "small_file_id" Data.Aeson.Types.ToJSON..= smallFileId obj : "small_file_unique_id" Data.Aeson.Types.ToJSON..= smallFileUniqueId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("big_file_id" Data.Aeson.Types.ToJSON..= bigFileId obj) GHC.Base.<> (("big_file_unique_id" Data.Aeson.Types.ToJSON..= bigFileUniqueId obj) GHC.Base.<> (("small_file_id" Data.Aeson.Types.ToJSON..= smallFileId obj) GHC.Base.<> ("small_file_unique_id" Data.Aeson.Types.ToJSON..= smallFileUniqueId obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON ChatPhoto
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChatPhoto" (\obj -> (((GHC.Base.pure ChatPhoto GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "big_file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "big_file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "small_file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "small_file_unique_id"))
 -- | Create a new 'ChatPhoto' with all required fields.
-mkChatPhoto :: Data.Text.Internal.Text -- ^ 'chatPhotoBigFileId'
-  -> Data.Text.Internal.Text -- ^ 'chatPhotoBigFileUniqueId'
-  -> Data.Text.Internal.Text -- ^ 'chatPhotoSmallFileId'
-  -> Data.Text.Internal.Text -- ^ 'chatPhotoSmallFileUniqueId'
+mkChatPhoto :: Data.Text.Internal.Text -- ^ 'bigFileId'
+  -> Data.Text.Internal.Text -- ^ 'bigFileUniqueId'
+  -> Data.Text.Internal.Text -- ^ 'smallFileId'
+  -> Data.Text.Internal.Text -- ^ 'smallFileUniqueId'
   -> ChatPhoto
-mkChatPhoto chatPhotoBigFileId chatPhotoBigFileUniqueId chatPhotoSmallFileId chatPhotoSmallFileUniqueId = ChatPhoto{chatPhotoBigFileId = chatPhotoBigFileId,
-                                                                                                                    chatPhotoBigFileUniqueId = chatPhotoBigFileUniqueId,
-                                                                                                                    chatPhotoSmallFileId = chatPhotoSmallFileId,
-                                                                                                                    chatPhotoSmallFileUniqueId = chatPhotoSmallFileUniqueId}
+mkChatPhoto bigFileId bigFileUniqueId smallFileId smallFileUniqueId = ChatPhoto{bigFileId = bigFileId,
+                                                                                bigFileUniqueId = bigFileUniqueId,
+                                                                                smallFileId = smallFileId,
+                                                                                smallFileUniqueId = smallFileUniqueId}

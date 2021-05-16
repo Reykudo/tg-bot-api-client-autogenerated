@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultGif
 module TgBotAPI.Types.InlineQueryResultGif where
@@ -24,94 +25,93 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
-import {-# SOURCE #-} TgBotAPI.Types.InputMessageContent
-import {-# SOURCE #-} TgBotAPI.Types.MessageEntity
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
+import  {-# SOURCE #-}  TgBotAPI.Types.InputMessageContent (InputMessageContent)
+import  {-# SOURCE #-}  TgBotAPI.Types.MessageEntity (MessageEntity)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultGif@ in the specification.
 -- 
 -- Represents a link to an animated GIF file. By default, this animated GIF file will be sent by the user with optional caption. Alternatively, you can use *input\\_message\\_content* to send a message with the specified content instead of the animation.
 data InlineQueryResultGif = InlineQueryResultGif {
   -- | caption: *Optional*. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
-  inlineQueryResultGifCaption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  caption :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | caption_entities: *Optional*. List of special entities that appear in the caption, which can be specified instead of *parse\\_mode*
-  , inlineQueryResultGifCaptionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
+  , captionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | gif_duration: *Optional*. Duration of the GIF
-  , inlineQueryResultGifGifDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , gifDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | gif_height: *Optional*. Height of the GIF
-  , inlineQueryResultGifGifHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , gifHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | gif_url: A valid URL for the GIF file. File size must not exceed 1MB
-  , inlineQueryResultGifGifUrl :: Data.Text.Internal.Text
+  , gifUrl :: Data.Text.Internal.Text
   -- | gif_width: *Optional*. Width of the GIF
-  , inlineQueryResultGifGifWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , gifWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | id: Unique identifier for this result, 1-64 bytes
-  , inlineQueryResultGifId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
-  , inlineQueryResultGifInputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
+  , inputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
   -- | parse_mode: *Optional*. Mode for parsing entities in the caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
-  , inlineQueryResultGifParseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultGifReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_mime_type: *Optional*. MIME type of the thumbnail, must be one of “image\/jpeg”, “image\/gif”, or “video\/mp4”. Defaults to “image\/jpeg”
-  , inlineQueryResultGifThumbMimeType :: (GHC.Maybe.Maybe InlineQueryResultGifThumbMimeType)
+  , thumbMimeType :: (GHC.Maybe.Maybe ThumbMimeType)
   -- | thumb_url: URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
-  , inlineQueryResultGifThumbUrl :: Data.Text.Internal.Text
+  , thumbUrl :: Data.Text.Internal.Text
   -- | title: *Optional*. Title for the result
-  , inlineQueryResultGifTitle :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , title :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | type: Type of the result, must be *gif*
-  , inlineQueryResultGifType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultGif
-    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= inlineQueryResultGifCaption obj : "caption_entities" Data.Aeson.Types.ToJSON..= inlineQueryResultGifCaptionEntities obj : "gif_duration" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifDuration obj : "gif_height" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifHeight obj : "gif_url" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifUrl obj : "gif_width" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifWidth obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryResultGifId obj : "input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultGifInputMessageContent obj : "parse_mode" Data.Aeson.Types.ToJSON..= inlineQueryResultGifParseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultGifReplyMarkup obj : "thumb_mime_type" Data.Aeson.Types.ToJSON..= inlineQueryResultGifThumbMimeType obj : "thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultGifThumbUrl obj : "title" Data.Aeson.Types.ToJSON..= inlineQueryResultGifTitle obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultGifType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= inlineQueryResultGifCaption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= inlineQueryResultGifCaptionEntities obj) GHC.Base.<> (("gif_duration" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifDuration obj) GHC.Base.<> (("gif_height" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifHeight obj) GHC.Base.<> (("gif_url" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifUrl obj) GHC.Base.<> (("gif_width" Data.Aeson.Types.ToJSON..= inlineQueryResultGifGifWidth obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultGifId obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inlineQueryResultGifInputMessageContent obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= inlineQueryResultGifParseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultGifReplyMarkup obj) GHC.Base.<> (("thumb_mime_type" Data.Aeson.Types.ToJSON..= inlineQueryResultGifThumbMimeType obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= inlineQueryResultGifThumbUrl obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= inlineQueryResultGifTitle obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= inlineQueryResultGifType obj))))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("caption" Data.Aeson.Types.ToJSON..= caption obj : "caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj : "gif_duration" Data.Aeson.Types.ToJSON..= gifDuration obj : "gif_height" Data.Aeson.Types.ToJSON..= gifHeight obj : "gif_url" Data.Aeson.Types.ToJSON..= gifUrl obj : "gif_width" Data.Aeson.Types.ToJSON..= gifWidth obj : "id" Data.Aeson.Types.ToJSON..= id obj : "input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj : "parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "thumb_mime_type" Data.Aeson.Types.ToJSON..= thumbMimeType obj : "thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj : "title" Data.Aeson.Types.ToJSON..= title obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("caption" Data.Aeson.Types.ToJSON..= caption obj) GHC.Base.<> (("caption_entities" Data.Aeson.Types.ToJSON..= captionEntities obj) GHC.Base.<> (("gif_duration" Data.Aeson.Types.ToJSON..= gifDuration obj) GHC.Base.<> (("gif_height" Data.Aeson.Types.ToJSON..= gifHeight obj) GHC.Base.<> (("gif_url" Data.Aeson.Types.ToJSON..= gifUrl obj) GHC.Base.<> (("gif_width" Data.Aeson.Types.ToJSON..= gifWidth obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("input_message_content" Data.Aeson.Types.ToJSON..= inputMessageContent obj) GHC.Base.<> (("parse_mode" Data.Aeson.Types.ToJSON..= parseMode obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> (("thumb_mime_type" Data.Aeson.Types.ToJSON..= thumbMimeType obj) GHC.Base.<> (("thumb_url" Data.Aeson.Types.ToJSON..= thumbUrl obj) GHC.Base.<> (("title" Data.Aeson.Types.ToJSON..= title obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj))))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultGif
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultGif" (\obj -> (((((((((((((GHC.Base.pure InlineQueryResultGif GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption_entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "gif_duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "gif_height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "gif_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "gif_width")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "input_message_content")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parse_mode")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb_mime_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "thumb_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'InlineQueryResultGif' with all required fields.
-mkInlineQueryResultGif :: Data.Text.Internal.Text -- ^ 'inlineQueryResultGifGifUrl'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultGifId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultGifThumbUrl'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultGifType'
+mkInlineQueryResultGif :: Data.Text.Internal.Text -- ^ 'gifUrl'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'thumbUrl'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> InlineQueryResultGif
-mkInlineQueryResultGif inlineQueryResultGifGifUrl inlineQueryResultGifId inlineQueryResultGifThumbUrl inlineQueryResultGifType = InlineQueryResultGif{inlineQueryResultGifCaption = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifCaptionEntities = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifGifDuration = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifGifHeight = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifGifUrl = inlineQueryResultGifGifUrl,
-                                                                                                                                                      inlineQueryResultGifGifWidth = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifId = inlineQueryResultGifId,
-                                                                                                                                                      inlineQueryResultGifInputMessageContent = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifParseMode = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifThumbMimeType = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifThumbUrl = inlineQueryResultGifThumbUrl,
-                                                                                                                                                      inlineQueryResultGifTitle = GHC.Maybe.Nothing,
-                                                                                                                                                      inlineQueryResultGifType = inlineQueryResultGifType}
+mkInlineQueryResultGif gifUrl id thumbUrl type' = InlineQueryResultGif{caption = GHC.Maybe.Nothing,
+                                                                       captionEntities = GHC.Maybe.Nothing,
+                                                                       gifDuration = GHC.Maybe.Nothing,
+                                                                       gifHeight = GHC.Maybe.Nothing,
+                                                                       gifUrl = gifUrl,
+                                                                       gifWidth = GHC.Maybe.Nothing,
+                                                                       id = id,
+                                                                       inputMessageContent = GHC.Maybe.Nothing,
+                                                                       parseMode = GHC.Maybe.Nothing,
+                                                                       replyMarkup = GHC.Maybe.Nothing,
+                                                                       thumbMimeType = GHC.Maybe.Nothing,
+                                                                       thumbUrl = thumbUrl,
+                                                                       title = GHC.Maybe.Nothing,
+                                                                       type' = type'}
 -- | Defines the enum schema located at @components.schemas.InlineQueryResultGif.properties.thumb_mime_type@ in the specification.
 -- 
 -- *Optional*. MIME type of the thumbnail, must be one of “image\/jpeg”, “image\/gif”, or “video\/mp4”. Defaults to “image\/jpeg”
-data InlineQueryResultGifThumbMimeType =
-   InlineQueryResultGifThumbMimeTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | InlineQueryResultGifThumbMimeTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | InlineQueryResultGifThumbMimeTypeEnumImageJpeg -- ^ Represents the JSON value @"image/jpeg"@
-  | InlineQueryResultGifThumbMimeTypeEnumImageGif -- ^ Represents the JSON value @"image/gif"@
-  | InlineQueryResultGifThumbMimeTypeEnumVideoMp4 -- ^ Represents the JSON value @"video/mp4"@
+data ThumbMimeType =
+   ThumbMimeTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | ThumbMimeTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | ThumbMimeTypeEnumImageJpeg -- ^ Represents the JSON value @"image/jpeg"@
+  | ThumbMimeTypeEnumImageGif -- ^ Represents the JSON value @"image/gif"@
+  | ThumbMimeTypeEnumVideoMp4 -- ^ Represents the JSON value @"video/mp4"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultGifThumbMimeType
-    where toJSON (InlineQueryResultGifThumbMimeTypeOther val) = val
-          toJSON (InlineQueryResultGifThumbMimeTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (InlineQueryResultGifThumbMimeTypeEnumImageJpeg) = "image/jpeg"
-          toJSON (InlineQueryResultGifThumbMimeTypeEnumImageGif) = "image/gif"
-          toJSON (InlineQueryResultGifThumbMimeTypeEnumVideoMp4) = "video/mp4"
-instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultGifThumbMimeType
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "image/jpeg" -> InlineQueryResultGifThumbMimeTypeEnumImageJpeg
-                                            | val GHC.Classes.== "image/gif" -> InlineQueryResultGifThumbMimeTypeEnumImageGif
-                                            | val GHC.Classes.== "video/mp4" -> InlineQueryResultGifThumbMimeTypeEnumVideoMp4
-                                            | GHC.Base.otherwise -> InlineQueryResultGifThumbMimeTypeOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON ThumbMimeType
+    where toJSON (ThumbMimeTypeOther val) = val
+          toJSON (ThumbMimeTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (ThumbMimeTypeEnumImageJpeg) = "image/jpeg"
+          toJSON (ThumbMimeTypeEnumImageGif) = "image/gif"
+          toJSON (ThumbMimeTypeEnumVideoMp4) = "video/mp4"
+instance Data.Aeson.Types.FromJSON.FromJSON ThumbMimeType
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "image/jpeg" -> ThumbMimeTypeEnumImageJpeg
+                                            | val GHC.Classes.== "image/gif" -> ThumbMimeTypeEnumImageGif
+                                            | val GHC.Classes.== "video/mp4" -> ThumbMimeTypeEnumVideoMp4
+                                            | GHC.Base.otherwise -> ThumbMimeTypeOther val)

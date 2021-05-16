@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InputLocationMessageContent
 module TgBotAPI.Types.InputLocationMessageContent where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,31 +37,31 @@ import TgBotAPI.TypeAlias
 -- Represents the [content](https:\/\/core.telegram.org\/bots\/api\/\#inputmessagecontent) of a location message to be sent as the result of an inline query.
 data InputLocationMessageContent = InputLocationMessageContent {
   -- | heading: *Optional*. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
-  inputLocationMessageContentHeading :: (GHC.Maybe.Maybe GHC.Types.Int)
+  heading :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | horizontal_accuracy: *Optional*. The radius of uncertainty for the location, measured in meters; 0-1500
-  , inputLocationMessageContentHorizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
+  , horizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | latitude: Latitude of the location in degrees
-  , inputLocationMessageContentLatitude :: GHC.Types.Double
+  , latitude :: GHC.Types.Double
   -- | live_period: *Optional*. Period in seconds for which the location can be updated, should be between 60 and 86400.
-  , inputLocationMessageContentLivePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , livePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | longitude: Longitude of the location in degrees
-  , inputLocationMessageContentLongitude :: GHC.Types.Double
+  , longitude :: GHC.Types.Double
   -- | proximity_alert_radius: *Optional*. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
-  , inputLocationMessageContentProximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InputLocationMessageContent
-    where toJSON obj = Data.Aeson.Types.Internal.object ("heading" Data.Aeson.Types.ToJSON..= inputLocationMessageContentHeading obj : "horizontal_accuracy" Data.Aeson.Types.ToJSON..= inputLocationMessageContentHorizontalAccuracy obj : "latitude" Data.Aeson.Types.ToJSON..= inputLocationMessageContentLatitude obj : "live_period" Data.Aeson.Types.ToJSON..= inputLocationMessageContentLivePeriod obj : "longitude" Data.Aeson.Types.ToJSON..= inputLocationMessageContentLongitude obj : "proximity_alert_radius" Data.Aeson.Types.ToJSON..= inputLocationMessageContentProximityAlertRadius obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("heading" Data.Aeson.Types.ToJSON..= inputLocationMessageContentHeading obj) GHC.Base.<> (("horizontal_accuracy" Data.Aeson.Types.ToJSON..= inputLocationMessageContentHorizontalAccuracy obj) GHC.Base.<> (("latitude" Data.Aeson.Types.ToJSON..= inputLocationMessageContentLatitude obj) GHC.Base.<> (("live_period" Data.Aeson.Types.ToJSON..= inputLocationMessageContentLivePeriod obj) GHC.Base.<> (("longitude" Data.Aeson.Types.ToJSON..= inputLocationMessageContentLongitude obj) GHC.Base.<> ("proximity_alert_radius" Data.Aeson.Types.ToJSON..= inputLocationMessageContentProximityAlertRadius obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("heading" Data.Aeson.Types.ToJSON..= heading obj : "horizontal_accuracy" Data.Aeson.Types.ToJSON..= horizontalAccuracy obj : "latitude" Data.Aeson.Types.ToJSON..= latitude obj : "live_period" Data.Aeson.Types.ToJSON..= livePeriod obj : "longitude" Data.Aeson.Types.ToJSON..= longitude obj : "proximity_alert_radius" Data.Aeson.Types.ToJSON..= proximityAlertRadius obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("heading" Data.Aeson.Types.ToJSON..= heading obj) GHC.Base.<> (("horizontal_accuracy" Data.Aeson.Types.ToJSON..= horizontalAccuracy obj) GHC.Base.<> (("latitude" Data.Aeson.Types.ToJSON..= latitude obj) GHC.Base.<> (("live_period" Data.Aeson.Types.ToJSON..= livePeriod obj) GHC.Base.<> (("longitude" Data.Aeson.Types.ToJSON..= longitude obj) GHC.Base.<> ("proximity_alert_radius" Data.Aeson.Types.ToJSON..= proximityAlertRadius obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InputLocationMessageContent
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InputLocationMessageContent" (\obj -> (((((GHC.Base.pure InputLocationMessageContent GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "heading")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "horizontal_accuracy")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "latitude")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "live_period")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "longitude")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "proximity_alert_radius"))
 -- | Create a new 'InputLocationMessageContent' with all required fields.
-mkInputLocationMessageContent :: GHC.Types.Double -- ^ 'inputLocationMessageContentLatitude'
-  -> GHC.Types.Double -- ^ 'inputLocationMessageContentLongitude'
+mkInputLocationMessageContent :: GHC.Types.Double -- ^ 'latitude'
+  -> GHC.Types.Double -- ^ 'longitude'
   -> InputLocationMessageContent
-mkInputLocationMessageContent inputLocationMessageContentLatitude inputLocationMessageContentLongitude = InputLocationMessageContent{inputLocationMessageContentHeading = GHC.Maybe.Nothing,
-                                                                                                                                     inputLocationMessageContentHorizontalAccuracy = GHC.Maybe.Nothing,
-                                                                                                                                     inputLocationMessageContentLatitude = inputLocationMessageContentLatitude,
-                                                                                                                                     inputLocationMessageContentLivePeriod = GHC.Maybe.Nothing,
-                                                                                                                                     inputLocationMessageContentLongitude = inputLocationMessageContentLongitude,
-                                                                                                                                     inputLocationMessageContentProximityAlertRadius = GHC.Maybe.Nothing}
+mkInputLocationMessageContent latitude longitude = InputLocationMessageContent{heading = GHC.Maybe.Nothing,
+                                                                               horizontalAccuracy = GHC.Maybe.Nothing,
+                                                                               latitude = latitude,
+                                                                               livePeriod = GHC.Maybe.Nothing,
+                                                                               longitude = longitude,
+                                                                               proximityAlertRadius = GHC.Maybe.Nothing}

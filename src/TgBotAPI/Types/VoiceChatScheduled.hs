@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema VoiceChatScheduled
 module TgBotAPI.Types.VoiceChatScheduled where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,15 +37,15 @@ import TgBotAPI.TypeAlias
 -- This object represents a service message about a voice chat scheduled in the chat.
 data VoiceChatScheduled = VoiceChatScheduled {
   -- | start_date: Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
-  voiceChatScheduledStartDate :: GHC.Types.Int
+  startDate :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatScheduled
-    where toJSON obj = Data.Aeson.Types.Internal.object ("start_date" Data.Aeson.Types.ToJSON..= voiceChatScheduledStartDate obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("start_date" Data.Aeson.Types.ToJSON..= voiceChatScheduledStartDate obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("start_date" Data.Aeson.Types.ToJSON..= startDate obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("start_date" Data.Aeson.Types.ToJSON..= startDate obj)
 instance Data.Aeson.Types.FromJSON.FromJSON VoiceChatScheduled
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VoiceChatScheduled" (\obj -> GHC.Base.pure VoiceChatScheduled GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "start_date"))
 -- | Create a new 'VoiceChatScheduled' with all required fields.
-mkVoiceChatScheduled :: GHC.Types.Int -- ^ 'voiceChatScheduledStartDate'
+mkVoiceChatScheduled :: GHC.Types.Int -- ^ 'startDate'
   -> VoiceChatScheduled
-mkVoiceChatScheduled voiceChatScheduledStartDate = VoiceChatScheduled{voiceChatScheduledStartDate = voiceChatScheduledStartDate}
+mkVoiceChatScheduled startDate = VoiceChatScheduled{startDate = startDate}

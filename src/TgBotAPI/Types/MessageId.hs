@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema MessageId
 module TgBotAPI.Types.MessageId where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,15 +37,15 @@ import TgBotAPI.TypeAlias
 -- This object represents a unique message identifier.
 data MessageId = MessageId {
   -- | message_id: Unique message identifier
-  messageIdMessageId :: GHC.Types.Int
+  messageId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON MessageId
-    where toJSON obj = Data.Aeson.Types.Internal.object ("message_id" Data.Aeson.Types.ToJSON..= messageIdMessageId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("message_id" Data.Aeson.Types.ToJSON..= messageIdMessageId obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("message_id" Data.Aeson.Types.ToJSON..= messageId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("message_id" Data.Aeson.Types.ToJSON..= messageId obj)
 instance Data.Aeson.Types.FromJSON.FromJSON MessageId
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "MessageId" (\obj -> GHC.Base.pure MessageId GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'MessageId' with all required fields.
-mkMessageId :: GHC.Types.Int -- ^ 'messageIdMessageId'
+mkMessageId :: GHC.Types.Int -- ^ 'messageId'
   -> MessageId
-mkMessageId messageIdMessageId = MessageId{messageIdMessageId = messageIdMessageId}
+mkMessageId messageId = MessageId{messageId = messageId}

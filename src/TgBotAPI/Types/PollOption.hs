@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PollOption
 module TgBotAPI.Types.PollOption where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,19 +37,19 @@ import TgBotAPI.TypeAlias
 -- This object contains information about one answer option in a poll.
 data PollOption = PollOption {
   -- | text: Option text, 1-100 characters
-  pollOptionText :: Data.Text.Internal.Text
+  text :: Data.Text.Internal.Text
   -- | voter_count: Number of users that voted for this option
-  , pollOptionVoterCount :: GHC.Types.Int
+  , voterCount :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PollOption
-    where toJSON obj = Data.Aeson.Types.Internal.object ("text" Data.Aeson.Types.ToJSON..= pollOptionText obj : "voter_count" Data.Aeson.Types.ToJSON..= pollOptionVoterCount obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("text" Data.Aeson.Types.ToJSON..= pollOptionText obj) GHC.Base.<> ("voter_count" Data.Aeson.Types.ToJSON..= pollOptionVoterCount obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("text" Data.Aeson.Types.ToJSON..= text obj : "voter_count" Data.Aeson.Types.ToJSON..= voterCount obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("text" Data.Aeson.Types.ToJSON..= text obj) GHC.Base.<> ("voter_count" Data.Aeson.Types.ToJSON..= voterCount obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PollOption
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PollOption" (\obj -> (GHC.Base.pure PollOption GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "text")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "voter_count"))
 -- | Create a new 'PollOption' with all required fields.
-mkPollOption :: Data.Text.Internal.Text -- ^ 'pollOptionText'
-  -> GHC.Types.Int -- ^ 'pollOptionVoterCount'
+mkPollOption :: Data.Text.Internal.Text -- ^ 'text'
+  -> GHC.Types.Int -- ^ 'voterCount'
   -> PollOption
-mkPollOption pollOptionText pollOptionVoterCount = PollOption{pollOptionText = pollOptionText,
-                                                              pollOptionVoterCount = pollOptionVoterCount}
+mkPollOption text voterCount = PollOption{text = text,
+                                          voterCount = voterCount}

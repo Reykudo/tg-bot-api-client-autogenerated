@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ShippingAddress
 module TgBotAPI.Types.ShippingAddress where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,35 +37,35 @@ import TgBotAPI.TypeAlias
 -- This object represents a shipping address.
 data ShippingAddress = ShippingAddress {
   -- | city: City
-  shippingAddressCity :: Data.Text.Internal.Text
+  city :: Data.Text.Internal.Text
   -- | country_code: ISO 3166-1 alpha-2 country code
-  , shippingAddressCountryCode :: Data.Text.Internal.Text
+  , countryCode :: Data.Text.Internal.Text
   -- | post_code: Address post code
-  , shippingAddressPostCode :: Data.Text.Internal.Text
+  , postCode :: Data.Text.Internal.Text
   -- | state: State, if applicable
-  , shippingAddressState :: Data.Text.Internal.Text
+  , state :: Data.Text.Internal.Text
   -- | street_line1: First line for the address
-  , shippingAddressStreetLine1 :: Data.Text.Internal.Text
+  , streetLine1 :: Data.Text.Internal.Text
   -- | street_line2: Second line for the address
-  , shippingAddressStreetLine2 :: Data.Text.Internal.Text
+  , streetLine2 :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ShippingAddress
-    where toJSON obj = Data.Aeson.Types.Internal.object ("city" Data.Aeson.Types.ToJSON..= shippingAddressCity obj : "country_code" Data.Aeson.Types.ToJSON..= shippingAddressCountryCode obj : "post_code" Data.Aeson.Types.ToJSON..= shippingAddressPostCode obj : "state" Data.Aeson.Types.ToJSON..= shippingAddressState obj : "street_line1" Data.Aeson.Types.ToJSON..= shippingAddressStreetLine1 obj : "street_line2" Data.Aeson.Types.ToJSON..= shippingAddressStreetLine2 obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("city" Data.Aeson.Types.ToJSON..= shippingAddressCity obj) GHC.Base.<> (("country_code" Data.Aeson.Types.ToJSON..= shippingAddressCountryCode obj) GHC.Base.<> (("post_code" Data.Aeson.Types.ToJSON..= shippingAddressPostCode obj) GHC.Base.<> (("state" Data.Aeson.Types.ToJSON..= shippingAddressState obj) GHC.Base.<> (("street_line1" Data.Aeson.Types.ToJSON..= shippingAddressStreetLine1 obj) GHC.Base.<> ("street_line2" Data.Aeson.Types.ToJSON..= shippingAddressStreetLine2 obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("city" Data.Aeson.Types.ToJSON..= city obj : "country_code" Data.Aeson.Types.ToJSON..= countryCode obj : "post_code" Data.Aeson.Types.ToJSON..= postCode obj : "state" Data.Aeson.Types.ToJSON..= state obj : "street_line1" Data.Aeson.Types.ToJSON..= streetLine1 obj : "street_line2" Data.Aeson.Types.ToJSON..= streetLine2 obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("city" Data.Aeson.Types.ToJSON..= city obj) GHC.Base.<> (("country_code" Data.Aeson.Types.ToJSON..= countryCode obj) GHC.Base.<> (("post_code" Data.Aeson.Types.ToJSON..= postCode obj) GHC.Base.<> (("state" Data.Aeson.Types.ToJSON..= state obj) GHC.Base.<> (("street_line1" Data.Aeson.Types.ToJSON..= streetLine1 obj) GHC.Base.<> ("street_line2" Data.Aeson.Types.ToJSON..= streetLine2 obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON ShippingAddress
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ShippingAddress" (\obj -> (((((GHC.Base.pure ShippingAddress GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "city")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "country_code")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "post_code")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "state")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "street_line1")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "street_line2"))
 -- | Create a new 'ShippingAddress' with all required fields.
-mkShippingAddress :: Data.Text.Internal.Text -- ^ 'shippingAddressCity'
-  -> Data.Text.Internal.Text -- ^ 'shippingAddressCountryCode'
-  -> Data.Text.Internal.Text -- ^ 'shippingAddressPostCode'
-  -> Data.Text.Internal.Text -- ^ 'shippingAddressState'
-  -> Data.Text.Internal.Text -- ^ 'shippingAddressStreetLine1'
-  -> Data.Text.Internal.Text -- ^ 'shippingAddressStreetLine2'
+mkShippingAddress :: Data.Text.Internal.Text -- ^ 'city'
+  -> Data.Text.Internal.Text -- ^ 'countryCode'
+  -> Data.Text.Internal.Text -- ^ 'postCode'
+  -> Data.Text.Internal.Text -- ^ 'state'
+  -> Data.Text.Internal.Text -- ^ 'streetLine1'
+  -> Data.Text.Internal.Text -- ^ 'streetLine2'
   -> ShippingAddress
-mkShippingAddress shippingAddressCity shippingAddressCountryCode shippingAddressPostCode shippingAddressState shippingAddressStreetLine1 shippingAddressStreetLine2 = ShippingAddress{shippingAddressCity = shippingAddressCity,
-                                                                                                                                                                                      shippingAddressCountryCode = shippingAddressCountryCode,
-                                                                                                                                                                                      shippingAddressPostCode = shippingAddressPostCode,
-                                                                                                                                                                                      shippingAddressState = shippingAddressState,
-                                                                                                                                                                                      shippingAddressStreetLine1 = shippingAddressStreetLine1,
-                                                                                                                                                                                      shippingAddressStreetLine2 = shippingAddressStreetLine2}
+mkShippingAddress city countryCode postCode state streetLine1 streetLine2 = ShippingAddress{city = city,
+                                                                                            countryCode = countryCode,
+                                                                                            postCode = postCode,
+                                                                                            state = state,
+                                                                                            streetLine1 = streetLine1,
+                                                                                            streetLine2 = streetLine2}
