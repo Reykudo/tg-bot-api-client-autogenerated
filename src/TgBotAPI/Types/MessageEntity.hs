@@ -40,9 +40,9 @@ data MessageEntity = MessageEntity {
   -- | language: *Optional*. For “pre” only, the programming language of the entity text
   language :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | length: Length of the entity in UTF-16 code units
-  , length :: GHC.Types.Int
+  , length :: GHC.Int.Int64
   -- | offset: Offset in UTF-16 code units to the start of the entity
-  , offset :: GHC.Types.Int
+  , offset :: GHC.Int.Int64
   -- | type: Type of the entity. Can be “mention” (\`\@username\`), “hashtag” (\`\#hashtag\`), “cashtag” (\`\$USD\`), “bot\\_command” (\`\/start\@jobs_bot\`), “url” (\`https:\/\/telegram.org\`), “email” (\`do-not-reply\@telegram.org\`), “phone\\_number” (\`+1-212-555-0123\`), “bold” (**bold text**), “italic” (*italic text*), “underline” (underlined text), “strikethrough” (strikethrough text), “code” (monowidth string), “pre” (monowidth block), “text\\_link” (for clickable text URLs), “text\\_mention” (for users [without usernames](https:\/\/telegram.org\/blog\/edit\#new-mentions))
   , type' :: Type
   -- | url: *Optional*. For “text\\_link” only, url that will be opened after user taps on the text
@@ -57,8 +57,8 @@ instance Data.Aeson.Types.ToJSON.ToJSON MessageEntity
 instance Data.Aeson.Types.FromJSON.FromJSON MessageEntity
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "MessageEntity" (\obj -> (((((GHC.Base.pure MessageEntity GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "language")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "length")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "offset")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "user"))
 -- | Create a new 'MessageEntity' with all required fields.
-mkMessageEntity :: GHC.Types.Int -- ^ 'length'
-  -> GHC.Types.Int -- ^ 'offset'
+mkMessageEntity :: GHC.Int.Int64 -- ^ 'length'
+  -> GHC.Int.Int64 -- ^ 'offset'
   -> Type -- ^ 'type''
   -> MessageEntity
 mkMessageEntity length offset type' = MessageEntity{language = GHC.Maybe.Nothing,

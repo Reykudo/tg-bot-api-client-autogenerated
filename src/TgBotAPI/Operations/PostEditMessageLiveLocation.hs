@@ -60,7 +60,7 @@ data PostEditMessageLiveLocationRequestBody = PostEditMessageLiveLocationRequest
   -- | chat_id: Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
   chatId :: (GHC.Maybe.Maybe ChatIdVariants)
   -- | heading: Direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
-  , heading :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , heading :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | horizontal_accuracy: The radius of uncertainty for the location, measured in meters; 0-1500
   , horizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | inline_message_id: Required if *chat\\_id* and *message\\_id* are not specified. Identifier of the inline message
@@ -70,9 +70,9 @@ data PostEditMessageLiveLocationRequestBody = PostEditMessageLiveLocationRequest
   -- | longitude: Longitude of new location
   , longitude :: GHC.Types.Double
   -- | message_id: Required if *inline\\_message\\_id* is not specified. Identifier of the message to edit
-  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | proximity_alert_radius: Maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
-  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
   , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   } deriving (GHC.Show.Show
@@ -99,7 +99,7 @@ mkPostEditMessageLiveLocationRequestBody latitude longitude = PostEditMessageLiv
 -- 
 -- Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

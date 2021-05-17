@@ -37,11 +37,11 @@ import TgBotAPI.TypeAlias
 -- This object represents a voice note.
 data Voice = Voice {
   -- | duration: Duration of the audio in seconds as defined by sender
-  duration :: GHC.Types.Int
+  duration :: GHC.Int.Int64
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
   , fileId :: Data.Text.Internal.Text
   -- | file_size: *Optional*. File size
-  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
   , fileUniqueId :: Data.Text.Internal.Text
   -- | mime_type: *Optional*. MIME type of the file as defined by sender
@@ -54,7 +54,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON Voice
 instance Data.Aeson.Types.FromJSON.FromJSON Voice
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Voice" (\obj -> ((((GHC.Base.pure Voice GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "mime_type"))
 -- | Create a new 'Voice' with all required fields.
-mkVoice :: GHC.Types.Int -- ^ 'duration'
+mkVoice :: GHC.Int.Int64 -- ^ 'duration'
   -> Data.Text.Internal.Text -- ^ 'fileId'
   -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
   -> Voice

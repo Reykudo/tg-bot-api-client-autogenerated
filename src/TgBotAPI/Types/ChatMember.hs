@@ -78,7 +78,7 @@ data ChatMember = ChatMember {
   -- | status: The member\'s status in the chat. Can be “creator”, “administrator”, “member”, “restricted”, “left” or “kicked”
   , status :: Status
   -- | until_date: *Optional*. Restricted and kicked only. Date when restrictions will be lifted for this user; unix time
-  , untilDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , untilDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | user: This object represents a Telegram user or bot.
   , user :: User
   } deriving (GHC.Show.Show

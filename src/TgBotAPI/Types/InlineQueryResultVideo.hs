@@ -64,13 +64,13 @@ data InlineQueryResultVideo = InlineQueryResultVideo {
   -- | type: Type of the result, must be *video*
   , type' :: Data.Text.Internal.Text
   -- | video_duration: *Optional*. Video duration in seconds
-  , videoDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , videoDuration :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | video_height: *Optional*. Video height
-  , videoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , videoHeight :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | video_url: A valid URL for the embedded video player or video file
   , videoUrl :: Data.Text.Internal.Text
   -- | video_width: *Optional*. Video width
-  , videoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , videoWidth :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultVideo

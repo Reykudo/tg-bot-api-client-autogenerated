@@ -48,13 +48,13 @@ data InlineQueryResultMpeg4Gif = InlineQueryResultMpeg4Gif {
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:
   , inputMessageContent :: (GHC.Maybe.Maybe InputMessageContent)
   -- | mpeg4_duration: *Optional*. Video duration
-  , mpeg4Duration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , mpeg4Duration :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | mpeg4_height: *Optional*. Video height
-  , mpeg4Height :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , mpeg4Height :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | mpeg4_url: A valid URL for the MP4 file. File size must not exceed 1MB
   , mpeg4Url :: Data.Text.Internal.Text
   -- | mpeg4_width: *Optional*. Video width
-  , mpeg4Width :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , mpeg4Width :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | parse_mode: *Optional*. Mode for parsing entities in the caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
   , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.

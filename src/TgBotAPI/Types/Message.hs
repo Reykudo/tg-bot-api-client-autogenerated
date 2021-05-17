@@ -81,7 +81,7 @@ data Message = Message {
   -- | contact: This object represents a phone contact.
   , contact :: (GHC.Maybe.Maybe Contact)
   -- | date: Date the message was sent in Unix time
-  , date :: GHC.Types.Int
+  , date :: GHC.Int.Int64
   -- | delete_chat_photo: *Optional*. Service message: the chat photo was deleted
   , deleteChatPhoto :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | dice: This object represents an animated emoji that displays a random value.
@@ -89,17 +89,17 @@ data Message = Message {
   -- | document: This object represents a general file (as opposed to [photos](https:\/\/core.telegram.org\/bots\/api\/\#photosize), [voice messages](https:\/\/core.telegram.org\/bots\/api\/\#voice) and [audio files](https:\/\/core.telegram.org\/bots\/api\/\#audio)).
   , document :: (GHC.Maybe.Maybe Document)
   -- | edit_date: *Optional*. Date the message was last edited in Unix time
-  , editDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , editDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | entities: *Optional*. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
   , entities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | forward_date: *Optional*. For forwarded messages, date the original message was sent in Unix time
-  , forwardDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , forwardDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | forward_from: This object represents a Telegram user or bot.
   , forwardFrom :: (GHC.Maybe.Maybe User)
   -- | forward_from_chat: This object represents a chat.
   , forwardFromChat :: (GHC.Maybe.Maybe Chat)
   -- | forward_from_message_id: *Optional*. For messages forwarded from channels, identifier of the original message in the channel
-  , forwardFromMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , forwardFromMessageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | forward_sender_name: *Optional*. Sender\'s name for messages forwarded from users who disallow adding a link to their account in forwarded messages
   , forwardSenderName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | forward_signature: *Optional*. For messages forwarded from channels, signature of the post author if present
@@ -121,11 +121,11 @@ data Message = Message {
   -- | message_auto_delete_timer_changed: This object represents a service message about a change in auto-delete timer settings.
   , messageAutoDeleteTimerChanged :: (GHC.Maybe.Maybe MessageAutoDeleteTimerChanged)
   -- | message_id: Unique message identifier inside this chat
-  , messageId :: GHC.Types.Int
+  , messageId :: GHC.Int.Int64
   -- | migrate_from_chat_id: *Optional*. The supergroup has been migrated from a group with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-  , migrateFromChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , migrateFromChatId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | migrate_to_chat_id: *Optional*. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-  , migrateToChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , migrateToChatId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | new_chat_members: *Optional*. New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)
   , newChatMembers :: (GHC.Maybe.Maybe ([User]))
   -- | new_chat_photo: *Optional*. A chat photo was change to this value
@@ -183,8 +183,8 @@ instance Data.Aeson.Types.FromJSON.FromJSON Message
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Message" (\obj -> (((((((((((((((((((((((((((((((((((((((((((((((((((((((GHC.Base.pure Message GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "animation")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "audio")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "author_signature")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "caption_entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "channel_chat_created")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "connected_website")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "contact")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "delete_chat_photo")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "dice")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "document")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "edit_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "forward_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "forward_from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "forward_from_chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "forward_from_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "forward_sender_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "forward_signature")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "game")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "group_chat_created")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "invoice")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "left_chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "media_group_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_auto_delete_timer_changed")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "migrate_from_chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "migrate_to_chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "new_chat_members")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "new_chat_photo")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "new_chat_title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "passport_data")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "pinned_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "poll")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "proximity_alert_triggered")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_to_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "sender_chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "sticker")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "successful_payment")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "supergroup_chat_created")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "text")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "venue")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "via_bot")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "video")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "video_note")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "voice")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "voice_chat_ended")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "voice_chat_participants_invited")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "voice_chat_scheduled")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "voice_chat_started"))
 -- | Create a new 'Message' with all required fields.
 mkMessage :: Chat -- ^ 'chat'
-  -> GHC.Types.Int -- ^ 'date'
-  -> GHC.Types.Int -- ^ 'messageId'
+  -> GHC.Int.Int64 -- ^ 'date'
+  -> GHC.Int.Int64 -- ^ 'messageId'
   -> Message
 mkMessage chat date messageId = Message{animation = GHC.Maybe.Nothing,
                                         audio = GHC.Maybe.Nothing,

@@ -58,7 +58,7 @@ postSetGameScore body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either
 -- 
 data PostSetGameScoreRequestBody = PostSetGameScoreRequestBody {
   -- | chat_id: Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat
-  chatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  chatId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | disable_edit_message: Pass True, if the game message should not be automatically edited to include the current scoreboard
   , disableEditMessage :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | force: Pass True, if the high score is allowed to decrease. This can be useful when fixing mistakes or banning cheaters
@@ -66,11 +66,11 @@ data PostSetGameScoreRequestBody = PostSetGameScoreRequestBody {
   -- | inline_message_id: Required if *chat\\_id* and *message\\_id* are not specified. Identifier of the inline message
   , inlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | message_id: Required if *inline\\_message\\_id* is not specified. Identifier of the sent message
-  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | score: New score, must be non-negative
-  , score :: GHC.Types.Int
+  , score :: GHC.Int.Int64
   -- | user_id: User identifier
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetGameScoreRequestBody
@@ -79,8 +79,8 @@ instance Data.Aeson.Types.ToJSON.ToJSON PostSetGameScoreRequestBody
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetGameScoreRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetGameScoreRequestBody" (\obj -> ((((((GHC.Base.pure PostSetGameScoreRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_edit_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "force")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "score")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostSetGameScoreRequestBody' with all required fields.
-mkPostSetGameScoreRequestBody :: GHC.Types.Int -- ^ 'score'
-  -> GHC.Types.Int -- ^ 'userId'
+mkPostSetGameScoreRequestBody :: GHC.Int.Int64 -- ^ 'score'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostSetGameScoreRequestBody
 mkPostSetGameScoreRequestBody score userId = PostSetGameScoreRequestBody{chatId = GHC.Maybe.Nothing,
                                                                          disableEditMessage = GHC.Maybe.Nothing,

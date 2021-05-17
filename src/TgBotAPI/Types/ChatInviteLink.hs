@@ -40,7 +40,7 @@ data ChatInviteLink = ChatInviteLink {
   -- | creator: This object represents a Telegram user or bot.
   creator :: User
   -- | expire_date: *Optional*. Point in time (Unix timestamp) when the link will expire or has been expired
-  , expireDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , expireDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | invite_link: The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
   , inviteLink :: Data.Text.Internal.Text
   -- | is_primary: True, if the link is primary
@@ -48,7 +48,7 @@ data ChatInviteLink = ChatInviteLink {
   -- | is_revoked: True, if the link is revoked
   , isRevoked :: GHC.Types.Bool
   -- | member_limit: *Optional*. Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
-  , memberLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , memberLimit :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatInviteLink

@@ -64,21 +64,21 @@ data PostSendLocationRequestBody = PostSendLocationRequestBody {
   -- | disable_notification: Sends the message [silently](https:\/\/telegram.org\/blog\/channels-2-0\#silent-messages). Users will receive a notification with no sound.
   , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | heading: For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
-  , heading :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , heading :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | horizontal_accuracy: The radius of uncertainty for the location, measured in meters; 0-1500
   , horizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | latitude: Latitude of the location
   , latitude :: GHC.Types.Double
   -- | live_period: Period in seconds for which the location will be updated (see [Live Locations](https:\/\/telegram.org\/blog\/live-locations), should be between 60 and 86400.
-  , livePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , livePeriod :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | longitude: Longitude of the location
   , longitude :: GHC.Types.Double
   -- | proximity_alert_radius: For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
-  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | reply_markup: Additional interface options. A JSON-serialized object for an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https:\/\/core.telegram.org\/bots\#keyboards), instructions to remove reply keyboard or to force a reply from the user.
   , replyMarkup :: (GHC.Maybe.Maybe ReplyMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendLocationRequestBody
@@ -106,7 +106,7 @@ mkPostSendLocationRequestBody chatId latitude longitude = PostSendLocationReques
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

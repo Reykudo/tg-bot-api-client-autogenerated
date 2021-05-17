@@ -62,9 +62,9 @@ data PostRestrictChatMemberRequestBody = PostRestrictChatMemberRequestBody {
   -- | permissions: Describes actions that a non-administrator user is allowed to take in a chat.
   , permissions :: ChatPermissions
   -- | until_date: Date when restrictions will be lifted for the user, unix time. If user is restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be restricted forever
-  , untilDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , untilDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostRestrictChatMemberRequestBody
@@ -75,7 +75,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostRestrictChatMemberRequestBody
 -- | Create a new 'PostRestrictChatMemberRequestBody' with all required fields.
 mkPostRestrictChatMemberRequestBody :: ChatIdVariants -- ^ 'chatId'
   -> ChatPermissions -- ^ 'permissions'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostRestrictChatMemberRequestBody
 mkPostRestrictChatMemberRequestBody chatId permissions userId = PostRestrictChatMemberRequestBody{chatId = chatId,
                                                                                                   permissions = permissions,
@@ -85,7 +85,7 @@ mkPostRestrictChatMemberRequestBody chatId permissions userId = PostRestrictChat
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

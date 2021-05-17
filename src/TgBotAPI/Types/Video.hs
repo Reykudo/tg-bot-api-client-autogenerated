@@ -38,23 +38,23 @@ import  {-# SOURCE #-}  TgBotAPI.Types.PhotoSize (PhotoSize)
 -- This object represents a video file.
 data Video = Video {
   -- | duration: Duration of the video in seconds as defined by sender
-  duration :: GHC.Types.Int
+  duration :: GHC.Int.Int64
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
   , fileId :: Data.Text.Internal.Text
   -- | file_name: *Optional*. Original filename as defined by sender
   , fileName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | file_size: *Optional*. File size
-  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
   , fileUniqueId :: Data.Text.Internal.Text
   -- | height: Video height as defined by sender
-  , height :: GHC.Types.Int
+  , height :: GHC.Int.Int64
   -- | mime_type: *Optional*. Mime type of a file as defined by sender
   , mimeType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb: This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
   , thumb :: (GHC.Maybe.Maybe PhotoSize)
   -- | width: Video width as defined by sender
-  , width :: GHC.Types.Int
+  , width :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Video
@@ -63,11 +63,11 @@ instance Data.Aeson.Types.ToJSON.ToJSON Video
 instance Data.Aeson.Types.FromJSON.FromJSON Video
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Video" (\obj -> ((((((((GHC.Base.pure Video GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "height")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "mime_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "width"))
 -- | Create a new 'Video' with all required fields.
-mkVideo :: GHC.Types.Int -- ^ 'duration'
+mkVideo :: GHC.Int.Int64 -- ^ 'duration'
   -> Data.Text.Internal.Text -- ^ 'fileId'
   -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
-  -> GHC.Types.Int -- ^ 'height'
-  -> GHC.Types.Int -- ^ 'width'
+  -> GHC.Int.Int64 -- ^ 'height'
+  -> GHC.Int.Int64 -- ^ 'width'
   -> Video
 mkVideo duration fileId fileUniqueId height width = Video{duration = duration,
                                                           fileId = fileId,

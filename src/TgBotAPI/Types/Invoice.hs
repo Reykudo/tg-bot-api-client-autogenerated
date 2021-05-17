@@ -45,7 +45,7 @@ data Invoice = Invoice {
   -- | title: Product name
   , title :: Data.Text.Internal.Text
   -- | total_amount: Total price in the *smallest units* of the currency (integer, **not** float\/double). For example, for a price of \`US\$ 1.45\` pass \`amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-  , totalAmount :: GHC.Types.Int
+  , totalAmount :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Invoice
@@ -58,7 +58,7 @@ mkInvoice :: Data.Text.Internal.Text -- ^ 'currency'
   -> Data.Text.Internal.Text -- ^ 'description'
   -> Data.Text.Internal.Text -- ^ 'startParameter'
   -> Data.Text.Internal.Text -- ^ 'title'
-  -> GHC.Types.Int -- ^ 'totalAmount'
+  -> GHC.Int.Int64 -- ^ 'totalAmount'
   -> Invoice
 mkInvoice currency description startParameter title totalAmount = Invoice{currency = currency,
                                                                           description = description,

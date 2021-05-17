@@ -40,7 +40,7 @@ import  {-# SOURCE #-}  TgBotAPI.Types.MessageEntity (MessageEntity)
 -- Represents a link to an MP3 audio file. By default, this audio file will be sent by the user. Alternatively, you can use *input\\_message\\_content* to send a message with the specified content instead of the audio.
 data InlineQueryResultAudio = InlineQueryResultAudio {
   -- | audio_duration: *Optional*. Audio duration in seconds
-  audioDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  audioDuration :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | audio_url: A valid URL for the audio file
   , audioUrl :: Data.Text.Internal.Text
   -- | caption: *Optional*. Caption, 0-1024 characters after entities parsing

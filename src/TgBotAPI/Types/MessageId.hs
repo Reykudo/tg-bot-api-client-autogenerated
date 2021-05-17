@@ -37,7 +37,7 @@ import TgBotAPI.TypeAlias
 -- This object represents a unique message identifier.
 data MessageId = MessageId {
   -- | message_id: Unique message identifier
-  messageId :: GHC.Types.Int
+  messageId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON MessageId
@@ -46,6 +46,6 @@ instance Data.Aeson.Types.ToJSON.ToJSON MessageId
 instance Data.Aeson.Types.FromJSON.FromJSON MessageId
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "MessageId" (\obj -> GHC.Base.pure MessageId GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'MessageId' with all required fields.
-mkMessageId :: GHC.Types.Int -- ^ 'messageId'
+mkMessageId :: GHC.Int.Int64 -- ^ 'messageId'
   -> MessageId
 mkMessageId messageId = MessageId{messageId = messageId}

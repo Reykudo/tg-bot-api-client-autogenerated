@@ -39,13 +39,13 @@ data PhotoSize = PhotoSize {
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
   fileId :: Data.Text.Internal.Text
   -- | file_size: *Optional*. File size
-  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
   , fileUniqueId :: Data.Text.Internal.Text
   -- | height: Photo height
-  , height :: GHC.Types.Int
+  , height :: GHC.Int.Int64
   -- | width: Photo width
-  , width :: GHC.Types.Int
+  , width :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PhotoSize
@@ -56,8 +56,8 @@ instance Data.Aeson.Types.FromJSON.FromJSON PhotoSize
 -- | Create a new 'PhotoSize' with all required fields.
 mkPhotoSize :: Data.Text.Internal.Text -- ^ 'fileId'
   -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
-  -> GHC.Types.Int -- ^ 'height'
-  -> GHC.Types.Int -- ^ 'width'
+  -> GHC.Int.Int64 -- ^ 'height'
+  -> GHC.Int.Int64 -- ^ 'width'
   -> PhotoSize
 mkPhotoSize fileId fileUniqueId height width = PhotoSize{fileId = fileId,
                                                          fileSize = GHC.Maybe.Nothing,

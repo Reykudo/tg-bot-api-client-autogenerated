@@ -37,7 +37,7 @@ import TgBotAPI.TypeAlias
 -- This object represents a portion of the price for goods or services.
 data LabeledPrice = LabeledPrice {
   -- | amount: Price of the product in the *smallest units* of the [currency](\/bots\/payments\#supported-currencies) (integer, **not** float\/double). For example, for a price of \`US\$ 1.45\` pass \`amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-  amount :: GHC.Types.Int
+  amount :: GHC.Int.Int64
   -- | label: Portion label
   , label :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -48,7 +48,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON LabeledPrice
 instance Data.Aeson.Types.FromJSON.FromJSON LabeledPrice
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "LabeledPrice" (\obj -> (GHC.Base.pure LabeledPrice GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "amount")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "label"))
 -- | Create a new 'LabeledPrice' with all required fields.
-mkLabeledPrice :: GHC.Types.Int -- ^ 'amount'
+mkLabeledPrice :: GHC.Int.Int64 -- ^ 'amount'
   -> Data.Text.Internal.Text -- ^ 'label'
   -> LabeledPrice
 mkLabeledPrice amount label = LabeledPrice{amount = amount,

@@ -62,7 +62,7 @@ data PostPinChatMessageRequestBody = PostPinChatMessageRequestBody {
   -- | disable_notification: Pass *True*, if it is not necessary to send a notification to all chat members about the new pinned message. Notifications are always disabled in channels and private chats.
   , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | message_id: Identifier of a message to pin
-  , messageId :: GHC.Types.Int
+  , messageId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostPinChatMessageRequestBody
@@ -72,7 +72,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostPinChatMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostPinChatMessageRequestBody" (\obj -> ((GHC.Base.pure PostPinChatMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'PostPinChatMessageRequestBody' with all required fields.
 mkPostPinChatMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'messageId'
+  -> GHC.Int.Int64 -- ^ 'messageId'
   -> PostPinChatMessageRequestBody
 mkPostPinChatMessageRequestBody chatId messageId = PostPinChatMessageRequestBody{chatId = chatId,
                                                                                  disableNotification = GHC.Maybe.Nothing,
@@ -81,7 +81,7 @@ mkPostPinChatMessageRequestBody chatId messageId = PostPinChatMessageRequestBody
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

@@ -38,15 +38,15 @@ import  {-# SOURCE #-}  TgBotAPI.Types.PhotoSize (PhotoSize)
 -- This object represents a [video message](https:\/\/telegram.org\/blog\/video-messages-and-telescope) (available in Telegram apps as of [v.4.0](https:\/\/telegram.org\/blog\/video-messages-and-telescope)).
 data VideoNote = VideoNote {
   -- | duration: Duration of the video in seconds as defined by sender
-  duration :: GHC.Types.Int
+  duration :: GHC.Int.Int64
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
   , fileId :: Data.Text.Internal.Text
   -- | file_size: *Optional*. File size
-  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
   , fileUniqueId :: Data.Text.Internal.Text
   -- | length: Video width and height (diameter of the video message) as defined by sender
-  , length :: GHC.Types.Int
+  , length :: GHC.Int.Int64
   -- | thumb: This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
   , thumb :: (GHC.Maybe.Maybe PhotoSize)
   } deriving (GHC.Show.Show
@@ -57,10 +57,10 @@ instance Data.Aeson.Types.ToJSON.ToJSON VideoNote
 instance Data.Aeson.Types.FromJSON.FromJSON VideoNote
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VideoNote" (\obj -> (((((GHC.Base.pure VideoNote GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "length")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb"))
 -- | Create a new 'VideoNote' with all required fields.
-mkVideoNote :: GHC.Types.Int -- ^ 'duration'
+mkVideoNote :: GHC.Int.Int64 -- ^ 'duration'
   -> Data.Text.Internal.Text -- ^ 'fileId'
   -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
-  -> GHC.Types.Int -- ^ 'length'
+  -> GHC.Int.Int64 -- ^ 'length'
   -> VideoNote
 mkVideoNote duration fileId fileUniqueId length = VideoNote{duration = duration,
                                                             fileId = fileId,

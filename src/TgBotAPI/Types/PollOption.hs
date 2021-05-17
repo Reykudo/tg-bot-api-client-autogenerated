@@ -39,7 +39,7 @@ data PollOption = PollOption {
   -- | text: Option text, 1-100 characters
   text :: Data.Text.Internal.Text
   -- | voter_count: Number of users that voted for this option
-  , voterCount :: GHC.Types.Int
+  , voterCount :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PollOption
@@ -49,7 +49,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PollOption
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PollOption" (\obj -> (GHC.Base.pure PollOption GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "text")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "voter_count"))
 -- | Create a new 'PollOption' with all required fields.
 mkPollOption :: Data.Text.Internal.Text -- ^ 'text'
-  -> GHC.Types.Int -- ^ 'voterCount'
+  -> GHC.Int.Int64 -- ^ 'voterCount'
   -> PollOption
 mkPollOption text voterCount = PollOption{text = text,
                                           voterCount = voterCount}

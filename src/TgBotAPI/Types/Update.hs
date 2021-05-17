@@ -73,7 +73,7 @@ data Update = Update {
   -- | shipping_query: This object contains information about an incoming shipping query.
   , shippingQuery :: (GHC.Maybe.Maybe ShippingQuery)
   -- | update_id: The update\'s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you\'re using [Webhooks](https:\/\/core.telegram.org\/bots\/api\/\#setwebhook), since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
-  , updateId :: GHC.Types.Int
+  , updateId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Update
@@ -82,7 +82,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON Update
 instance Data.Aeson.Types.FromJSON.FromJSON Update
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Update" (\obj -> (((((((((((((GHC.Base.pure Update GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "callback_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "channel_post")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chosen_inline_result")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "edited_channel_post")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "edited_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "my_chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "poll")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "poll_answer")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "pre_checkout_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "shipping_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "update_id"))
 -- | Create a new 'Update' with all required fields.
-mkUpdate :: GHC.Types.Int -- ^ 'updateId'
+mkUpdate :: GHC.Int.Int64 -- ^ 'updateId'
   -> Update
 mkUpdate updateId = Update{callbackQuery = GHC.Maybe.Nothing,
                            channelPost = GHC.Maybe.Nothing,

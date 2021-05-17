@@ -72,7 +72,7 @@ data PostSendMessageRequestBody = PostSendMessageRequestBody {
   -- | reply_markup: Additional interface options. A JSON-serialized object for an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https:\/\/core.telegram.org\/bots\#keyboards), instructions to remove reply keyboard or to force a reply from the user.
   , replyMarkup :: (GHC.Maybe.Maybe ReplyMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | text: Text of the message to be sent, 1-4096 characters after entities parsing
   , text :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -99,7 +99,7 @@ mkPostSendMessageRequestBody chatId text = PostSendMessageRequestBody{allowSendi
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

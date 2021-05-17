@@ -43,7 +43,7 @@ data Contact = Contact {
   -- | phone_number: Contact\'s phone number
   , phoneNumber :: Data.Text.Internal.Text
   -- | user_id: *Optional*. Contact\'s user identifier in Telegram. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
-  , userId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , userId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | vcard: *Optional*. Additional data about the contact in the form of a [vCard](https:\/\/en.wikipedia.org\/wiki\/VCard)
   , vcard :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show

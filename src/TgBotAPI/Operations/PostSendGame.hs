@@ -60,7 +60,7 @@ data PostSendGameRequestBody = PostSendGameRequestBody {
   -- | allow_sending_without_reply: Pass *True*, if the message should be sent even if the specified replied-to message is not found
   allowSendingWithoutReply :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | chat_id: Unique identifier for the target chat
-  , chatId :: GHC.Types.Int
+  , chatId :: GHC.Int.Int64
   -- | disable_notification: Sends the message [silently](https:\/\/telegram.org\/blog\/channels-2-0\#silent-messages). Users will receive a notification with no sound.
   , disableNotification :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | game_short_name: Short name of the game, serves as the unique identifier for the game. Set up your games via [Botfather](https:\/\/t.me\/botfather).
@@ -68,7 +68,7 @@ data PostSendGameRequestBody = PostSendGameRequestBody {
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
   , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendGameRequestBody
@@ -77,7 +77,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON PostSendGameRequestBody
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendGameRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendGameRequestBody" (\obj -> (((((GHC.Base.pure PostSendGameRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "allow_sending_without_reply")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "disable_notification")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "game_short_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_to_message_id"))
 -- | Create a new 'PostSendGameRequestBody' with all required fields.
-mkPostSendGameRequestBody :: GHC.Types.Int -- ^ 'chatId'
+mkPostSendGameRequestBody :: GHC.Int.Int64 -- ^ 'chatId'
   -> Data.Text.Internal.Text -- ^ 'gameShortName'
   -> PostSendGameRequestBody
 mkPostSendGameRequestBody chatId gameShortName = PostSendGameRequestBody{allowSendingWithoutReply = GHC.Maybe.Nothing,

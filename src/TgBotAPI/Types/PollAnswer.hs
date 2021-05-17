@@ -38,7 +38,7 @@ import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 -- This object represents an answer of a user in a non-anonymous poll.
 data PollAnswer = PollAnswer {
   -- | option_ids: 0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote.
-  optionIds :: ([GHC.Types.Int])
+  optionIds :: ([GHC.Int.Int64])
   -- | poll_id: Unique poll identifier
   , pollId :: Data.Text.Internal.Text
   -- | user: This object represents a Telegram user or bot.
@@ -51,7 +51,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON PollAnswer
 instance Data.Aeson.Types.FromJSON.FromJSON PollAnswer
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PollAnswer" (\obj -> ((GHC.Base.pure PollAnswer GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "option_ids")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "poll_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user"))
 -- | Create a new 'PollAnswer' with all required fields.
-mkPollAnswer :: [GHC.Types.Int] -- ^ 'optionIds'
+mkPollAnswer :: [GHC.Int.Int64] -- ^ 'optionIds'
   -> Data.Text.Internal.Text -- ^ 'pollId'
   -> User -- ^ 'user'
   -> PollAnswer

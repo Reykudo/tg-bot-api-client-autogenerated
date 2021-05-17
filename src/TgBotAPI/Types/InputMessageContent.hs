@@ -64,7 +64,7 @@ data InputMessageContent = InputMessageContent {
   -- | google_place_type: *Optional*. Google Places type of the venue. (See [supported types](https:\/\/developers.google.com\/places\/web-service\/supported_types).)
   , googlePlaceType :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | heading: *Optional*. For live locations, a direction in which the user is moving, in degrees. Must be between 1 and 360 if specified.
-  , heading :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , heading :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | horizontal_accuracy: *Optional*. The radius of uncertainty for the location, measured in meters; 0-1500
   , horizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | is_flexible: *Optional*. Pass *True*, if the final price depends on the shipping method
@@ -74,11 +74,11 @@ data InputMessageContent = InputMessageContent {
   -- | latitude: Latitude of the location in degrees
   , latitude :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | live_period: *Optional*. Period in seconds for which the location can be updated, should be between 60 and 86400.
-  , livePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , livePeriod :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | longitude: Longitude of the location in degrees
   , longitude :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | max_tip_amount: *Optional*. The maximum accepted amount for tips in the *smallest units* of the currency (integer, **not** float\/double). For example, for a maximum tip of \`US\$ 1.45\` pass \`max_tip_amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
-  , maxTipAmount :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , maxTipAmount :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | message_text: Text of the message to be sent, 1-4096 characters
   , messageText :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | need_email: *Optional*. Pass *True*, if you require the user\'s email address to complete the order
@@ -96,13 +96,13 @@ data InputMessageContent = InputMessageContent {
   -- | phone_number: Contact\'s phone number
   , phoneNumber :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | photo_height: *Optional*. Photo height
-  , photoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoHeight :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | photo_size: *Optional*. Photo size
-  , photoSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | photo_url: *Optional*. URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
   , photoUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | photo_width: *Optional*. Photo width
-  , photoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoWidth :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | prices: Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
   , prices :: (GHC.Maybe.Maybe ([LabeledPrice]))
   -- | provider_data: *Optional*. A JSON-serialized object for data about the invoice, which will be shared with the payment provider. A detailed description of the required fields should be provided by the payment provider.
@@ -110,13 +110,13 @@ data InputMessageContent = InputMessageContent {
   -- | provider_token: Payment provider token, obtained via [Botfather](https:\/\/t.me\/botfather)
   , providerToken :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | proximity_alert_radius: *Optional*. For live locations, a maximum distance for proximity alerts about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
-  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | send_email_to_provider: *Optional*. Pass *True*, if user\'s email address should be sent to provider
   , sendEmailToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | send_phone_number_to_provider: *Optional*. Pass *True*, if user\'s phone number should be sent to provider
   , sendPhoneNumberToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | suggested_tip_amounts: *Optional*. A JSON-serialized array of suggested amounts of tip in the *smallest units* of the currency (integer, **not** float\/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed *max\\_tip\\_amount*.
-  , suggestedTipAmounts :: (GHC.Maybe.Maybe ([GHC.Types.Int]))
+  , suggestedTipAmounts :: (GHC.Maybe.Maybe ([GHC.Int.Int64]))
   -- | title: Name of the venue
   , title :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | vcard: *Optional*. Additional data about the contact in the form of a [vCard](https:\/\/en.wikipedia.org\/wiki\/VCard), 0-2048 bytes

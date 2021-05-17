@@ -37,11 +37,11 @@ import TgBotAPI.TypeAlias
 -- This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don\'t exceed 10MB.
 data PassportFile = PassportFile {
   -- | file_date: Unix time when the file was uploaded
-  fileDate :: GHC.Types.Int
+  fileDate :: GHC.Int.Int64
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
   , fileId :: Data.Text.Internal.Text
   -- | file_size: File size
-  , fileSize :: GHC.Types.Int
+  , fileSize :: GHC.Int.Int64
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
   , fileUniqueId :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -52,9 +52,9 @@ instance Data.Aeson.Types.ToJSON.ToJSON PassportFile
 instance Data.Aeson.Types.FromJSON.FromJSON PassportFile
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PassportFile" (\obj -> (((GHC.Base.pure PassportFile GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id"))
 -- | Create a new 'PassportFile' with all required fields.
-mkPassportFile :: GHC.Types.Int -- ^ 'fileDate'
+mkPassportFile :: GHC.Int.Int64 -- ^ 'fileDate'
   -> Data.Text.Internal.Text -- ^ 'fileId'
-  -> GHC.Types.Int -- ^ 'fileSize'
+  -> GHC.Int.Int64 -- ^ 'fileSize'
   -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
   -> PassportFile
 mkPassportFile fileDate fileId fileSize fileUniqueId = PassportFile{fileDate = fileDate,

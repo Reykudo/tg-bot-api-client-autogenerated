@@ -37,17 +37,17 @@ import TgBotAPI.TypeAlias
 -- This object represents a point on the map.
 data Location = Location {
   -- | heading: *Optional*. The direction in which user is moving, in degrees; 1-360. For active live locations only.
-  heading :: (GHC.Maybe.Maybe GHC.Types.Int)
+  heading :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | horizontal_accuracy: *Optional*. The radius of uncertainty for the location, measured in meters; 0-1500
   , horizontalAccuracy :: (GHC.Maybe.Maybe GHC.Types.Double)
   -- | latitude: Latitude as defined by sender
   , latitude :: GHC.Types.Double
   -- | live_period: *Optional*. Time relative to the message sending date, during which the location can be updated, in seconds. For active live locations only.
-  , livePeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , livePeriod :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | longitude: Longitude as defined by sender
   , longitude :: GHC.Types.Double
   -- | proximity_alert_radius: *Optional*. Maximum distance for proximity alerts about approaching another chat member, in meters. For sent live locations only.
-  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , proximityAlertRadius :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Location

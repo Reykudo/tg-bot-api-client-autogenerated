@@ -39,7 +39,7 @@ data Dice = Dice {
   -- | emoji: Emoji on which the dice throw animation is based
   emoji :: Data.Text.Internal.Text
   -- | value: Value of the dice, 1-6 for “🎲”, “🎯” and “🎳” base emoji, 1-5 for “🏀” and “⚽” base emoji, 1-64 for “🎰” base emoji
-  , value :: GHC.Types.Int
+  , value :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Dice
@@ -49,6 +49,6 @@ instance Data.Aeson.Types.FromJSON.FromJSON Dice
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Dice" (\obj -> (GHC.Base.pure Dice GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "emoji")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "value"))
 -- | Create a new 'Dice' with all required fields.
 mkDice :: Data.Text.Internal.Text -- ^ 'emoji'
-  -> GHC.Types.Int -- ^ 'value'
+  -> GHC.Int.Int64 -- ^ 'value'
   -> Dice
 mkDice emoji value = Dice{emoji = emoji, value = value}

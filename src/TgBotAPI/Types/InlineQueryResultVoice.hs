@@ -56,7 +56,7 @@ data InlineQueryResultVoice = InlineQueryResultVoice {
   -- | type: Type of the result, must be *voice*
   , type' :: Data.Text.Internal.Text
   -- | voice_duration: *Optional*. Recording duration in seconds
-  , voiceDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , voiceDuration :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | voice_url: A valid URL for the voice recording
   , voiceUrl :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show

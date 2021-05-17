@@ -52,11 +52,11 @@ data InlineQueryResultPhoto = InlineQueryResultPhoto {
   -- | parse_mode: *Optional*. Mode for parsing entities in the photo caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
   , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | photo_height: *Optional*. Height of the photo
-  , photoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoHeight :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | photo_url: A valid URL of the photo. Photo must be in **jpeg** format. Photo size must not exceed 5MB
   , photoUrl :: Data.Text.Internal.Text
   -- | photo_width: *Optional*. Width of the photo
-  , photoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoWidth :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
   , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_url: URL of the thumbnail for the photo

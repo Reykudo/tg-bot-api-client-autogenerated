@@ -70,7 +70,7 @@ data PostSendInvoiceRequestBody = PostSendInvoiceRequestBody {
   -- | is_flexible: Pass *True*, if the final price depends on the shipping method
   , isFlexible :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | max_tip_amount: The maximum accepted amount for tips in the *smallest units* of the currency (integer, **not** float\/double). For example, for a maximum tip of \`US\$ 1.45\` pass \`max_tip_amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies). Defaults to 0
-  , maxTipAmount :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , maxTipAmount :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | need_email: Pass *True*, if you require the user\'s email address to complete the order
   , needEmail :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | need_name: Pass *True*, if you require the user\'s full name to complete the order
@@ -82,13 +82,13 @@ data PostSendInvoiceRequestBody = PostSendInvoiceRequestBody {
   -- | payload: Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
   , payload :: Data.Text.Internal.Text
   -- | photo_height: Photo height
-  , photoHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoHeight :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | photo_size: Photo size
-  , photoSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | photo_url: URL of the product photo for the invoice. Can be a photo of the goods or a marketing image for a service. People like it better when they see what they are paying for.
   , photoUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | photo_width: Photo width
-  , photoWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , photoWidth :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | prices: Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
   , prices :: ([LabeledPrice])
   -- | provider_data: A JSON-serialized data about the invoice, which will be shared with the payment provider. A detailed description of required fields should be provided by the payment provider.
@@ -98,7 +98,7 @@ data PostSendInvoiceRequestBody = PostSendInvoiceRequestBody {
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
   , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | send_email_to_provider: Pass *True*, if user\'s email address should be sent to provider
   , sendEmailToProvider :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | send_phone_number_to_provider: Pass *True*, if user\'s phone number should be sent to provider
@@ -106,7 +106,7 @@ data PostSendInvoiceRequestBody = PostSendInvoiceRequestBody {
   -- | start_parameter: Unique deep-linking parameter. If left empty, **forwarded copies** of the sent message will have a *Pay* button, allowing multiple users to pay directly from the forwarded message, using the same invoice. If non-empty, forwarded copies of the sent message will have a *URL* button with a deep link to the bot (instead of a *Pay* button), with the value used as the start parameter
   , startParameter :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | suggested_tip_amounts: A JSON-serialized array of suggested amounts of tips in the *smallest units* of the currency (integer, **not** float\/double). At most 4 suggested tip amounts can be specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed *max\\_tip\\_amount*.
-  , suggestedTipAmounts :: (GHC.Maybe.Maybe ([GHC.Types.Int]))
+  , suggestedTipAmounts :: (GHC.Maybe.Maybe ([GHC.Int.Int64]))
   -- | title: Product name, 1-32 characters
   , title :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -155,7 +155,7 @@ mkPostSendInvoiceRequestBody chatId currency description payload prices provider
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

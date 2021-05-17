@@ -68,7 +68,7 @@ data PostDeleteMessageRequestBody = PostDeleteMessageRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
   chatId :: ChatIdVariants
   -- | message_id: Identifier of the message to delete
-  , messageId :: GHC.Types.Int
+  , messageId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostDeleteMessageRequestBody
@@ -78,7 +78,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostDeleteMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostDeleteMessageRequestBody" (\obj -> (GHC.Base.pure PostDeleteMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id"))
 -- | Create a new 'PostDeleteMessageRequestBody' with all required fields.
 mkPostDeleteMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'messageId'
+  -> GHC.Int.Int64 -- ^ 'messageId'
   -> PostDeleteMessageRequestBody
 mkPostDeleteMessageRequestBody chatId messageId = PostDeleteMessageRequestBody{chatId = chatId,
                                                                                messageId = messageId}
@@ -86,7 +86,7 @@ mkPostDeleteMessageRequestBody chatId messageId = PostDeleteMessageRequestBody{c
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

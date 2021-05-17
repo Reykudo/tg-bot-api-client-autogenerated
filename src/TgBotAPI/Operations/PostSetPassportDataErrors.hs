@@ -62,7 +62,7 @@ data PostSetPassportDataErrorsRequestBody = PostSetPassportDataErrorsRequestBody
   -- | errors: A JSON-serialized array describing the errors
   errors :: ([PassportElementError])
   -- | user_id: User identifier
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetPassportDataErrorsRequestBody
@@ -72,7 +72,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostSetPassportDataErrorsRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetPassportDataErrorsRequestBody" (\obj -> (GHC.Base.pure PostSetPassportDataErrorsRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "errors")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostSetPassportDataErrorsRequestBody' with all required fields.
 mkPostSetPassportDataErrorsRequestBody :: [PassportElementError] -- ^ 'errors'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostSetPassportDataErrorsRequestBody
 mkPostSetPassportDataErrorsRequestBody errors userId = PostSetPassportDataErrorsRequestBody{errors = errors,
                                                                                             userId = userId}

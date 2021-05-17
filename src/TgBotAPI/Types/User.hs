@@ -43,7 +43,7 @@ data User = User {
   -- | first_name: User\'s or bot\'s first name
   , firstName :: Data.Text.Internal.Text
   -- | id: Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
-  , id :: GHC.Types.Int
+  , id :: GHC.Int.Int64
   -- | is_bot: True, if this user is a bot
   , isBot :: GHC.Types.Bool
   -- | language_code: *Optional*. [IETF language tag](https:\/\/en.wikipedia.org\/wiki\/IETF_language_tag) of the user\'s language
@@ -63,7 +63,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON User
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "User" (\obj -> ((((((((GHC.Base.pure User GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_join_groups")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_read_all_group_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "first_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "is_bot")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "language_code")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "supports_inline_queries")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "username"))
 -- | Create a new 'User' with all required fields.
 mkUser :: Data.Text.Internal.Text -- ^ 'firstName'
-  -> GHC.Types.Int -- ^ 'id'
+  -> GHC.Int.Int64 -- ^ 'id'
   -> GHC.Types.Bool -- ^ 'isBot'
   -> User
 mkUser firstName id isBot = User{canJoinGroups = GHC.Maybe.Nothing,

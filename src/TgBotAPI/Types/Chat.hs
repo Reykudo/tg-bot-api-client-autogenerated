@@ -49,17 +49,17 @@ data Chat = Chat {
   -- | first_name: *Optional*. First name of the other party in a private chat
   , firstName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | id: Unique identifier for this chat. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-  , id :: GHC.Types.Int
+  , id :: GHC.Int.Int64
   -- | invite_link: *Optional*. Primary invite link, for groups, supergroups and channel chats. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
   , inviteLink :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | last_name: *Optional*. Last name of the other party in a private chat
   , lastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | linked_chat_id: *Optional*. Unique identifier for the linked chat, i.e. the discussion group identifier for a channel and vice versa; for supergroups and channel chats. This identifier may be greater than 32 bits and some programming languages may have difficulty\/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , linkedChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , linkedChatId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | location: Represents a location to which a chat is connected.
   , location :: (GHC.Maybe.Maybe ChatLocation)
   -- | message_auto_delete_time: *Optional*. The time after which all messages sent to the chat will be automatically deleted; in seconds. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , messageAutoDeleteTime :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageAutoDeleteTime :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | permissions: Describes actions that a non-administrator user is allowed to take in a chat.
   , permissions :: (GHC.Maybe.Maybe ChatPermissions)
   -- | photo: This object represents a chat photo.
@@ -67,7 +67,7 @@ data Chat = Chat {
   -- | pinned_message: This object represents a message.
   , pinnedMessage :: (GHC.Maybe.Maybe Message)
   -- | slow_mode_delay: *Optional*. For supergroups, the minimum allowed delay between consecutive messages sent by each unpriviledged user. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
-  , slowModeDelay :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , slowModeDelay :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | sticker_set_name: *Optional*. For supergroups, name of group sticker set. Returned only in [getChat](https:\/\/core.telegram.org\/bots\/api\/\#getchat).
   , stickerSetName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | title: *Optional*. Title, for supergroups, channels and group chats
@@ -84,7 +84,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON Chat
 instance Data.Aeson.Types.FromJSON.FromJSON Chat
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Chat" (\obj -> (((((((((((((((((GHC.Base.pure Chat GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "bio")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_set_sticker_set")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "first_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "invite_link")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "linked_chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_auto_delete_time")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "permissions")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "photo")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "pinned_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "slow_mode_delay")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "sticker_set_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "username"))
 -- | Create a new 'Chat' with all required fields.
-mkChat :: GHC.Types.Int -- ^ 'id'
+mkChat :: GHC.Int.Int64 -- ^ 'id'
   -> Type -- ^ 'type''
   -> Chat
 mkChat id type' = Chat{bio = GHC.Maybe.Nothing,

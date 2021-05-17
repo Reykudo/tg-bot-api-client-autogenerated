@@ -38,7 +38,7 @@ import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 -- This object represents the content of a service message, sent whenever a user in the chat triggers a proximity alert set by another user.
 data ProximityAlertTriggered = ProximityAlertTriggered {
   -- | distance: The distance between the users
-  distance :: GHC.Types.Int
+  distance :: GHC.Int.Int64
   -- | traveler: This object represents a Telegram user or bot.
   , traveler :: User
   -- | watcher: This object represents a Telegram user or bot.
@@ -51,7 +51,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON ProximityAlertTriggered
 instance Data.Aeson.Types.FromJSON.FromJSON ProximityAlertTriggered
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ProximityAlertTriggered" (\obj -> ((GHC.Base.pure ProximityAlertTriggered GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "distance")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "traveler")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "watcher"))
 -- | Create a new 'ProximityAlertTriggered' with all required fields.
-mkProximityAlertTriggered :: GHC.Types.Int -- ^ 'distance'
+mkProximityAlertTriggered :: GHC.Int.Int64 -- ^ 'distance'
   -> User -- ^ 'traveler'
   -> User -- ^ 'watcher'
   -> ProximityAlertTriggered

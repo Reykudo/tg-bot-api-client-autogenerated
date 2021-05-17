@@ -60,13 +60,13 @@ postGetGameHighScores body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.E
 -- 
 data PostGetGameHighScoresRequestBody = PostGetGameHighScoresRequestBody {
   -- | chat_id: Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat
-  chatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  chatId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | inline_message_id: Required if *chat\\_id* and *message\\_id* are not specified. Identifier of the inline message
   , inlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | message_id: Required if *inline\\_message\\_id* is not specified. Identifier of the sent message
-  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | user_id: Target user id
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetGameHighScoresRequestBody
@@ -75,7 +75,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON PostGetGameHighScoresRequestBody
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetGameHighScoresRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetGameHighScoresRequestBody" (\obj -> (((GHC.Base.pure PostGetGameHighScoresRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostGetGameHighScoresRequestBody' with all required fields.
-mkPostGetGameHighScoresRequestBody :: GHC.Types.Int -- ^ 'userId'
+mkPostGetGameHighScoresRequestBody :: GHC.Int.Int64 -- ^ 'userId'
   -> PostGetGameHighScoresRequestBody
 mkPostGetGameHighScoresRequestBody userId = PostGetGameHighScoresRequestBody{chatId = GHC.Maybe.Nothing,
                                                                              inlineMessageId = GHC.Maybe.Nothing,

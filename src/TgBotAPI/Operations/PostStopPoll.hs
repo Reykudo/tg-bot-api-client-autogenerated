@@ -60,7 +60,7 @@ data PostStopPollRequestBody = PostStopPollRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
   chatId :: ChatIdVariants
   -- | message_id: Identifier of the original message with the poll
-  , messageId :: GHC.Types.Int
+  , messageId :: GHC.Int.Int64
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
   , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   } deriving (GHC.Show.Show
@@ -72,7 +72,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostStopPollRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostStopPollRequestBody" (\obj -> ((GHC.Base.pure PostStopPollRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup"))
 -- | Create a new 'PostStopPollRequestBody' with all required fields.
 mkPostStopPollRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'messageId'
+  -> GHC.Int.Int64 -- ^ 'messageId'
   -> PostStopPollRequestBody
 mkPostStopPollRequestBody chatId messageId = PostStopPollRequestBody{chatId = chatId,
                                                                      messageId = messageId,
@@ -81,7 +81,7 @@ mkPostStopPollRequestBody chatId messageId = PostStopPollRequestBody{chatId = ch
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

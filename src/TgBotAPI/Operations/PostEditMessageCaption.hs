@@ -66,7 +66,7 @@ data PostEditMessageCaptionRequestBody = PostEditMessageCaptionRequestBody {
   -- | inline_message_id: Required if *chat\\_id* and *message\\_id* are not specified. Identifier of the inline message
   , inlineMessageId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | message_id: Required if *inline\\_message\\_id* is not specified. Identifier of the message to edit
-  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | parse_mode: Mode for parsing entities in the message caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
   , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
@@ -91,7 +91,7 @@ mkPostEditMessageCaptionRequestBody = PostEditMessageCaptionRequestBody{caption 
 -- 
 -- Required if *inline\\_message\\_id* is not specified. Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

@@ -74,7 +74,7 @@ mkPostGetChatMembersCountRequestBody chatId = PostGetChatMembersCountRequestBody
 -- 
 -- Unique identifier for the target chat or username of the target supergroup or channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
@@ -99,7 +99,7 @@ data PostGetChatMembersCountResponseBody200 = PostGetChatMembersCountResponseBod
   -- | ok
   ok :: GHC.Types.Bool
   -- | result
-  , result :: GHC.Types.Int
+  , result :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetChatMembersCountResponseBody200
@@ -109,7 +109,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostGetChatMembersCountResponseBody2
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetChatMembersCountResponseBody200" (\obj -> (GHC.Base.pure PostGetChatMembersCountResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostGetChatMembersCountResponseBody200' with all required fields.
 mkPostGetChatMembersCountResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
-  -> GHC.Types.Int -- ^ 'result'
+  -> GHC.Int.Int64 -- ^ 'result'
   -> PostGetChatMembersCountResponseBody200
 mkPostGetChatMembersCountResponseBody200 ok result = PostGetChatMembersCountResponseBody200{ok = ok,
                                                                                             result = result}

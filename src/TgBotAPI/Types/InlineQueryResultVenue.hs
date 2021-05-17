@@ -59,11 +59,11 @@ data InlineQueryResultVenue = InlineQueryResultVenue {
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
   , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | thumb_height: *Optional*. Thumbnail height
-  , thumbHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbHeight :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | thumb_url: *Optional*. Url of the thumbnail for the result
   , thumbUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | thumb_width: *Optional*. Thumbnail width
-  , thumbWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , thumbWidth :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | title: Title of the venue
   , title :: Data.Text.Internal.Text
   -- | type: Type of the result, must be *venue*

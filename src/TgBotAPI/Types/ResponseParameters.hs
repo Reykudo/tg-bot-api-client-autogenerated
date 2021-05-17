@@ -37,9 +37,9 @@ import TgBotAPI.TypeAlias
 -- Contains information about why a request was unsuccessful.
 data ResponseParameters = ResponseParameters {
   -- | migrate_to_chat_id: *Optional*. The group has been migrated to a supergroup with the specified identifier. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
-  migrateToChatId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  migrateToChatId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | retry_after: *Optional*. In case of exceeding flood control, the number of seconds left to wait before the request can be repeated
-  , retryAfter :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , retryAfter :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ResponseParameters

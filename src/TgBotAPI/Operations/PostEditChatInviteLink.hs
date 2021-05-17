@@ -60,11 +60,11 @@ data PostEditChatInviteLinkRequestBody = PostEditChatInviteLinkRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
   chatId :: ChatIdVariants
   -- | expire_date: Point in time (Unix timestamp) when the link will expire
-  , expireDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , expireDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | invite_link: The invite link to edit
   , inviteLink :: Data.Text.Internal.Text
   -- | member_limit: Maximum number of users that can be members of the chat simultaneously after joining the chat via this invite link; 1-99999
-  , memberLimit :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , memberLimit :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostEditChatInviteLinkRequestBody
@@ -84,7 +84,7 @@ mkPostEditChatInviteLinkRequestBody chatId inviteLink = PostEditChatInviteLinkRe
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

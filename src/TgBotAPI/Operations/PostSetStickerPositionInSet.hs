@@ -58,7 +58,7 @@ postSetStickerPositionInSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (
 -- 
 data PostSetStickerPositionInSetRequestBody = PostSetStickerPositionInSetRequestBody {
   -- | position: New sticker position in the set, zero-based
-  position :: GHC.Types.Int
+  position :: GHC.Int.Int64
   -- | sticker: File identifier of the sticker
   , sticker :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -69,7 +69,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON PostSetStickerPositionInSetRequestBody
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetStickerPositionInSetRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetStickerPositionInSetRequestBody" (\obj -> (GHC.Base.pure PostSetStickerPositionInSetRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "position")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "sticker"))
 -- | Create a new 'PostSetStickerPositionInSetRequestBody' with all required fields.
-mkPostSetStickerPositionInSetRequestBody :: GHC.Types.Int -- ^ 'position'
+mkPostSetStickerPositionInSetRequestBody :: GHC.Int.Int64 -- ^ 'position'
   -> Data.Text.Internal.Text -- ^ 'sticker'
   -> PostSetStickerPositionInSetRequestBody
 mkPostSetStickerPositionInSetRequestBody position sticker = PostSetStickerPositionInSetRequestBody{position = position,

@@ -51,7 +51,7 @@ data PreCheckoutQuery = PreCheckoutQuery {
   -- | shipping_option_id: *Optional*. Identifier of the shipping option chosen by the user
   , shippingOptionId :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | total_amount: Total price in the *smallest units* of the currency (integer, **not** float\/double). For example, for a price of \`US\$ 1.45\` pass \`amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-  , totalAmount :: GHC.Types.Int
+  , totalAmount :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PreCheckoutQuery
@@ -64,7 +64,7 @@ mkPreCheckoutQuery :: Data.Text.Internal.Text -- ^ 'currency'
   -> User -- ^ 'from'
   -> Data.Text.Internal.Text -- ^ 'id'
   -> Data.Text.Internal.Text -- ^ 'invoicePayload'
-  -> GHC.Types.Int -- ^ 'totalAmount'
+  -> GHC.Int.Int64 -- ^ 'totalAmount'
   -> PreCheckoutQuery
 mkPreCheckoutQuery currency from id invoicePayload totalAmount = PreCheckoutQuery{currency = currency,
                                                                                   from = from,

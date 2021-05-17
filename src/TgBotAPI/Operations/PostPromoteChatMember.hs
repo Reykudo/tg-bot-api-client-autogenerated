@@ -82,7 +82,7 @@ data PostPromoteChatMemberRequestBody = PostPromoteChatMemberRequestBody {
   -- | is_anonymous: Pass *True*, if the administrator\'s presence in the chat is hidden
   , isAnonymous :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostPromoteChatMemberRequestBody
@@ -92,7 +92,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostPromoteChatMemberRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostPromoteChatMemberRequestBody" (\obj -> ((((((((((((GHC.Base.pure PostPromoteChatMemberRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_change_info")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_delete_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_edit_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_invite_users")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_manage_chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_manage_voice_chats")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_pin_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_post_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_promote_members")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_restrict_members")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "is_anonymous")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostPromoteChatMemberRequestBody' with all required fields.
 mkPostPromoteChatMemberRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostPromoteChatMemberRequestBody
 mkPostPromoteChatMemberRequestBody chatId userId = PostPromoteChatMemberRequestBody{canChangeInfo = GHC.Maybe.Nothing,
                                                                                     canDeleteMessages = GHC.Maybe.Nothing,
@@ -111,7 +111,7 @@ mkPostPromoteChatMemberRequestBody chatId userId = PostPromoteChatMemberRequestB
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

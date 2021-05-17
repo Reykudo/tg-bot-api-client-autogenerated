@@ -37,7 +37,7 @@ import TgBotAPI.TypeAlias
 -- This object represents a service message about a voice chat ended in the chat.
 data VoiceChatEnded = VoiceChatEnded {
   -- | duration: Voice chat duration; in seconds
-  duration :: GHC.Types.Int
+  duration :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatEnded
@@ -46,6 +46,6 @@ instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatEnded
 instance Data.Aeson.Types.FromJSON.FromJSON VoiceChatEnded
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VoiceChatEnded" (\obj -> GHC.Base.pure VoiceChatEnded GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration"))
 -- | Create a new 'VoiceChatEnded' with all required fields.
-mkVoiceChatEnded :: GHC.Types.Int -- ^ 'duration'
+mkVoiceChatEnded :: GHC.Int.Int64 -- ^ 'duration'
   -> VoiceChatEnded
 mkVoiceChatEnded duration = VoiceChatEnded{duration = duration}

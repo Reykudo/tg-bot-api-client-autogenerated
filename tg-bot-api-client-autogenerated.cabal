@@ -84,7 +84,6 @@ library
       TgBotAPI.Operations.PostUnpinAllChatMessages
       TgBotAPI.Operations.PostUnpinChatMessage
       TgBotAPI.Operations.PostUploadStickerFile
-      TgBotAPI.Types
       TgBotAPI.TypeAlias
       TgBotAPI.Types.Animation
       TgBotAPI.Types.Audio

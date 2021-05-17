@@ -40,7 +40,7 @@ data Error = Error {
   -- | description
   description :: Data.Text.Internal.Text
   -- | error_code
-  , errorCode :: GHC.Types.Int
+  , errorCode :: GHC.Int.Int64
   -- | ok
   , ok :: GHC.Types.Bool
   -- | parameters: Contains information about why a request was unsuccessful.
@@ -54,7 +54,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON Error
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Error" (\obj -> (((GHC.Base.pure Error GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "description")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "error_code")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "parameters"))
 -- | Create a new 'Error' with all required fields.
 mkError :: Data.Text.Internal.Text -- ^ 'description'
-  -> GHC.Types.Int -- ^ 'errorCode'
+  -> GHC.Int.Int64 -- ^ 'errorCode'
   -> GHC.Types.Bool -- ^ 'ok'
   -> Error
 mkError description errorCode ok = Error{description = description,

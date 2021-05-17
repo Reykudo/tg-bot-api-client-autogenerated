@@ -38,9 +38,9 @@ import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 -- This object represents one row of the high scores table for a game.
 data GameHighScore = GameHighScore {
   -- | position: Position in high score table for the game
-  position :: GHC.Types.Int
+  position :: GHC.Int.Int64
   -- | score: Score
-  , score :: GHC.Types.Int
+  , score :: GHC.Int.Int64
   -- | user: This object represents a Telegram user or bot.
   , user :: User
   } deriving (GHC.Show.Show
@@ -51,8 +51,8 @@ instance Data.Aeson.Types.ToJSON.ToJSON GameHighScore
 instance Data.Aeson.Types.FromJSON.FromJSON GameHighScore
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "GameHighScore" (\obj -> ((GHC.Base.pure GameHighScore GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "position")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "score")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user"))
 -- | Create a new 'GameHighScore' with all required fields.
-mkGameHighScore :: GHC.Types.Int -- ^ 'position'
-  -> GHC.Types.Int -- ^ 'score'
+mkGameHighScore :: GHC.Int.Int64 -- ^ 'position'
+  -> GHC.Int.Int64 -- ^ 'score'
   -> User -- ^ 'user'
   -> GameHighScore
 mkGameHighScore position score user = GameHighScore{position = position,

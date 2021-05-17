@@ -63,11 +63,11 @@ data PostGetUserProfilePhotosRequestBody = PostGetUserProfilePhotosRequestBody {
   -- 
   -- * Maxium  of 100.0
   -- * Minimum  of 1.0
-  limit :: (GHC.Maybe.Maybe GHC.Types.Int)
+  limit :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | offset: Sequential number of the first photo to be returned. By default, all photos are returned.
-  , offset :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , offset :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetUserProfilePhotosRequestBody
@@ -76,7 +76,7 @@ instance Data.Aeson.Types.ToJSON.ToJSON PostGetUserProfilePhotosRequestBody
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetUserProfilePhotosRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetUserProfilePhotosRequestBody" (\obj -> ((GHC.Base.pure PostGetUserProfilePhotosRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "limit")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "offset")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostGetUserProfilePhotosRequestBody' with all required fields.
-mkPostGetUserProfilePhotosRequestBody :: GHC.Types.Int -- ^ 'userId'
+mkPostGetUserProfilePhotosRequestBody :: GHC.Int.Int64 -- ^ 'userId'
   -> PostGetUserProfilePhotosRequestBody
 mkPostGetUserProfilePhotosRequestBody userId = PostGetUserProfilePhotosRequestBody{limit = GHC.Maybe.Nothing,
                                                                                    offset = GHC.Maybe.Nothing,

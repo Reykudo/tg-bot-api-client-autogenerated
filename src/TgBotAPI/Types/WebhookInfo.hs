@@ -43,13 +43,13 @@ data WebhookInfo = WebhookInfo {
   -- | ip_address: *Optional*. Currently used webhook IP address
   , ipAddress :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | last_error_date: *Optional*. Unix time for the most recent error that happened when trying to deliver an update via webhook
-  , lastErrorDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , lastErrorDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | last_error_message: *Optional*. Error message in human-readable format for the most recent error that happened when trying to deliver an update via webhook
   , lastErrorMessage :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | max_connections: *Optional*. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
-  , maxConnections :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , maxConnections :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | pending_update_count: Number of updates awaiting delivery
-  , pendingUpdateCount :: GHC.Types.Int
+  , pendingUpdateCount :: GHC.Int.Int64
   -- | url: Webhook URL, may be empty if webhook is not set up
   , url :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -61,7 +61,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON WebhookInfo
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "WebhookInfo" (\obj -> (((((((GHC.Base.pure WebhookInfo GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "allowed_updates")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "has_custom_certificate")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "ip_address")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_error_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_error_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "max_connections")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "pending_update_count")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "url"))
 -- | Create a new 'WebhookInfo' with all required fields.
 mkWebhookInfo :: GHC.Types.Bool -- ^ 'hasCustomCertificate'
-  -> GHC.Types.Int -- ^ 'pendingUpdateCount'
+  -> GHC.Int.Int64 -- ^ 'pendingUpdateCount'
   -> Data.Text.Internal.Text -- ^ 'url'
   -> WebhookInfo
 mkWebhookInfo hasCustomCertificate pendingUpdateCount url = WebhookInfo{allowedUpdates = GHC.Maybe.Nothing,

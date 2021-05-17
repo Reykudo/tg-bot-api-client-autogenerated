@@ -60,7 +60,7 @@ data PostGetChatMemberRequestBody = PostGetChatMemberRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target supergroup or channel (in the format \`\@channelusername\`)
   chatId :: ChatIdVariants
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetChatMemberRequestBody
@@ -70,7 +70,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostGetChatMemberRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetChatMemberRequestBody" (\obj -> (GHC.Base.pure PostGetChatMemberRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostGetChatMemberRequestBody' with all required fields.
 mkPostGetChatMemberRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostGetChatMemberRequestBody
 mkPostGetChatMemberRequestBody chatId userId = PostGetChatMemberRequestBody{chatId = chatId,
                                                                             userId = userId}
@@ -78,7 +78,7 @@ mkPostGetChatMemberRequestBody chatId userId = PostGetChatMemberRequestBody{chat
 -- 
 -- Unique identifier for the target chat or username of the target supergroup or channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

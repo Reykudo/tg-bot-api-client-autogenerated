@@ -62,9 +62,9 @@ data PostKickChatMemberRequestBody = PostKickChatMemberRequestBody {
   -- | revoke_messages: Pass *True* to delete all messages from the chat for the user that is being removed. If *False*, the user will be able to see messages in the group that were sent before the user was removed. Always *True* for supergroups and channels.
   , revokeMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | until_date: Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied for supergroups and channels only.
-  , untilDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , untilDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostKickChatMemberRequestBody
@@ -74,7 +74,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostKickChatMemberRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostKickChatMemberRequestBody" (\obj -> (((GHC.Base.pure PostKickChatMemberRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "revoke_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "until_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostKickChatMemberRequestBody' with all required fields.
 mkPostKickChatMemberRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostKickChatMemberRequestBody
 mkPostKickChatMemberRequestBody chatId userId = PostKickChatMemberRequestBody{chatId = chatId,
                                                                               revokeMessages = GHC.Maybe.Nothing,
@@ -84,7 +84,7 @@ mkPostKickChatMemberRequestBody chatId userId = PostKickChatMemberRequestBody{ch
 -- 
 -- Unique identifier for the target group or username of the target supergroup or channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

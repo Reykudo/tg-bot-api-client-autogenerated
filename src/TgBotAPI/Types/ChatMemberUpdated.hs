@@ -43,7 +43,7 @@ data ChatMemberUpdated = ChatMemberUpdated {
   -- | chat: This object represents a chat.
   chat :: Chat
   -- | date: Date the change was done in Unix time
-  , date :: GHC.Types.Int
+  , date :: GHC.Int.Int64
   -- | from: This object represents a Telegram user or bot.
   , from :: User
   -- | invite_link: Represents an invite link for a chat.
@@ -61,7 +61,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON ChatMemberUpdated
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ChatMemberUpdated" (\obj -> (((((GHC.Base.pure ChatMemberUpdated GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "invite_link")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "new_chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "old_chat_member"))
 -- | Create a new 'ChatMemberUpdated' with all required fields.
 mkChatMemberUpdated :: Chat -- ^ 'chat'
-  -> GHC.Types.Int -- ^ 'date'
+  -> GHC.Int.Int64 -- ^ 'date'
   -> User -- ^ 'from'
   -> ChatMember -- ^ 'newChatMember'
   -> ChatMember -- ^ 'oldChatMember'

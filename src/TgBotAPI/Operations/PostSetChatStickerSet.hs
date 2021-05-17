@@ -78,7 +78,7 @@ mkPostSetChatStickerSetRequestBody chatId stickerSetName = PostSetChatStickerSet
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

@@ -41,9 +41,9 @@ data Poll = Poll {
   -- | allows_multiple_answers: True, if the poll allows multiple answers
   allowsMultipleAnswers :: GHC.Types.Bool
   -- | close_date: *Optional*. Point in time (Unix timestamp) when the poll will be automatically closed
-  , closeDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , closeDate :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | correct_option_id: *Optional*. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
-  , correctOptionId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , correctOptionId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | explanation: *Optional*. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
   , explanation :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | explanation_entities: *Optional*. Special entities like usernames, URLs, bot commands, etc. that appear in the *explanation*
@@ -55,13 +55,13 @@ data Poll = Poll {
   -- | is_closed: True, if the poll is closed
   , isClosed :: GHC.Types.Bool
   -- | open_period: *Optional*. Amount of time in seconds the poll will be active after creation
-  , openPeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , openPeriod :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | options: List of poll options
   , options :: ([PollOption])
   -- | question: Poll question, 1-300 characters
   , question :: Data.Text.Internal.Text
   -- | total_voter_count: Total number of users that voted in the poll
-  , totalVoterCount :: GHC.Types.Int
+  , totalVoterCount :: GHC.Int.Int64
   -- | type: Poll type, currently can be “regular” or “quiz”
   , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
@@ -78,7 +78,7 @@ mkPoll :: GHC.Types.Bool -- ^ 'allowsMultipleAnswers'
   -> GHC.Types.Bool -- ^ 'isClosed'
   -> [PollOption] -- ^ 'options'
   -> Data.Text.Internal.Text -- ^ 'question'
-  -> GHC.Types.Int -- ^ 'totalVoterCount'
+  -> GHC.Int.Int64 -- ^ 'totalVoterCount'
   -> Data.Text.Internal.Text -- ^ 'type''
   -> Poll
 mkPoll allowsMultipleAnswers id isAnonymous isClosed options question totalVoterCount type' = Poll{allowsMultipleAnswers = allowsMultipleAnswers,

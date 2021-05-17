@@ -43,11 +43,11 @@ data Sticker = Sticker {
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
   , fileId :: Data.Text.Internal.Text
   -- | file_size: *Optional*. File size
-  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
   , fileUniqueId :: Data.Text.Internal.Text
   -- | height: Sticker height
-  , height :: GHC.Types.Int
+  , height :: GHC.Int.Int64
   -- | is_animated: *True*, if the sticker is [animated](https:\/\/telegram.org\/blog\/animated-stickers)
   , isAnimated :: GHC.Types.Bool
   -- | mask_position: This object describes the position on faces where a mask should be placed by default.
@@ -57,7 +57,7 @@ data Sticker = Sticker {
   -- | thumb: This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
   , thumb :: (GHC.Maybe.Maybe PhotoSize)
   -- | width: Sticker width
-  , width :: GHC.Types.Int
+  , width :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Sticker
@@ -68,9 +68,9 @@ instance Data.Aeson.Types.FromJSON.FromJSON Sticker
 -- | Create a new 'Sticker' with all required fields.
 mkSticker :: Data.Text.Internal.Text -- ^ 'fileId'
   -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
-  -> GHC.Types.Int -- ^ 'height'
+  -> GHC.Int.Int64 -- ^ 'height'
   -> GHC.Types.Bool -- ^ 'isAnimated'
-  -> GHC.Types.Int -- ^ 'width'
+  -> GHC.Int.Int64 -- ^ 'width'
   -> Sticker
 mkSticker fileId fileUniqueId height isAnimated width = Sticker{emoji = GHC.Maybe.Nothing,
                                                                 fileId = fileId,

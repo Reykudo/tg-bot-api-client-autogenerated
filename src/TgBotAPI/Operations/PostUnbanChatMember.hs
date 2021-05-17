@@ -62,7 +62,7 @@ data PostUnbanChatMemberRequestBody = PostUnbanChatMemberRequestBody {
   -- | only_if_banned: Do nothing if the user is not banned
   , onlyIfBanned :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostUnbanChatMemberRequestBody
@@ -72,7 +72,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostUnbanChatMemberRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostUnbanChatMemberRequestBody" (\obj -> ((GHC.Base.pure PostUnbanChatMemberRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "only_if_banned")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostUnbanChatMemberRequestBody' with all required fields.
 mkPostUnbanChatMemberRequestBody :: ChatIdVariants -- ^ 'chatId'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostUnbanChatMemberRequestBody
 mkPostUnbanChatMemberRequestBody chatId userId = PostUnbanChatMemberRequestBody{chatId = chatId,
                                                                                 onlyIfBanned = GHC.Maybe.Nothing,
@@ -81,7 +81,7 @@ mkPostUnbanChatMemberRequestBody chatId userId = PostUnbanChatMemberRequestBody{
 -- 
 -- Unique identifier for the target group or username of the target supergroup or channel (in the format \`\@username\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

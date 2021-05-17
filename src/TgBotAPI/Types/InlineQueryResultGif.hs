@@ -44,13 +44,13 @@ data InlineQueryResultGif = InlineQueryResultGif {
   -- | caption_entities: *Optional*. List of special entities that appear in the caption, which can be specified instead of *parse\\_mode*
   , captionEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | gif_duration: *Optional*. Duration of the GIF
-  , gifDuration :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , gifDuration :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | gif_height: *Optional*. Height of the GIF
-  , gifHeight :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , gifHeight :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | gif_url: A valid URL for the GIF file. File size must not exceed 1MB
   , gifUrl :: Data.Text.Internal.Text
   -- | gif_width: *Optional*. Width of the GIF
-  , gifWidth :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , gifWidth :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | id: Unique identifier for this result, 1-64 bytes
   , id :: Data.Text.Internal.Text
   -- | input_message_content: This object represents the content of a message to be sent as a result of an inline query. Telegram clients currently support the following 5 types:

@@ -70,13 +70,13 @@ data PostCopyMessageRequestBody = PostCopyMessageRequestBody {
   -- | from_chat_id: Unique identifier for the chat where the original message was sent (or channel username in the format \`\@channelusername\`)
   , fromChatId :: FromChatIdVariants
   -- | message_id: Message identifier in the chat specified in *from\\_chat\\_id*
-  , messageId :: GHC.Types.Int
+  , messageId :: GHC.Int.Int64
   -- | parse_mode: Mode for parsing entities in the new caption. See [formatting options](https:\/\/core.telegram.org\/bots\/api\/\#formatting-options) for more details.
   , parseMode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | reply_markup: Additional interface options. A JSON-serialized object for an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating), [custom reply keyboard](https:\/\/core.telegram.org\/bots\#keyboards), instructions to remove reply keyboard or to force a reply from the user.
   , replyMarkup :: (GHC.Maybe.Maybe ReplyMarkup)
   -- | reply_to_message_id: If the message is a reply, ID of the original message
-  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , replyToMessageId :: (GHC.Maybe.Maybe GHC.Int.Int64)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostCopyMessageRequestBody
@@ -87,7 +87,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostCopyMessageRequestBody
 -- | Create a new 'PostCopyMessageRequestBody' with all required fields.
 mkPostCopyMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
   -> FromChatIdVariants -- ^ 'fromChatId'
-  -> GHC.Types.Int -- ^ 'messageId'
+  -> GHC.Int.Int64 -- ^ 'messageId'
   -> PostCopyMessageRequestBody
 mkPostCopyMessageRequestBody chatId fromChatId messageId = PostCopyMessageRequestBody{allowSendingWithoutReply = GHC.Maybe.Nothing,
                                                                                       caption = GHC.Maybe.Nothing,
@@ -103,7 +103,7 @@ mkPostCopyMessageRequestBody chatId fromChatId messageId = PostCopyMessageReques
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
@@ -117,7 +117,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
 -- 
 -- Unique identifier for the chat where the original message was sent (or channel username in the format \`\@channelusername\`)
 data FromChatIdVariants =
-   FromChatIdInt GHC.Types.Int
+   FromChatIdInt GHC.Int.Int64
   | FromChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON FromChatIdVariants

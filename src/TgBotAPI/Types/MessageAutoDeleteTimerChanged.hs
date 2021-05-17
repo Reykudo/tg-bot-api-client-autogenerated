@@ -37,7 +37,7 @@ import TgBotAPI.TypeAlias
 -- This object represents a service message about a change in auto-delete timer settings.
 data MessageAutoDeleteTimerChanged = MessageAutoDeleteTimerChanged {
   -- | message_auto_delete_time: New auto-delete time for messages in the chat
-  messageAutoDeleteTime :: GHC.Types.Int
+  messageAutoDeleteTime :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON MessageAutoDeleteTimerChanged
@@ -46,6 +46,6 @@ instance Data.Aeson.Types.ToJSON.ToJSON MessageAutoDeleteTimerChanged
 instance Data.Aeson.Types.FromJSON.FromJSON MessageAutoDeleteTimerChanged
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "MessageAutoDeleteTimerChanged" (\obj -> GHC.Base.pure MessageAutoDeleteTimerChanged GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message_auto_delete_time"))
 -- | Create a new 'MessageAutoDeleteTimerChanged' with all required fields.
-mkMessageAutoDeleteTimerChanged :: GHC.Types.Int -- ^ 'messageAutoDeleteTime'
+mkMessageAutoDeleteTimerChanged :: GHC.Int.Int64 -- ^ 'messageAutoDeleteTime'
   -> MessageAutoDeleteTimerChanged
 mkMessageAutoDeleteTimerChanged messageAutoDeleteTime = MessageAutoDeleteTimerChanged{messageAutoDeleteTime = messageAutoDeleteTime}

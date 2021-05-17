@@ -60,7 +60,7 @@ postAnswerCallbackQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data
 -- 
 data PostAnswerCallbackQueryRequestBody = PostAnswerCallbackQueryRequestBody {
   -- | cache_time: The maximum amount of time in seconds that the result of the callback query may be cached client-side. Telegram apps will support caching starting in version 3.14. Defaults to 0.
-  cacheTime :: (GHC.Maybe.Maybe GHC.Types.Int)
+  cacheTime :: (GHC.Maybe.Maybe GHC.Int.Int64)
   -- | callback_query_id: Unique identifier for the query to be answered
   , callbackQueryId :: Data.Text.Internal.Text
   -- | show_alert: If *true*, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to *false*.

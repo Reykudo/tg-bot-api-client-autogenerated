@@ -64,7 +64,7 @@ data PostForwardMessageRequestBody = PostForwardMessageRequestBody {
   -- | from_chat_id: Unique identifier for the chat where the original message was sent (or channel username in the format \`\@channelusername\`)
   , fromChatId :: FromChatIdVariants
   -- | message_id: Message identifier in the chat specified in *from\\_chat\\_id*
-  , messageId :: GHC.Types.Int
+  , messageId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostForwardMessageRequestBody
@@ -75,7 +75,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostForwardMessageRequestBody
 -- | Create a new 'PostForwardMessageRequestBody' with all required fields.
 mkPostForwardMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
   -> FromChatIdVariants -- ^ 'fromChatId'
-  -> GHC.Types.Int -- ^ 'messageId'
+  -> GHC.Int.Int64 -- ^ 'messageId'
   -> PostForwardMessageRequestBody
 mkPostForwardMessageRequestBody chatId fromChatId messageId = PostForwardMessageRequestBody{chatId = chatId,
                                                                                             disableNotification = GHC.Maybe.Nothing,
@@ -85,7 +85,7 @@ mkPostForwardMessageRequestBody chatId fromChatId messageId = PostForwardMessage
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
@@ -99,7 +99,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
 -- 
 -- Unique identifier for the chat where the original message was sent (or channel username in the format \`\@channelusername\`)
 data FromChatIdVariants =
-   FromChatIdInt GHC.Types.Int
+   FromChatIdInt GHC.Int.Int64
   | FromChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON FromChatIdVariants

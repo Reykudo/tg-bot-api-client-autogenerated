@@ -62,7 +62,7 @@ data PostSetChatAdministratorCustomTitleRequestBody = PostSetChatAdministratorCu
   -- | custom_title: New custom title for the administrator; 0-16 characters, emoji are not allowed
   , customTitle :: Data.Text.Internal.Text
   -- | user_id: Unique identifier of the target user
-  , userId :: GHC.Types.Int
+  , userId :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatAdministratorCustomTitleRequestBody
@@ -73,7 +73,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatAdministratorCustomTitleR
 -- | Create a new 'PostSetChatAdministratorCustomTitleRequestBody' with all required fields.
 mkPostSetChatAdministratorCustomTitleRequestBody :: ChatIdVariants -- ^ 'chatId'
   -> Data.Text.Internal.Text -- ^ 'customTitle'
-  -> GHC.Types.Int -- ^ 'userId'
+  -> GHC.Int.Int64 -- ^ 'userId'
   -> PostSetChatAdministratorCustomTitleRequestBody
 mkPostSetChatAdministratorCustomTitleRequestBody chatId customTitle userId = PostSetChatAdministratorCustomTitleRequestBody{chatId = chatId,
                                                                                                                             customTitle = customTitle,
@@ -82,7 +82,7 @@ mkPostSetChatAdministratorCustomTitleRequestBody chatId customTitle userId = Pos
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
 data ChatIdVariants =
-   ChatIdInt GHC.Types.Int
+   ChatIdInt GHC.Int.Int64
   | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants

@@ -40,7 +40,7 @@ data UserProfilePhotos = UserProfilePhotos {
   -- | photos: Requested profile pictures (in up to 4 sizes each)
   photos :: ([[PhotoSize]])
   -- | total_count: Total number of profile pictures the target user has
-  , totalCount :: GHC.Types.Int
+  , totalCount :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON UserProfilePhotos
@@ -50,7 +50,7 @@ instance Data.Aeson.Types.FromJSON.FromJSON UserProfilePhotos
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "UserProfilePhotos" (\obj -> (GHC.Base.pure UserProfilePhotos GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "photos")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "total_count"))
 -- | Create a new 'UserProfilePhotos' with all required fields.
 mkUserProfilePhotos :: [[PhotoSize]] -- ^ 'photos'
-  -> GHC.Types.Int -- ^ 'totalCount'
+  -> GHC.Int.Int64 -- ^ 'totalCount'
   -> UserProfilePhotos
 mkUserProfilePhotos photos totalCount = UserProfilePhotos{photos = photos,
                                                           totalCount = totalCount}

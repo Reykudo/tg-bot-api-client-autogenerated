@@ -37,7 +37,7 @@ import TgBotAPI.TypeAlias
 -- This object represents a service message about a voice chat scheduled in the chat.
 data VoiceChatScheduled = VoiceChatScheduled {
   -- | start_date: Point in time (Unix timestamp) when the voice chat is supposed to be started by a chat administrator
-  startDate :: GHC.Types.Int
+  startDate :: GHC.Int.Int64
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatScheduled
@@ -46,6 +46,6 @@ instance Data.Aeson.Types.ToJSON.ToJSON VoiceChatScheduled
 instance Data.Aeson.Types.FromJSON.FromJSON VoiceChatScheduled
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VoiceChatScheduled" (\obj -> GHC.Base.pure VoiceChatScheduled GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "start_date"))
 -- | Create a new 'VoiceChatScheduled' with all required fields.
-mkVoiceChatScheduled :: GHC.Types.Int -- ^ 'startDate'
+mkVoiceChatScheduled :: GHC.Int.Int64 -- ^ 'startDate'
   -> VoiceChatScheduled
 mkVoiceChatScheduled startDate = VoiceChatScheduled{startDate = startDate}
