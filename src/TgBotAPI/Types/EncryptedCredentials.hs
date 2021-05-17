@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema EncryptedCredentials
 module TgBotAPI.Types.EncryptedCredentials where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,23 +37,23 @@ import TgBotAPI.TypeAlias
 -- Contains data required for decrypting and authenticating [EncryptedPassportElement](https:\/\/core.telegram.org\/bots\/api\/\#encryptedpassportelement). See the [Telegram Passport Documentation](https:\/\/core.telegram.org\/passport\#receiving-information) for a complete description of the data decryption and authentication processes.
 data EncryptedCredentials = EncryptedCredentials {
   -- | data: Base64-encoded encrypted JSON-serialized data with unique user\'s payload, data hashes and secrets required for [EncryptedPassportElement](https:\/\/core.telegram.org\/bots\/api\/\#encryptedpassportelement) decryption and authentication
-  encryptedCredentialsData :: Data.Text.Internal.Text
+  data' :: Data.Text.Internal.Text
   -- | hash: Base64-encoded data hash for data authentication
-  , encryptedCredentialsHash :: Data.Text.Internal.Text
+  , hash :: Data.Text.Internal.Text
   -- | secret: Base64-encoded secret, encrypted with the bot\'s public RSA key, required for data decryption
-  , encryptedCredentialsSecret :: Data.Text.Internal.Text
+  , secret :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON EncryptedCredentials
-    where toJSON obj = Data.Aeson.Types.Internal.object ("data" Data.Aeson.Types.ToJSON..= encryptedCredentialsData obj : "hash" Data.Aeson.Types.ToJSON..= encryptedCredentialsHash obj : "secret" Data.Aeson.Types.ToJSON..= encryptedCredentialsSecret obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("data" Data.Aeson.Types.ToJSON..= encryptedCredentialsData obj) GHC.Base.<> (("hash" Data.Aeson.Types.ToJSON..= encryptedCredentialsHash obj) GHC.Base.<> ("secret" Data.Aeson.Types.ToJSON..= encryptedCredentialsSecret obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("data" Data.Aeson.Types.ToJSON..= data' obj : "hash" Data.Aeson.Types.ToJSON..= hash obj : "secret" Data.Aeson.Types.ToJSON..= secret obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("data" Data.Aeson.Types.ToJSON..= data' obj) GHC.Base.<> (("hash" Data.Aeson.Types.ToJSON..= hash obj) GHC.Base.<> ("secret" Data.Aeson.Types.ToJSON..= secret obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON EncryptedCredentials
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "EncryptedCredentials" (\obj -> ((GHC.Base.pure EncryptedCredentials GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "data")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "hash")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "secret"))
 -- | Create a new 'EncryptedCredentials' with all required fields.
-mkEncryptedCredentials :: Data.Text.Internal.Text -- ^ 'encryptedCredentialsData'
-  -> Data.Text.Internal.Text -- ^ 'encryptedCredentialsHash'
-  -> Data.Text.Internal.Text -- ^ 'encryptedCredentialsSecret'
+mkEncryptedCredentials :: Data.Text.Internal.Text -- ^ 'data''
+  -> Data.Text.Internal.Text -- ^ 'hash'
+  -> Data.Text.Internal.Text -- ^ 'secret'
   -> EncryptedCredentials
-mkEncryptedCredentials encryptedCredentialsData encryptedCredentialsHash encryptedCredentialsSecret = EncryptedCredentials{encryptedCredentialsData = encryptedCredentialsData,
-                                                                                                                           encryptedCredentialsHash = encryptedCredentialsHash,
-                                                                                                                           encryptedCredentialsSecret = encryptedCredentialsSecret}
+mkEncryptedCredentials data' hash secret = EncryptedCredentials{data' = data',
+                                                                hash = hash,
+                                                                secret = secret}

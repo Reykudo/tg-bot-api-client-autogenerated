@@ -6,8 +6,8 @@ instance Show Chat
 instance Eq Chat
 instance FromJSON Chat
 instance ToJSON Chat
-data ChatType
-instance Show ChatType
-instance Eq ChatType
-instance FromJSON ChatType
-instance ToJSON ChatType
+data Type
+instance Show Type
+instance Eq Type
+instance FromJSON Type
+instance ToJSON Type

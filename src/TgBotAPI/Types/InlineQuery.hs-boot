@@ -6,8 +6,8 @@ instance Show InlineQuery
 instance Eq InlineQuery
 instance FromJSON InlineQuery
 instance ToJSON InlineQuery
-data InlineQueryChatType
-instance Show InlineQueryChatType
-instance Eq InlineQueryChatType
-instance FromJSON InlineQueryChatType
-instance ToJSON InlineQueryChatType
+data ChatType
+instance Show ChatType
+instance Eq ChatType
+instance FromJSON ChatType
+instance ToJSON ChatType

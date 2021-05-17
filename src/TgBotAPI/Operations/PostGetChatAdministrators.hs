@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postGetChatAdministrators
 module TgBotAPI.Operations.PostGetChatAdministrators where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to get a list of administrators in a chat. On success, returns an Array of [ChatMember](https:\/\/core.telegram.org\/bots\/api\/\#chatmember) objects that contains information about all chat administrators except other bots. If the chat is a group or a supergroup and no administrators were appointed, only the creator will be returned.
 postGetChatAdministrators :: forall m . TgBotAPI.Common.MonadHTTP m => PostGetChatAdministratorsRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostGetChatAdministratorsResponse) -- ^ Monadic computation which returns the result of the operation
-postGetChatAdministrators body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostGetChatAdministratorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postGetChatAdministrators body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostGetChatAdministratorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                               PostGetChatAdministratorsResponseBody200)
-                                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                 Error)
                                                                                                                                                                                      | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/getChatAdministrators") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/getChatAdministrators.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,37 +58,37 @@ postGetChatAdministrators body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Da
 -- 
 data PostGetChatAdministratorsRequestBody = PostGetChatAdministratorsRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target supergroup or channel (in the format \`\@channelusername\`)
-  postGetChatAdministratorsRequestBodyChatId :: PostGetChatAdministratorsRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetChatAdministratorsRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postGetChatAdministratorsRequestBodyChatId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("chat_id" Data.Aeson.Types.ToJSON..= postGetChatAdministratorsRequestBodyChatId obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj)
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetChatAdministratorsRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetChatAdministratorsRequestBody" (\obj -> GHC.Base.pure PostGetChatAdministratorsRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id"))
 -- | Create a new 'PostGetChatAdministratorsRequestBody' with all required fields.
-mkPostGetChatAdministratorsRequestBody :: PostGetChatAdministratorsRequestBodyChatIdVariants -- ^ 'postGetChatAdministratorsRequestBodyChatId'
+mkPostGetChatAdministratorsRequestBody :: ChatIdVariants -- ^ 'chatId'
   -> PostGetChatAdministratorsRequestBody
-mkPostGetChatAdministratorsRequestBody postGetChatAdministratorsRequestBodyChatId = PostGetChatAdministratorsRequestBody{postGetChatAdministratorsRequestBodyChatId = postGetChatAdministratorsRequestBodyChatId}
+mkPostGetChatAdministratorsRequestBody chatId = PostGetChatAdministratorsRequestBody{chatId = chatId}
 -- | Defines the oneOf schema located at @paths.\/getChatAdministrators.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target supergroup or channel (in the format \`\@channelusername\`)
-data PostGetChatAdministratorsRequestBodyChatIdVariants =
-   PostGetChatAdministratorsRequestBodyChatIdInt GHC.Types.Int
-  | PostGetChatAdministratorsRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostGetChatAdministratorsRequestBodyChatIdVariants
-    where toJSON (PostGetChatAdministratorsRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostGetChatAdministratorsRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostGetChatAdministratorsRequestBodyChatIdVariants
-    where parseJSON val = case (PostGetChatAdministratorsRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostGetChatAdministratorsRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postGetChatAdministrators'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostGetChatAdministratorsResponseError' is used.
 data PostGetChatAdministratorsResponse =
-   PostGetChatAdministratorsResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostGetChatAdministratorsResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostGetChatAdministratorsResponse200 PostGetChatAdministratorsResponseBody200 -- ^ 
   | PostGetChatAdministratorsResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -97,22 +97,22 @@ data PostGetChatAdministratorsResponse =
 -- 
 data PostGetChatAdministratorsResponseBody200 = PostGetChatAdministratorsResponseBody200 {
   -- | ok
-  postGetChatAdministratorsResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postGetChatAdministratorsResponseBody200Result :: ([ChatMember])
+  , result :: ([ChatMember])
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetChatAdministratorsResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postGetChatAdministratorsResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postGetChatAdministratorsResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postGetChatAdministratorsResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postGetChatAdministratorsResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetChatAdministratorsResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetChatAdministratorsResponseBody200" (\obj -> (GHC.Base.pure PostGetChatAdministratorsResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostGetChatAdministratorsResponseBody200' with all required fields.
-mkPostGetChatAdministratorsResponseBody200 :: GHC.Types.Bool -- ^ 'postGetChatAdministratorsResponseBody200Ok'
-  -> [ChatMember] -- ^ 'postGetChatAdministratorsResponseBody200Result'
+mkPostGetChatAdministratorsResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> [ChatMember] -- ^ 'result'
   -> PostGetChatAdministratorsResponseBody200
-mkPostGetChatAdministratorsResponseBody200 postGetChatAdministratorsResponseBody200Ok postGetChatAdministratorsResponseBody200Result = PostGetChatAdministratorsResponseBody200{postGetChatAdministratorsResponseBody200Ok = postGetChatAdministratorsResponseBody200Ok,
-                                                                                                                                                                                postGetChatAdministratorsResponseBody200Result = postGetChatAdministratorsResponseBody200Result}
+mkPostGetChatAdministratorsResponseBody200 ok result = PostGetChatAdministratorsResponseBody200{ok = ok,
+                                                                                                result = result}
 -- | > POST /getChatAdministrators
 -- 
 -- The same as 'postGetChatAdministrators' but accepts an explicit configuration.
@@ -120,9 +120,9 @@ postGetChatAdministratorsWithConfiguration :: forall m . TgBotAPI.Common.MonadHT
   -> PostGetChatAdministratorsRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostGetChatAdministratorsResponse) -- ^ Monadic computation which returns the result of the operation
 postGetChatAdministratorsWithConfiguration config
-                                           body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostGetChatAdministratorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                           body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostGetChatAdministratorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                                PostGetChatAdministratorsResponseBody200)
-                                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetChatAdministratorsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                  Error)
                                                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/getChatAdministrators") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /getChatAdministrators

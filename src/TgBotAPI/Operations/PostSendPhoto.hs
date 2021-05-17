@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSendPhoto
 module TgBotAPI.Operations.PostSendPhoto where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,16 +47,16 @@ import TgBotAPI.Types
 -- 
 -- Use this method to send photos. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postSendPhoto :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSendPhotoResponse) -- ^ Monadic computation which returns the result of the operation
-postSendPhoto = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendPhotoResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendPhoto = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendPhotoResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                      PostSendPhotoResponseBody200)
-                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                        Error)
                                                                                                                                                         | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendPhoto") GHC.Base.mempty)
 -- | Represents a response of the operation 'postSendPhoto'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendPhotoResponseError' is used.
 data PostSendPhotoResponse =
-   PostSendPhotoResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSendPhotoResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSendPhotoResponse200 PostSendPhotoResponseBody200 -- ^ 
   | PostSendPhotoResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -65,30 +65,30 @@ data PostSendPhotoResponse =
 -- 
 data PostSendPhotoResponseBody200 = PostSendPhotoResponseBody200 {
   -- | ok
-  postSendPhotoResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a message.
-  , postSendPhotoResponseBody200Result :: Message
+  , result :: Message
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendPhotoResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSendPhotoResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSendPhotoResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSendPhotoResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSendPhotoResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendPhotoResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendPhotoResponseBody200" (\obj -> (GHC.Base.pure PostSendPhotoResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSendPhotoResponseBody200' with all required fields.
-mkPostSendPhotoResponseBody200 :: GHC.Types.Bool -- ^ 'postSendPhotoResponseBody200Ok'
-  -> Message -- ^ 'postSendPhotoResponseBody200Result'
+mkPostSendPhotoResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Message -- ^ 'result'
   -> PostSendPhotoResponseBody200
-mkPostSendPhotoResponseBody200 postSendPhotoResponseBody200Ok postSendPhotoResponseBody200Result = PostSendPhotoResponseBody200{postSendPhotoResponseBody200Ok = postSendPhotoResponseBody200Ok,
-                                                                                                                                postSendPhotoResponseBody200Result = postSendPhotoResponseBody200Result}
+mkPostSendPhotoResponseBody200 ok result = PostSendPhotoResponseBody200{ok = ok,
+                                                                        result = result}
 -- | > POST /sendPhoto
 -- 
 -- The same as 'postSendPhoto' but accepts an explicit configuration.
 postSendPhotoWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.Configuration -- ^ The configuration to use in the request
   -> m (Network.HTTP.Client.Types.Response PostSendPhotoResponse) -- ^ Monadic computation which returns the result of the operation
-postSendPhotoWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendPhotoResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendPhotoWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendPhotoResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                              PostSendPhotoResponseBody200)
-                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendPhotoResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                Error)
                                                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendPhoto") GHC.Base.mempty)
 -- | > POST /sendPhoto

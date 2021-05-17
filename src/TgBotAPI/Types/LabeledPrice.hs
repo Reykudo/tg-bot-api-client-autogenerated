@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema LabeledPrice
 module TgBotAPI.Types.LabeledPrice where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,19 +37,19 @@ import TgBotAPI.TypeAlias
 -- This object represents a portion of the price for goods or services.
 data LabeledPrice = LabeledPrice {
   -- | amount: Price of the product in the *smallest units* of the [currency](\/bots\/payments\#supported-currencies) (integer, **not** float\/double). For example, for a price of \`US\$ 1.45\` pass \`amount = 145\`. See the *exp* parameter in [currencies.json](https:\/\/core.telegram.org\/bots\/payments\/currencies.json), it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-  labeledPriceAmount :: GHC.Types.Int
+  amount :: GHC.Types.Int
   -- | label: Portion label
-  , labeledPriceLabel :: Data.Text.Internal.Text
+  , label :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON LabeledPrice
-    where toJSON obj = Data.Aeson.Types.Internal.object ("amount" Data.Aeson.Types.ToJSON..= labeledPriceAmount obj : "label" Data.Aeson.Types.ToJSON..= labeledPriceLabel obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("amount" Data.Aeson.Types.ToJSON..= labeledPriceAmount obj) GHC.Base.<> ("label" Data.Aeson.Types.ToJSON..= labeledPriceLabel obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("amount" Data.Aeson.Types.ToJSON..= amount obj : "label" Data.Aeson.Types.ToJSON..= label obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("amount" Data.Aeson.Types.ToJSON..= amount obj) GHC.Base.<> ("label" Data.Aeson.Types.ToJSON..= label obj))
 instance Data.Aeson.Types.FromJSON.FromJSON LabeledPrice
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "LabeledPrice" (\obj -> (GHC.Base.pure LabeledPrice GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "amount")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "label"))
 -- | Create a new 'LabeledPrice' with all required fields.
-mkLabeledPrice :: GHC.Types.Int -- ^ 'labeledPriceAmount'
-  -> Data.Text.Internal.Text -- ^ 'labeledPriceLabel'
+mkLabeledPrice :: GHC.Types.Int -- ^ 'amount'
+  -> Data.Text.Internal.Text -- ^ 'label'
   -> LabeledPrice
-mkLabeledPrice labeledPriceAmount labeledPriceLabel = LabeledPrice{labeledPriceAmount = labeledPriceAmount,
-                                                                   labeledPriceLabel = labeledPriceLabel}
+mkLabeledPrice amount label = LabeledPrice{amount = amount,
+                                           label = label}

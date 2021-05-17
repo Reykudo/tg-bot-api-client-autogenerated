@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PassportFile
 module TgBotAPI.Types.PassportFile where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,27 +37,27 @@ import TgBotAPI.TypeAlias
 -- This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format when decrypted and don\'t exceed 10MB.
 data PassportFile = PassportFile {
   -- | file_date: Unix time when the file was uploaded
-  passportFileFileDate :: GHC.Types.Int
+  fileDate :: GHC.Types.Int
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
-  , passportFileFileId :: Data.Text.Internal.Text
+  , fileId :: Data.Text.Internal.Text
   -- | file_size: File size
-  , passportFileFileSize :: GHC.Types.Int
+  , fileSize :: GHC.Types.Int
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , passportFileFileUniqueId :: Data.Text.Internal.Text
+  , fileUniqueId :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PassportFile
-    where toJSON obj = Data.Aeson.Types.Internal.object ("file_date" Data.Aeson.Types.ToJSON..= passportFileFileDate obj : "file_id" Data.Aeson.Types.ToJSON..= passportFileFileId obj : "file_size" Data.Aeson.Types.ToJSON..= passportFileFileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= passportFileFileUniqueId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_date" Data.Aeson.Types.ToJSON..= passportFileFileDate obj) GHC.Base.<> (("file_id" Data.Aeson.Types.ToJSON..= passportFileFileId obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= passportFileFileSize obj) GHC.Base.<> ("file_unique_id" Data.Aeson.Types.ToJSON..= passportFileFileUniqueId obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("file_date" Data.Aeson.Types.ToJSON..= fileDate obj : "file_id" Data.Aeson.Types.ToJSON..= fileId obj : "file_size" Data.Aeson.Types.ToJSON..= fileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_date" Data.Aeson.Types.ToJSON..= fileDate obj) GHC.Base.<> (("file_id" Data.Aeson.Types.ToJSON..= fileId obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileSize obj) GHC.Base.<> ("file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON PassportFile
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PassportFile" (\obj -> (((GHC.Base.pure PassportFile GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id"))
 -- | Create a new 'PassportFile' with all required fields.
-mkPassportFile :: GHC.Types.Int -- ^ 'passportFileFileDate'
-  -> Data.Text.Internal.Text -- ^ 'passportFileFileId'
-  -> GHC.Types.Int -- ^ 'passportFileFileSize'
-  -> Data.Text.Internal.Text -- ^ 'passportFileFileUniqueId'
+mkPassportFile :: GHC.Types.Int -- ^ 'fileDate'
+  -> Data.Text.Internal.Text -- ^ 'fileId'
+  -> GHC.Types.Int -- ^ 'fileSize'
+  -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
   -> PassportFile
-mkPassportFile passportFileFileDate passportFileFileId passportFileFileSize passportFileFileUniqueId = PassportFile{passportFileFileDate = passportFileFileDate,
-                                                                                                                    passportFileFileId = passportFileFileId,
-                                                                                                                    passportFileFileSize = passportFileFileSize,
-                                                                                                                    passportFileFileUniqueId = passportFileFileUniqueId}
+mkPassportFile fileDate fileId fileSize fileUniqueId = PassportFile{fileDate = fileDate,
+                                                                    fileId = fileId,
+                                                                    fileSize = fileSize,
+                                                                    fileUniqueId = fileUniqueId}

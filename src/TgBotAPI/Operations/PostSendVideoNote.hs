@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSendVideoNote
 module TgBotAPI.Operations.PostSendVideoNote where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,16 +47,16 @@ import TgBotAPI.Types
 -- 
 -- As of [v.4.0](https:\/\/telegram.org\/blog\/video-messages-and-telescope), Telegram clients support rounded square mp4 videos of up to 1 minute long. Use this method to send video messages. On success, the sent [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned.
 postSendVideoNote :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSendVideoNoteResponse) -- ^ Monadic computation which returns the result of the operation
-postSendVideoNote = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendVideoNoteResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendVideoNote = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSendVideoNoteResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                  PostSendVideoNoteResponseBody200)
-                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                    Error)
                                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendVideoNote") GHC.Base.mempty)
 -- | Represents a response of the operation 'postSendVideoNote'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSendVideoNoteResponseError' is used.
 data PostSendVideoNoteResponse =
-   PostSendVideoNoteResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSendVideoNoteResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSendVideoNoteResponse200 PostSendVideoNoteResponseBody200 -- ^ 
   | PostSendVideoNoteResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -65,30 +65,30 @@ data PostSendVideoNoteResponse =
 -- 
 data PostSendVideoNoteResponseBody200 = PostSendVideoNoteResponseBody200 {
   -- | ok
-  postSendVideoNoteResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a message.
-  , postSendVideoNoteResponseBody200Result :: Message
+  , result :: Message
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSendVideoNoteResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSendVideoNoteResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSendVideoNoteResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSendVideoNoteResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSendVideoNoteResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSendVideoNoteResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSendVideoNoteResponseBody200" (\obj -> (GHC.Base.pure PostSendVideoNoteResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSendVideoNoteResponseBody200' with all required fields.
-mkPostSendVideoNoteResponseBody200 :: GHC.Types.Bool -- ^ 'postSendVideoNoteResponseBody200Ok'
-  -> Message -- ^ 'postSendVideoNoteResponseBody200Result'
+mkPostSendVideoNoteResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> Message -- ^ 'result'
   -> PostSendVideoNoteResponseBody200
-mkPostSendVideoNoteResponseBody200 postSendVideoNoteResponseBody200Ok postSendVideoNoteResponseBody200Result = PostSendVideoNoteResponseBody200{postSendVideoNoteResponseBody200Ok = postSendVideoNoteResponseBody200Ok,
-                                                                                                                                                postSendVideoNoteResponseBody200Result = postSendVideoNoteResponseBody200Result}
+mkPostSendVideoNoteResponseBody200 ok result = PostSendVideoNoteResponseBody200{ok = ok,
+                                                                                result = result}
 -- | > POST /sendVideoNote
 -- 
 -- The same as 'postSendVideoNote' but accepts an explicit configuration.
 postSendVideoNoteWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.Configuration -- ^ The configuration to use in the request
   -> m (Network.HTTP.Client.Types.Response PostSendVideoNoteResponse) -- ^ Monadic computation which returns the result of the operation
-postSendVideoNoteWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendVideoNoteResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSendVideoNoteWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSendVideoNoteResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                          PostSendVideoNoteResponseBody200)
-                                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSendVideoNoteResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                            Error)
                                                                                                                                                                                         | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/sendVideoNote") GHC.Base.mempty)
 -- | > POST /sendVideoNote

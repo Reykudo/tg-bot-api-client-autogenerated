@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetPassportDataErrors
 module TgBotAPI.Operations.PostSetPassportDataErrors where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -50,9 +50,9 @@ import TgBotAPI.Types
 -- Use this if the data submitted by the user doesn\'t satisfy the standards your service requires for any reason. For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering, etc. Supply some details in the error message to make sure the user knows how to correct the issues.
 postSetPassportDataErrors :: forall m . TgBotAPI.Common.MonadHTTP m => PostSetPassportDataErrorsRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetPassportDataErrorsResponse) -- ^ Monadic computation which returns the result of the operation
-postSetPassportDataErrors body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetPassportDataErrorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetPassportDataErrors body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetPassportDataErrorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                               PostSetPassportDataErrorsResponseBody200)
-                                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                 Error)
                                                                                                                                                                                      | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setPassportDataErrors") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/setPassportDataErrors.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -60,27 +60,27 @@ postSetPassportDataErrors body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Da
 -- 
 data PostSetPassportDataErrorsRequestBody = PostSetPassportDataErrorsRequestBody {
   -- | errors: A JSON-serialized array describing the errors
-  postSetPassportDataErrorsRequestBodyErrors :: ([PassportElementError])
+  errors :: ([PassportElementError])
   -- | user_id: User identifier
-  , postSetPassportDataErrorsRequestBodyUserId :: GHC.Types.Int
+  , userId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetPassportDataErrorsRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("errors" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsRequestBodyErrors obj : "user_id" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsRequestBodyUserId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("errors" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsRequestBodyErrors obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsRequestBodyUserId obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("errors" Data.Aeson.Types.ToJSON..= errors obj : "user_id" Data.Aeson.Types.ToJSON..= userId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("errors" Data.Aeson.Types.ToJSON..= errors obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= userId obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetPassportDataErrorsRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetPassportDataErrorsRequestBody" (\obj -> (GHC.Base.pure PostSetPassportDataErrorsRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "errors")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostSetPassportDataErrorsRequestBody' with all required fields.
-mkPostSetPassportDataErrorsRequestBody :: [PassportElementError] -- ^ 'postSetPassportDataErrorsRequestBodyErrors'
-  -> GHC.Types.Int -- ^ 'postSetPassportDataErrorsRequestBodyUserId'
+mkPostSetPassportDataErrorsRequestBody :: [PassportElementError] -- ^ 'errors'
+  -> GHC.Types.Int -- ^ 'userId'
   -> PostSetPassportDataErrorsRequestBody
-mkPostSetPassportDataErrorsRequestBody postSetPassportDataErrorsRequestBodyErrors postSetPassportDataErrorsRequestBodyUserId = PostSetPassportDataErrorsRequestBody{postSetPassportDataErrorsRequestBodyErrors = postSetPassportDataErrorsRequestBodyErrors,
-                                                                                                                                                                    postSetPassportDataErrorsRequestBodyUserId = postSetPassportDataErrorsRequestBodyUserId}
+mkPostSetPassportDataErrorsRequestBody errors userId = PostSetPassportDataErrorsRequestBody{errors = errors,
+                                                                                            userId = userId}
 -- | Represents a response of the operation 'postSetPassportDataErrors'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetPassportDataErrorsResponseError' is used.
 data PostSetPassportDataErrorsResponse =
-   PostSetPassportDataErrorsResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetPassportDataErrorsResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetPassportDataErrorsResponse200 PostSetPassportDataErrorsResponseBody200 -- ^ 
   | PostSetPassportDataErrorsResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -89,22 +89,22 @@ data PostSetPassportDataErrorsResponse =
 -- 
 data PostSetPassportDataErrorsResponseBody200 = PostSetPassportDataErrorsResponseBody200 {
   -- | ok
-  postSetPassportDataErrorsResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetPassportDataErrorsResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetPassportDataErrorsResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetPassportDataErrorsResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetPassportDataErrorsResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetPassportDataErrorsResponseBody200" (\obj -> (GHC.Base.pure PostSetPassportDataErrorsResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetPassportDataErrorsResponseBody200' with all required fields.
-mkPostSetPassportDataErrorsResponseBody200 :: GHC.Types.Bool -- ^ 'postSetPassportDataErrorsResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetPassportDataErrorsResponseBody200Result'
+mkPostSetPassportDataErrorsResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetPassportDataErrorsResponseBody200
-mkPostSetPassportDataErrorsResponseBody200 postSetPassportDataErrorsResponseBody200Ok postSetPassportDataErrorsResponseBody200Result = PostSetPassportDataErrorsResponseBody200{postSetPassportDataErrorsResponseBody200Ok = postSetPassportDataErrorsResponseBody200Ok,
-                                                                                                                                                                                postSetPassportDataErrorsResponseBody200Result = postSetPassportDataErrorsResponseBody200Result}
+mkPostSetPassportDataErrorsResponseBody200 ok result = PostSetPassportDataErrorsResponseBody200{ok = ok,
+                                                                                                result = result}
 -- | > POST /setPassportDataErrors
 -- 
 -- The same as 'postSetPassportDataErrors' but accepts an explicit configuration.
@@ -112,9 +112,9 @@ postSetPassportDataErrorsWithConfiguration :: forall m . TgBotAPI.Common.MonadHT
   -> PostSetPassportDataErrorsRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSetPassportDataErrorsResponse) -- ^ Monadic computation which returns the result of the operation
 postSetPassportDataErrorsWithConfiguration config
-                                           body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetPassportDataErrorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                           body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetPassportDataErrorsResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                                PostSetPassportDataErrorsResponseBody200)
-                                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetPassportDataErrorsResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                  Error)
                                                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setPassportDataErrors") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /setPassportDataErrors

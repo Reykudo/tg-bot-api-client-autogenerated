@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postClose
 module TgBotAPI.Operations.PostClose where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,16 +47,16 @@ import TgBotAPI.Types
 -- 
 -- Use this method to close the bot instance before moving it from one local server to another. You need to delete the webhook before calling this method to ensure that the bot isn\'t launched again after server restart. The method will return error 429 in the first 10 minutes after the bot is launched. Returns *True* on success. Requires no parameters.
 postClose :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostCloseResponse) -- ^ Monadic computation which returns the result of the operation
-postClose = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostCloseResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postClose = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostCloseResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                          PostCloseResponseBody200)
-                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                            Error)
                                                                                                                                                 | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/close") GHC.Base.mempty)
 -- | Represents a response of the operation 'postClose'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostCloseResponseError' is used.
 data PostCloseResponse =
-   PostCloseResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostCloseResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostCloseResponse200 PostCloseResponseBody200 -- ^ 
   | PostCloseResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -65,30 +65,30 @@ data PostCloseResponse =
 -- 
 data PostCloseResponseBody200 = PostCloseResponseBody200 {
   -- | ok
-  postCloseResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postCloseResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostCloseResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postCloseResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postCloseResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postCloseResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postCloseResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostCloseResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostCloseResponseBody200" (\obj -> (GHC.Base.pure PostCloseResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostCloseResponseBody200' with all required fields.
-mkPostCloseResponseBody200 :: GHC.Types.Bool -- ^ 'postCloseResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postCloseResponseBody200Result'
+mkPostCloseResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostCloseResponseBody200
-mkPostCloseResponseBody200 postCloseResponseBody200Ok postCloseResponseBody200Result = PostCloseResponseBody200{postCloseResponseBody200Ok = postCloseResponseBody200Ok,
-                                                                                                                postCloseResponseBody200Result = postCloseResponseBody200Result}
+mkPostCloseResponseBody200 ok result = PostCloseResponseBody200{ok = ok,
+                                                                result = result}
 -- | > POST /close
 -- 
 -- The same as 'postClose' but accepts an explicit configuration.
 postCloseWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.Configuration -- ^ The configuration to use in the request
   -> m (Network.HTTP.Client.Types.Response PostCloseResponse) -- ^ Monadic computation which returns the result of the operation
-postCloseWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostCloseResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postCloseWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostCloseResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                  PostCloseResponseBody200)
-                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                        | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostCloseResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                    Error)
                                                                                                                                                                         | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/close") GHC.Base.mempty)
 -- | > POST /close

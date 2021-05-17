@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PassportElementErrorUnspecified
 module TgBotAPI.Types.PassportElementErrorUnspecified where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,27 +37,27 @@ import TgBotAPI.TypeAlias
 -- Represents an issue in an unspecified place. The error is considered resolved when new data is added.
 data PassportElementErrorUnspecified = PassportElementErrorUnspecified {
   -- | element_hash: Base64-encoded element hash
-  passportElementErrorUnspecifiedElementHash :: Data.Text.Internal.Text
+  elementHash :: Data.Text.Internal.Text
   -- | message: Error message
-  , passportElementErrorUnspecifiedMessage :: Data.Text.Internal.Text
+  , message :: Data.Text.Internal.Text
   -- | source: Error source, must be *unspecified*
-  , passportElementErrorUnspecifiedSource :: Data.Text.Internal.Text
+  , source :: Data.Text.Internal.Text
   -- | type: Type of element of the user\'s Telegram Passport which has the issue
-  , passportElementErrorUnspecifiedType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PassportElementErrorUnspecified
-    where toJSON obj = Data.Aeson.Types.Internal.object ("element_hash" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedElementHash obj : "message" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedMessage obj : "source" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedSource obj : "type" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("element_hash" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedElementHash obj) GHC.Base.<> (("message" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedMessage obj) GHC.Base.<> (("source" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedSource obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= passportElementErrorUnspecifiedType obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("element_hash" Data.Aeson.Types.ToJSON..= elementHash obj : "message" Data.Aeson.Types.ToJSON..= message obj : "source" Data.Aeson.Types.ToJSON..= source obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("element_hash" Data.Aeson.Types.ToJSON..= elementHash obj) GHC.Base.<> (("message" Data.Aeson.Types.ToJSON..= message obj) GHC.Base.<> (("source" Data.Aeson.Types.ToJSON..= source obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON PassportElementErrorUnspecified
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PassportElementErrorUnspecified" (\obj -> (((GHC.Base.pure PassportElementErrorUnspecified GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "element_hash")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "source")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'PassportElementErrorUnspecified' with all required fields.
-mkPassportElementErrorUnspecified :: Data.Text.Internal.Text -- ^ 'passportElementErrorUnspecifiedElementHash'
-  -> Data.Text.Internal.Text -- ^ 'passportElementErrorUnspecifiedMessage'
-  -> Data.Text.Internal.Text -- ^ 'passportElementErrorUnspecifiedSource'
-  -> Data.Text.Internal.Text -- ^ 'passportElementErrorUnspecifiedType'
+mkPassportElementErrorUnspecified :: Data.Text.Internal.Text -- ^ 'elementHash'
+  -> Data.Text.Internal.Text -- ^ 'message'
+  -> Data.Text.Internal.Text -- ^ 'source'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> PassportElementErrorUnspecified
-mkPassportElementErrorUnspecified passportElementErrorUnspecifiedElementHash passportElementErrorUnspecifiedMessage passportElementErrorUnspecifiedSource passportElementErrorUnspecifiedType = PassportElementErrorUnspecified{passportElementErrorUnspecifiedElementHash = passportElementErrorUnspecifiedElementHash,
-                                                                                                                                                                                                                                passportElementErrorUnspecifiedMessage = passportElementErrorUnspecifiedMessage,
-                                                                                                                                                                                                                                passportElementErrorUnspecifiedSource = passportElementErrorUnspecifiedSource,
-                                                                                                                                                                                                                                passportElementErrorUnspecifiedType = passportElementErrorUnspecifiedType}
+mkPassportElementErrorUnspecified elementHash message source type' = PassportElementErrorUnspecified{elementHash = elementHash,
+                                                                                                     message = message,
+                                                                                                     source = source,
+                                                                                                     type' = type'}

@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQueryResultGame
 module TgBotAPI.Types.InlineQueryResultGame where
@@ -24,40 +25,39 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardMarkup
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardMarkup (InlineKeyboardMarkup)
 
 -- | Defines the object schema located at @components.schemas.InlineQueryResultGame@ in the specification.
 -- 
 -- Represents a [Game](https:\/\/core.telegram.org\/bots\/api\/\#games).
 data InlineQueryResultGame = InlineQueryResultGame {
   -- | game_short_name: Short name of the game
-  inlineQueryResultGameGameShortName :: Data.Text.Internal.Text
+  gameShortName :: Data.Text.Internal.Text
   -- | id: Unique identifier for this result, 1-64 bytes
-  , inlineQueryResultGameId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | reply_markup: This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
-  , inlineQueryResultGameReplyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
+  , replyMarkup :: (GHC.Maybe.Maybe InlineKeyboardMarkup)
   -- | type: Type of the result, must be *game*
-  , inlineQueryResultGameType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryResultGame
-    where toJSON obj = Data.Aeson.Types.Internal.object ("game_short_name" Data.Aeson.Types.ToJSON..= inlineQueryResultGameGameShortName obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryResultGameId obj : "reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultGameReplyMarkup obj : "type" Data.Aeson.Types.ToJSON..= inlineQueryResultGameType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("game_short_name" Data.Aeson.Types.ToJSON..= inlineQueryResultGameGameShortName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryResultGameId obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= inlineQueryResultGameReplyMarkup obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= inlineQueryResultGameType obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("game_short_name" Data.Aeson.Types.ToJSON..= gameShortName obj : "id" Data.Aeson.Types.ToJSON..= id obj : "reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("game_short_name" Data.Aeson.Types.ToJSON..= gameShortName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("reply_markup" Data.Aeson.Types.ToJSON..= replyMarkup obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryResultGame
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQueryResultGame" (\obj -> (((GHC.Base.pure InlineQueryResultGame GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "game_short_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "reply_markup")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'InlineQueryResultGame' with all required fields.
-mkInlineQueryResultGame :: Data.Text.Internal.Text -- ^ 'inlineQueryResultGameGameShortName'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultGameId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryResultGameType'
+mkInlineQueryResultGame :: Data.Text.Internal.Text -- ^ 'gameShortName'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> InlineQueryResultGame
-mkInlineQueryResultGame inlineQueryResultGameGameShortName inlineQueryResultGameId inlineQueryResultGameType = InlineQueryResultGame{inlineQueryResultGameGameShortName = inlineQueryResultGameGameShortName,
-                                                                                                                                     inlineQueryResultGameId = inlineQueryResultGameId,
-                                                                                                                                     inlineQueryResultGameReplyMarkup = GHC.Maybe.Nothing,
-                                                                                                                                     inlineQueryResultGameType = inlineQueryResultGameType}
+mkInlineQueryResultGame gameShortName id type' = InlineQueryResultGame{gameShortName = gameShortName,
+                                                                       id = id,
+                                                                       replyMarkup = GHC.Maybe.Nothing,
+                                                                       type' = type'}

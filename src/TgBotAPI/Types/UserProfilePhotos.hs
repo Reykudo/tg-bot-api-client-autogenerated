@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema UserProfilePhotos
 module TgBotAPI.Types.UserProfilePhotos where
@@ -24,33 +25,32 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.PhotoSize
+import  {-# SOURCE #-}  TgBotAPI.Types.PhotoSize (PhotoSize)
 
 -- | Defines the object schema located at @components.schemas.UserProfilePhotos@ in the specification.
 -- 
 -- This object represent a user\'s profile pictures.
 data UserProfilePhotos = UserProfilePhotos {
   -- | photos: Requested profile pictures (in up to 4 sizes each)
-  userProfilePhotosPhotos :: ([[PhotoSize]])
+  photos :: ([[PhotoSize]])
   -- | total_count: Total number of profile pictures the target user has
-  , userProfilePhotosTotalCount :: GHC.Types.Int
+  , totalCount :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON UserProfilePhotos
-    where toJSON obj = Data.Aeson.Types.Internal.object ("photos" Data.Aeson.Types.ToJSON..= userProfilePhotosPhotos obj : "total_count" Data.Aeson.Types.ToJSON..= userProfilePhotosTotalCount obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("photos" Data.Aeson.Types.ToJSON..= userProfilePhotosPhotos obj) GHC.Base.<> ("total_count" Data.Aeson.Types.ToJSON..= userProfilePhotosTotalCount obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("photos" Data.Aeson.Types.ToJSON..= photos obj : "total_count" Data.Aeson.Types.ToJSON..= totalCount obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("photos" Data.Aeson.Types.ToJSON..= photos obj) GHC.Base.<> ("total_count" Data.Aeson.Types.ToJSON..= totalCount obj))
 instance Data.Aeson.Types.FromJSON.FromJSON UserProfilePhotos
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "UserProfilePhotos" (\obj -> (GHC.Base.pure UserProfilePhotos GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "photos")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "total_count"))
 -- | Create a new 'UserProfilePhotos' with all required fields.
-mkUserProfilePhotos :: [[PhotoSize]] -- ^ 'userProfilePhotosPhotos'
-  -> GHC.Types.Int -- ^ 'userProfilePhotosTotalCount'
+mkUserProfilePhotos :: [[PhotoSize]] -- ^ 'photos'
+  -> GHC.Types.Int -- ^ 'totalCount'
   -> UserProfilePhotos
-mkUserProfilePhotos userProfilePhotosPhotos userProfilePhotosTotalCount = UserProfilePhotos{userProfilePhotosPhotos = userProfilePhotosPhotos,
-                                                                                            userProfilePhotosTotalCount = userProfilePhotosTotalCount}
+mkUserProfilePhotos photos totalCount = UserProfilePhotos{photos = photos,
+                                                          totalCount = totalCount}

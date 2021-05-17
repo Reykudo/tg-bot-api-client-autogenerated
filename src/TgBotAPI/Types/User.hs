@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema User
 module TgBotAPI.Types.User where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,41 +37,41 @@ import TgBotAPI.TypeAlias
 -- This object represents a Telegram user or bot.
 data User = User {
   -- | can_join_groups: *Optional*. True, if the bot can be invited to groups. Returned only in [getMe](https:\/\/core.telegram.org\/bots\/api\/\#getme).
-  userCanJoinGroups :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  canJoinGroups :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | can_read_all_group_messages: *Optional*. True, if [privacy mode](https:\/\/core.telegram.org\/bots\#privacy-mode) is disabled for the bot. Returned only in [getMe](https:\/\/core.telegram.org\/bots\/api\/\#getme).
-  , userCanReadAllGroupMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , canReadAllGroupMessages :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | first_name: User\'s or bot\'s first name
-  , userFirstName :: Data.Text.Internal.Text
+  , firstName :: Data.Text.Internal.Text
   -- | id: Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty\/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
-  , userId :: GHC.Types.Int
+  , id :: GHC.Types.Int
   -- | is_bot: True, if this user is a bot
-  , userIsBot :: GHC.Types.Bool
+  , isBot :: GHC.Types.Bool
   -- | language_code: *Optional*. [IETF language tag](https:\/\/en.wikipedia.org\/wiki\/IETF_language_tag) of the user\'s language
-  , userLanguageCode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , languageCode :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | last_name: *Optional*. User\'s or bot\'s last name
-  , userLastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , lastName :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | supports_inline_queries: *Optional*. True, if the bot supports inline queries. Returned only in [getMe](https:\/\/core.telegram.org\/bots\/api\/\#getme).
-  , userSupportsInlineQueries :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , supportsInlineQueries :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | username: *Optional*. User\'s or bot\'s username
-  , userUsername :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , username :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON User
-    where toJSON obj = Data.Aeson.Types.Internal.object ("can_join_groups" Data.Aeson.Types.ToJSON..= userCanJoinGroups obj : "can_read_all_group_messages" Data.Aeson.Types.ToJSON..= userCanReadAllGroupMessages obj : "first_name" Data.Aeson.Types.ToJSON..= userFirstName obj : "id" Data.Aeson.Types.ToJSON..= userId obj : "is_bot" Data.Aeson.Types.ToJSON..= userIsBot obj : "language_code" Data.Aeson.Types.ToJSON..= userLanguageCode obj : "last_name" Data.Aeson.Types.ToJSON..= userLastName obj : "supports_inline_queries" Data.Aeson.Types.ToJSON..= userSupportsInlineQueries obj : "username" Data.Aeson.Types.ToJSON..= userUsername obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("can_join_groups" Data.Aeson.Types.ToJSON..= userCanJoinGroups obj) GHC.Base.<> (("can_read_all_group_messages" Data.Aeson.Types.ToJSON..= userCanReadAllGroupMessages obj) GHC.Base.<> (("first_name" Data.Aeson.Types.ToJSON..= userFirstName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= userId obj) GHC.Base.<> (("is_bot" Data.Aeson.Types.ToJSON..= userIsBot obj) GHC.Base.<> (("language_code" Data.Aeson.Types.ToJSON..= userLanguageCode obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= userLastName obj) GHC.Base.<> (("supports_inline_queries" Data.Aeson.Types.ToJSON..= userSupportsInlineQueries obj) GHC.Base.<> ("username" Data.Aeson.Types.ToJSON..= userUsername obj)))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("can_join_groups" Data.Aeson.Types.ToJSON..= canJoinGroups obj : "can_read_all_group_messages" Data.Aeson.Types.ToJSON..= canReadAllGroupMessages obj : "first_name" Data.Aeson.Types.ToJSON..= firstName obj : "id" Data.Aeson.Types.ToJSON..= id obj : "is_bot" Data.Aeson.Types.ToJSON..= isBot obj : "language_code" Data.Aeson.Types.ToJSON..= languageCode obj : "last_name" Data.Aeson.Types.ToJSON..= lastName obj : "supports_inline_queries" Data.Aeson.Types.ToJSON..= supportsInlineQueries obj : "username" Data.Aeson.Types.ToJSON..= username obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("can_join_groups" Data.Aeson.Types.ToJSON..= canJoinGroups obj) GHC.Base.<> (("can_read_all_group_messages" Data.Aeson.Types.ToJSON..= canReadAllGroupMessages obj) GHC.Base.<> (("first_name" Data.Aeson.Types.ToJSON..= firstName obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("is_bot" Data.Aeson.Types.ToJSON..= isBot obj) GHC.Base.<> (("language_code" Data.Aeson.Types.ToJSON..= languageCode obj) GHC.Base.<> (("last_name" Data.Aeson.Types.ToJSON..= lastName obj) GHC.Base.<> (("supports_inline_queries" Data.Aeson.Types.ToJSON..= supportsInlineQueries obj) GHC.Base.<> ("username" Data.Aeson.Types.ToJSON..= username obj)))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON User
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "User" (\obj -> ((((((((GHC.Base.pure User GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_join_groups")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "can_read_all_group_messages")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "first_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "is_bot")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "language_code")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "last_name")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "supports_inline_queries")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "username"))
 -- | Create a new 'User' with all required fields.
-mkUser :: Data.Text.Internal.Text -- ^ 'userFirstName'
-  -> GHC.Types.Int -- ^ 'userId'
-  -> GHC.Types.Bool -- ^ 'userIsBot'
+mkUser :: Data.Text.Internal.Text -- ^ 'firstName'
+  -> GHC.Types.Int -- ^ 'id'
+  -> GHC.Types.Bool -- ^ 'isBot'
   -> User
-mkUser userFirstName userId userIsBot = User{userCanJoinGroups = GHC.Maybe.Nothing,
-                                             userCanReadAllGroupMessages = GHC.Maybe.Nothing,
-                                             userFirstName = userFirstName,
-                                             userId = userId,
-                                             userIsBot = userIsBot,
-                                             userLanguageCode = GHC.Maybe.Nothing,
-                                             userLastName = GHC.Maybe.Nothing,
-                                             userSupportsInlineQueries = GHC.Maybe.Nothing,
-                                             userUsername = GHC.Maybe.Nothing}
+mkUser firstName id isBot = User{canJoinGroups = GHC.Maybe.Nothing,
+                                 canReadAllGroupMessages = GHC.Maybe.Nothing,
+                                 firstName = firstName,
+                                 id = id,
+                                 isBot = isBot,
+                                 languageCode = GHC.Maybe.Nothing,
+                                 lastName = GHC.Maybe.Nothing,
+                                 supportsInlineQueries = GHC.Maybe.Nothing,
+                                 username = GHC.Maybe.Nothing}

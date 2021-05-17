@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetChatAdministratorCustomTitle
 module TgBotAPI.Operations.PostSetChatAdministratorCustomTitle where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to set a custom title for an administrator in a supergroup promoted by the bot. Returns *True* on success.
 postSetChatAdministratorCustomTitle :: forall m . TgBotAPI.Common.MonadHTTP m => PostSetChatAdministratorCustomTitleRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetChatAdministratorCustomTitleResponse) -- ^ Monadic computation which returns the result of the operation
-postSetChatAdministratorCustomTitle body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetChatAdministratorCustomTitleResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetChatAdministratorCustomTitle body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetChatAdministratorCustomTitleResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                                             PostSetChatAdministratorCustomTitleResponseBody200)
-                                                                                                                                                                                                         | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                         | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                               Error)
                                                                                                                                                                                                          | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setChatAdministratorCustomTitle") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/setChatAdministratorCustomTitle.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,45 +58,45 @@ postSetChatAdministratorCustomTitle body = GHC.Base.fmap (\response_0 -> GHC.Bas
 -- 
 data PostSetChatAdministratorCustomTitleRequestBody = PostSetChatAdministratorCustomTitleRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-  postSetChatAdministratorCustomTitleRequestBodyChatId :: PostSetChatAdministratorCustomTitleRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | custom_title: New custom title for the administrator; 0-16 characters, emoji are not allowed
-  , postSetChatAdministratorCustomTitleRequestBodyCustomTitle :: Data.Text.Internal.Text
+  , customTitle :: Data.Text.Internal.Text
   -- | user_id: Unique identifier of the target user
-  , postSetChatAdministratorCustomTitleRequestBodyUserId :: GHC.Types.Int
+  , userId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatAdministratorCustomTitleRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleRequestBodyChatId obj : "custom_title" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleRequestBodyCustomTitle obj : "user_id" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleRequestBodyUserId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleRequestBodyChatId obj) GHC.Base.<> (("custom_title" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleRequestBodyCustomTitle obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleRequestBodyUserId obj)))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "custom_title" Data.Aeson.Types.ToJSON..= customTitle obj : "user_id" Data.Aeson.Types.ToJSON..= userId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> (("custom_title" Data.Aeson.Types.ToJSON..= customTitle obj) GHC.Base.<> ("user_id" Data.Aeson.Types.ToJSON..= userId obj)))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatAdministratorCustomTitleRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetChatAdministratorCustomTitleRequestBody" (\obj -> ((GHC.Base.pure PostSetChatAdministratorCustomTitleRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "custom_title")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "user_id"))
 -- | Create a new 'PostSetChatAdministratorCustomTitleRequestBody' with all required fields.
-mkPostSetChatAdministratorCustomTitleRequestBody :: PostSetChatAdministratorCustomTitleRequestBodyChatIdVariants -- ^ 'postSetChatAdministratorCustomTitleRequestBodyChatId'
-  -> Data.Text.Internal.Text -- ^ 'postSetChatAdministratorCustomTitleRequestBodyCustomTitle'
-  -> GHC.Types.Int -- ^ 'postSetChatAdministratorCustomTitleRequestBodyUserId'
+mkPostSetChatAdministratorCustomTitleRequestBody :: ChatIdVariants -- ^ 'chatId'
+  -> Data.Text.Internal.Text -- ^ 'customTitle'
+  -> GHC.Types.Int -- ^ 'userId'
   -> PostSetChatAdministratorCustomTitleRequestBody
-mkPostSetChatAdministratorCustomTitleRequestBody postSetChatAdministratorCustomTitleRequestBodyChatId postSetChatAdministratorCustomTitleRequestBodyCustomTitle postSetChatAdministratorCustomTitleRequestBodyUserId = PostSetChatAdministratorCustomTitleRequestBody{postSetChatAdministratorCustomTitleRequestBodyChatId = postSetChatAdministratorCustomTitleRequestBodyChatId,
-                                                                                                                                                                                                                                                                      postSetChatAdministratorCustomTitleRequestBodyCustomTitle = postSetChatAdministratorCustomTitleRequestBodyCustomTitle,
-                                                                                                                                                                                                                                                                      postSetChatAdministratorCustomTitleRequestBodyUserId = postSetChatAdministratorCustomTitleRequestBodyUserId}
+mkPostSetChatAdministratorCustomTitleRequestBody chatId customTitle userId = PostSetChatAdministratorCustomTitleRequestBody{chatId = chatId,
+                                                                                                                            customTitle = customTitle,
+                                                                                                                            userId = userId}
 -- | Defines the oneOf schema located at @paths.\/setChatAdministratorCustomTitle.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target supergroup (in the format \`\@supergroupusername\`)
-data PostSetChatAdministratorCustomTitleRequestBodyChatIdVariants =
-   PostSetChatAdministratorCustomTitleRequestBodyChatIdInt GHC.Types.Int
-  | PostSetChatAdministratorCustomTitleRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatAdministratorCustomTitleRequestBodyChatIdVariants
-    where toJSON (PostSetChatAdministratorCustomTitleRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostSetChatAdministratorCustomTitleRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatAdministratorCustomTitleRequestBodyChatIdVariants
-    where parseJSON val = case (PostSetChatAdministratorCustomTitleRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostSetChatAdministratorCustomTitleRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postSetChatAdministratorCustomTitle'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetChatAdministratorCustomTitleResponseError' is used.
 data PostSetChatAdministratorCustomTitleResponse =
-   PostSetChatAdministratorCustomTitleResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetChatAdministratorCustomTitleResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetChatAdministratorCustomTitleResponse200 PostSetChatAdministratorCustomTitleResponseBody200 -- ^ 
   | PostSetChatAdministratorCustomTitleResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -105,22 +105,22 @@ data PostSetChatAdministratorCustomTitleResponse =
 -- 
 data PostSetChatAdministratorCustomTitleResponseBody200 = PostSetChatAdministratorCustomTitleResponseBody200 {
   -- | ok
-  postSetChatAdministratorCustomTitleResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetChatAdministratorCustomTitleResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetChatAdministratorCustomTitleResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetChatAdministratorCustomTitleResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetChatAdministratorCustomTitleResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetChatAdministratorCustomTitleResponseBody200" (\obj -> (GHC.Base.pure PostSetChatAdministratorCustomTitleResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetChatAdministratorCustomTitleResponseBody200' with all required fields.
-mkPostSetChatAdministratorCustomTitleResponseBody200 :: GHC.Types.Bool -- ^ 'postSetChatAdministratorCustomTitleResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetChatAdministratorCustomTitleResponseBody200Result'
+mkPostSetChatAdministratorCustomTitleResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetChatAdministratorCustomTitleResponseBody200
-mkPostSetChatAdministratorCustomTitleResponseBody200 postSetChatAdministratorCustomTitleResponseBody200Ok postSetChatAdministratorCustomTitleResponseBody200Result = PostSetChatAdministratorCustomTitleResponseBody200{postSetChatAdministratorCustomTitleResponseBody200Ok = postSetChatAdministratorCustomTitleResponseBody200Ok,
-                                                                                                                                                                                                                        postSetChatAdministratorCustomTitleResponseBody200Result = postSetChatAdministratorCustomTitleResponseBody200Result}
+mkPostSetChatAdministratorCustomTitleResponseBody200 ok result = PostSetChatAdministratorCustomTitleResponseBody200{ok = ok,
+                                                                                                                    result = result}
 -- | > POST /setChatAdministratorCustomTitle
 -- 
 -- The same as 'postSetChatAdministratorCustomTitle' but accepts an explicit configuration.
@@ -128,9 +128,9 @@ postSetChatAdministratorCustomTitleWithConfiguration :: forall m . TgBotAPI.Comm
   -> PostSetChatAdministratorCustomTitleRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostSetChatAdministratorCustomTitleResponse) -- ^ Monadic computation which returns the result of the operation
 postSetChatAdministratorCustomTitleWithConfiguration config
-                                                     body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetChatAdministratorCustomTitleResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                     body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetChatAdministratorCustomTitleResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              PostSetChatAdministratorCustomTitleResponseBody200)
-                                                                                                                                                                                                                          | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                                          | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetChatAdministratorCustomTitleResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                Error)
                                                                                                                                                                                                                           | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setChatAdministratorCustomTitle") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /setChatAdministratorCustomTitle

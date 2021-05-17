@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postGetStickerSet
 module TgBotAPI.Operations.PostGetStickerSet where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to get a sticker set. On success, a [StickerSet](https:\/\/core.telegram.org\/bots\/api\/\#stickerset) object is returned.
 postGetStickerSet :: forall m . TgBotAPI.Common.MonadHTTP m => PostGetStickerSetRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostGetStickerSetResponse) -- ^ Monadic computation which returns the result of the operation
-postGetStickerSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostGetStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postGetStickerSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostGetStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                       PostGetStickerSetResponseBody200)
-                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                     | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                         Error)
                                                                                                                                                                      | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/getStickerSet") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/getStickerSet.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,23 +58,23 @@ postGetStickerSet body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Eithe
 -- 
 data PostGetStickerSetRequestBody = PostGetStickerSetRequestBody {
   -- | name: Name of the sticker set
-  postGetStickerSetRequestBodyName :: Data.Text.Internal.Text
+  name :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetStickerSetRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("name" Data.Aeson.Types.ToJSON..= postGetStickerSetRequestBodyName obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("name" Data.Aeson.Types.ToJSON..= postGetStickerSetRequestBodyName obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("name" Data.Aeson.Types.ToJSON..= name obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("name" Data.Aeson.Types.ToJSON..= name obj)
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetStickerSetRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetStickerSetRequestBody" (\obj -> GHC.Base.pure PostGetStickerSetRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "name"))
 -- | Create a new 'PostGetStickerSetRequestBody' with all required fields.
-mkPostGetStickerSetRequestBody :: Data.Text.Internal.Text -- ^ 'postGetStickerSetRequestBodyName'
+mkPostGetStickerSetRequestBody :: Data.Text.Internal.Text -- ^ 'name'
   -> PostGetStickerSetRequestBody
-mkPostGetStickerSetRequestBody postGetStickerSetRequestBodyName = PostGetStickerSetRequestBody{postGetStickerSetRequestBodyName = postGetStickerSetRequestBodyName}
+mkPostGetStickerSetRequestBody name = PostGetStickerSetRequestBody{name = name}
 -- | Represents a response of the operation 'postGetStickerSet'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostGetStickerSetResponseError' is used.
 data PostGetStickerSetResponse =
-   PostGetStickerSetResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostGetStickerSetResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostGetStickerSetResponse200 PostGetStickerSetResponseBody200 -- ^ 
   | PostGetStickerSetResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -83,22 +83,22 @@ data PostGetStickerSetResponse =
 -- 
 data PostGetStickerSetResponseBody200 = PostGetStickerSetResponseBody200 {
   -- | ok
-  postGetStickerSetResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result: This object represents a sticker set.
-  , postGetStickerSetResponseBody200Result :: StickerSet
+  , result :: StickerSet
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostGetStickerSetResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postGetStickerSetResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postGetStickerSetResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postGetStickerSetResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postGetStickerSetResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostGetStickerSetResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostGetStickerSetResponseBody200" (\obj -> (GHC.Base.pure PostGetStickerSetResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostGetStickerSetResponseBody200' with all required fields.
-mkPostGetStickerSetResponseBody200 :: GHC.Types.Bool -- ^ 'postGetStickerSetResponseBody200Ok'
-  -> StickerSet -- ^ 'postGetStickerSetResponseBody200Result'
+mkPostGetStickerSetResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> StickerSet -- ^ 'result'
   -> PostGetStickerSetResponseBody200
-mkPostGetStickerSetResponseBody200 postGetStickerSetResponseBody200Ok postGetStickerSetResponseBody200Result = PostGetStickerSetResponseBody200{postGetStickerSetResponseBody200Ok = postGetStickerSetResponseBody200Ok,
-                                                                                                                                                postGetStickerSetResponseBody200Result = postGetStickerSetResponseBody200Result}
+mkPostGetStickerSetResponseBody200 ok result = PostGetStickerSetResponseBody200{ok = ok,
+                                                                                result = result}
 -- | > POST /getStickerSet
 -- 
 -- The same as 'postGetStickerSet' but accepts an explicit configuration.
@@ -106,9 +106,9 @@ postGetStickerSetWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => 
   -> PostGetStickerSetRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostGetStickerSetResponse) -- ^ Monadic computation which returns the result of the operation
 postGetStickerSetWithConfiguration config
-                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostGetStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                   body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostGetStickerSetResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                        PostGetStickerSetResponseBody200)
-                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostGetStickerSetResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                          Error)
                                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/getStickerSet") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /getStickerSet

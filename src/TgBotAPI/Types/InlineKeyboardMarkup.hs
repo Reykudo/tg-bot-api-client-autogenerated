@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineKeyboardMarkup
 module TgBotAPI.Types.InlineKeyboardMarkup where
@@ -24,29 +25,28 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.InlineKeyboardButton
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineKeyboardButton (InlineKeyboardButton)
 
 -- | Defines the object schema located at @components.schemas.InlineKeyboardMarkup@ in the specification.
 -- 
 -- This object represents an [inline keyboard](https:\/\/core.telegram.org\/bots\#inline-keyboards-and-on-the-fly-updating) that appears right next to the message it belongs to.
 data InlineKeyboardMarkup = InlineKeyboardMarkup {
   -- | inline_keyboard: Array of button rows, each represented by an Array of [InlineKeyboardButton](https:\/\/core.telegram.org\/bots\/api\/\#inlinekeyboardbutton) objects
-  inlineKeyboardMarkupInlineKeyboard :: ([[InlineKeyboardButton]])
+  inlineKeyboard :: ([[InlineKeyboardButton]])
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineKeyboardMarkup
-    where toJSON obj = Data.Aeson.Types.Internal.object ("inline_keyboard" Data.Aeson.Types.ToJSON..= inlineKeyboardMarkupInlineKeyboard obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("inline_keyboard" Data.Aeson.Types.ToJSON..= inlineKeyboardMarkupInlineKeyboard obj)
+    where toJSON obj = Data.Aeson.Types.Internal.object ("inline_keyboard" Data.Aeson.Types.ToJSON..= inlineKeyboard obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs ("inline_keyboard" Data.Aeson.Types.ToJSON..= inlineKeyboard obj)
 instance Data.Aeson.Types.FromJSON.FromJSON InlineKeyboardMarkup
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineKeyboardMarkup" (\obj -> GHC.Base.pure InlineKeyboardMarkup GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "inline_keyboard"))
 -- | Create a new 'InlineKeyboardMarkup' with all required fields.
-mkInlineKeyboardMarkup :: [[InlineKeyboardButton]] -- ^ 'inlineKeyboardMarkupInlineKeyboard'
+mkInlineKeyboardMarkup :: [[InlineKeyboardButton]] -- ^ 'inlineKeyboard'
   -> InlineKeyboardMarkup
-mkInlineKeyboardMarkup inlineKeyboardMarkupInlineKeyboard = InlineKeyboardMarkup{inlineKeyboardMarkupInlineKeyboard = inlineKeyboardMarkupInlineKeyboard}
+mkInlineKeyboardMarkup inlineKeyboard = InlineKeyboardMarkup{inlineKeyboard = inlineKeyboard}

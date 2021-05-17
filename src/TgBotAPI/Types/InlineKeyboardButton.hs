@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineKeyboardButton
 module TgBotAPI.Types.InlineKeyboardButton where
@@ -24,60 +25,59 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.LoginUrl
+import  {-# SOURCE #-}  TgBotAPI.Types.LoginUrl (LoginUrl)
 
 -- | Defines the object schema located at @components.schemas.InlineKeyboardButton@ in the specification.
 -- 
 -- This object represents one button of an inline keyboard. You **must** use exactly one of the optional fields.
 data InlineKeyboardButton = InlineKeyboardButton {
   -- | callback_data: *Optional*. Data to be sent in a [callback query](https:\/\/core.telegram.org\/bots\/api\/\#callbackquery) to the bot when button is pressed, 1-64 bytes
-  inlineKeyboardButtonCallbackData :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  callbackData :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | callback_game: A placeholder, currently holds no information. Use [BotFather](https:\/\/t.me\/botfather) to set up your game.
-  , inlineKeyboardButtonCallbackGame :: (GHC.Maybe.Maybe CallbackGame)
+  , callbackGame :: (GHC.Maybe.Maybe CallbackGame)
   -- | login_url: This object represents a parameter of the inline keyboard button used to automatically authorize a user. Serves as a great replacement for the [Telegram Login Widget](https:\/\/core.telegram.org\/widgets\/login) when the user is coming from Telegram. All the user needs to do is tap\/click a button and confirm that they want to log in:
   -- 
   -- Telegram apps support these buttons as of [version 5.7](https:\/\/telegram.org\/blog\/privacy-discussions-web-bots\#meet-seamless-web-bots).
   -- 
   -- Sample bot: [\@discussbot](https:\/\/t.me\/discussbot)
-  , inlineKeyboardButtonLoginUrl :: (GHC.Maybe.Maybe LoginUrl)
+  , loginUrl :: (GHC.Maybe.Maybe LoginUrl)
   -- | pay: *Optional*. Specify True, to send a [Pay button](https:\/\/core.telegram.org\/bots\/api\/\#payments).  
   -- 
   -- **NOTE:** This type of button **must** always be the first button in the first row.
-  , inlineKeyboardButtonPay :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , pay :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | switch_inline_query: *Optional*. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot\'s username and the specified inline query in the input field. Can be empty, in which case just the bot\'s username will be inserted.  
   -- 
   -- **Note:** This offers an easy way for users to start using your bot in [inline mode](\/bots\/inline) when they are currently in a private chat with it. Especially useful when combined with [*switch\\_pm…*](https:\/\/core.telegram.org\/bots\/api\/\#answerinlinequery) actions – in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen.
-  , inlineKeyboardButtonSwitchInlineQuery :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , switchInlineQuery :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | switch_inline_query_current_chat: *Optional*. If set, pressing the button will insert the bot\'s username and the specified inline query in the current chat\'s input field. Can be empty, in which case only the bot\'s username will be inserted.  
   -- 
   -- This offers a quick way for the user to open your bot in inline mode in the same chat – good for selecting something from multiple options.
-  , inlineKeyboardButtonSwitchInlineQueryCurrentChat :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , switchInlineQueryCurrentChat :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | text: Label text on the button
-  , inlineKeyboardButtonText :: Data.Text.Internal.Text
+  , text :: Data.Text.Internal.Text
   -- | url: *Optional*. HTTP or tg:\/\/ url to be opened when button is pressed
-  , inlineKeyboardButtonUrl :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , url :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineKeyboardButton
-    where toJSON obj = Data.Aeson.Types.Internal.object ("callback_data" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonCallbackData obj : "callback_game" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonCallbackGame obj : "login_url" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonLoginUrl obj : "pay" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonPay obj : "switch_inline_query" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonSwitchInlineQuery obj : "switch_inline_query_current_chat" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonSwitchInlineQueryCurrentChat obj : "text" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonText obj : "url" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonUrl obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("callback_data" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonCallbackData obj) GHC.Base.<> (("callback_game" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonCallbackGame obj) GHC.Base.<> (("login_url" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonLoginUrl obj) GHC.Base.<> (("pay" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonPay obj) GHC.Base.<> (("switch_inline_query" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonSwitchInlineQuery obj) GHC.Base.<> (("switch_inline_query_current_chat" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonSwitchInlineQueryCurrentChat obj) GHC.Base.<> (("text" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonText obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= inlineKeyboardButtonUrl obj))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("callback_data" Data.Aeson.Types.ToJSON..= callbackData obj : "callback_game" Data.Aeson.Types.ToJSON..= callbackGame obj : "login_url" Data.Aeson.Types.ToJSON..= loginUrl obj : "pay" Data.Aeson.Types.ToJSON..= pay obj : "switch_inline_query" Data.Aeson.Types.ToJSON..= switchInlineQuery obj : "switch_inline_query_current_chat" Data.Aeson.Types.ToJSON..= switchInlineQueryCurrentChat obj : "text" Data.Aeson.Types.ToJSON..= text obj : "url" Data.Aeson.Types.ToJSON..= url obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("callback_data" Data.Aeson.Types.ToJSON..= callbackData obj) GHC.Base.<> (("callback_game" Data.Aeson.Types.ToJSON..= callbackGame obj) GHC.Base.<> (("login_url" Data.Aeson.Types.ToJSON..= loginUrl obj) GHC.Base.<> (("pay" Data.Aeson.Types.ToJSON..= pay obj) GHC.Base.<> (("switch_inline_query" Data.Aeson.Types.ToJSON..= switchInlineQuery obj) GHC.Base.<> (("switch_inline_query_current_chat" Data.Aeson.Types.ToJSON..= switchInlineQueryCurrentChat obj) GHC.Base.<> (("text" Data.Aeson.Types.ToJSON..= text obj) GHC.Base.<> ("url" Data.Aeson.Types.ToJSON..= url obj))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineKeyboardButton
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineKeyboardButton" (\obj -> (((((((GHC.Base.pure InlineKeyboardButton GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "callback_data")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "callback_game")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "login_url")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "pay")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "switch_inline_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "switch_inline_query_current_chat")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "text")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "url"))
 -- | Create a new 'InlineKeyboardButton' with all required fields.
-mkInlineKeyboardButton :: Data.Text.Internal.Text -- ^ 'inlineKeyboardButtonText'
+mkInlineKeyboardButton :: Data.Text.Internal.Text -- ^ 'text'
   -> InlineKeyboardButton
-mkInlineKeyboardButton inlineKeyboardButtonText = InlineKeyboardButton{inlineKeyboardButtonCallbackData = GHC.Maybe.Nothing,
-                                                                       inlineKeyboardButtonCallbackGame = GHC.Maybe.Nothing,
-                                                                       inlineKeyboardButtonLoginUrl = GHC.Maybe.Nothing,
-                                                                       inlineKeyboardButtonPay = GHC.Maybe.Nothing,
-                                                                       inlineKeyboardButtonSwitchInlineQuery = GHC.Maybe.Nothing,
-                                                                       inlineKeyboardButtonSwitchInlineQueryCurrentChat = GHC.Maybe.Nothing,
-                                                                       inlineKeyboardButtonText = inlineKeyboardButtonText,
-                                                                       inlineKeyboardButtonUrl = GHC.Maybe.Nothing}
+mkInlineKeyboardButton text = InlineKeyboardButton{callbackData = GHC.Maybe.Nothing,
+                                                   callbackGame = GHC.Maybe.Nothing,
+                                                   loginUrl = GHC.Maybe.Nothing,
+                                                   pay = GHC.Maybe.Nothing,
+                                                   switchInlineQuery = GHC.Maybe.Nothing,
+                                                   switchInlineQueryCurrentChat = GHC.Maybe.Nothing,
+                                                   text = text,
+                                                   url = GHC.Maybe.Nothing}

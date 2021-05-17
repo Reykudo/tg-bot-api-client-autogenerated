@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postUnpinChatMessage
 module TgBotAPI.Operations.PostUnpinChatMessage where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -48,9 +48,9 @@ import TgBotAPI.Types
 -- Use this method to remove a message from the list of pinned messages in a chat. If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have the \'can\\_pin\\_messages\' admin right in a supergroup or \'can\\_edit\\_messages\' admin right in a channel. Returns *True* on success.
 postUnpinChatMessage :: forall m . TgBotAPI.Common.MonadHTTP m => PostUnpinChatMessageRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostUnpinChatMessageResponse) -- ^ Monadic computation which returns the result of the operation
-postUnpinChatMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostUnpinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postUnpinChatMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostUnpinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                PostUnpinChatMessageResponseBody200)
-                                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                           | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                  Error)
                                                                                                                                                                            | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/unpinChatMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/unpinChatMessage.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -58,40 +58,40 @@ postUnpinChatMessage body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Ei
 -- 
 data PostUnpinChatMessageRequestBody = PostUnpinChatMessageRequestBody {
   -- | chat_id: Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-  postUnpinChatMessageRequestBodyChatId :: PostUnpinChatMessageRequestBodyChatIdVariants
+  chatId :: ChatIdVariants
   -- | message_id: Identifier of a message to unpin. If not specified, the most recent pinned message (by sending date) will be unpinned.
-  , postUnpinChatMessageRequestBodyMessageId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , messageId :: (GHC.Maybe.Maybe GHC.Types.Int)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostUnpinChatMessageRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= postUnpinChatMessageRequestBodyChatId obj : "message_id" Data.Aeson.Types.ToJSON..= postUnpinChatMessageRequestBodyMessageId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= postUnpinChatMessageRequestBodyChatId obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= postUnpinChatMessageRequestBodyMessageId obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_id" Data.Aeson.Types.ToJSON..= chatId obj : "message_id" Data.Aeson.Types.ToJSON..= messageId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_id" Data.Aeson.Types.ToJSON..= chatId obj) GHC.Base.<> ("message_id" Data.Aeson.Types.ToJSON..= messageId obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostUnpinChatMessageRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostUnpinChatMessageRequestBody" (\obj -> (GHC.Base.pure PostUnpinChatMessageRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "chat_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message_id"))
 -- | Create a new 'PostUnpinChatMessageRequestBody' with all required fields.
-mkPostUnpinChatMessageRequestBody :: PostUnpinChatMessageRequestBodyChatIdVariants -- ^ 'postUnpinChatMessageRequestBodyChatId'
+mkPostUnpinChatMessageRequestBody :: ChatIdVariants -- ^ 'chatId'
   -> PostUnpinChatMessageRequestBody
-mkPostUnpinChatMessageRequestBody postUnpinChatMessageRequestBodyChatId = PostUnpinChatMessageRequestBody{postUnpinChatMessageRequestBodyChatId = postUnpinChatMessageRequestBodyChatId,
-                                                                                                          postUnpinChatMessageRequestBodyMessageId = GHC.Maybe.Nothing}
+mkPostUnpinChatMessageRequestBody chatId = PostUnpinChatMessageRequestBody{chatId = chatId,
+                                                                           messageId = GHC.Maybe.Nothing}
 -- | Defines the oneOf schema located at @paths.\/unpinChatMessage.POST.requestBody.content.application\/json.schema.properties.chat_id.anyOf@ in the specification.
 -- 
 -- Unique identifier for the target chat or username of the target channel (in the format \`\@channelusername\`)
-data PostUnpinChatMessageRequestBodyChatIdVariants =
-   PostUnpinChatMessageRequestBodyChatIdInt GHC.Types.Int
-  | PostUnpinChatMessageRequestBodyChatIdText Data.Text.Internal.Text
+data ChatIdVariants =
+   ChatIdInt GHC.Types.Int
+  | ChatIdText Data.Text.Internal.Text
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostUnpinChatMessageRequestBodyChatIdVariants
-    where toJSON (PostUnpinChatMessageRequestBodyChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostUnpinChatMessageRequestBodyChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostUnpinChatMessageRequestBodyChatIdVariants
-    where parseJSON val = case (PostUnpinChatMessageRequestBodyChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostUnpinChatMessageRequestBodyChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ChatIdVariants
+    where toJSON (ChatIdInt a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ChatIdText a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ChatIdVariants
+    where parseJSON val = case (ChatIdInt Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ChatIdText Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | Represents a response of the operation 'postUnpinChatMessage'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostUnpinChatMessageResponseError' is used.
 data PostUnpinChatMessageResponse =
-   PostUnpinChatMessageResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostUnpinChatMessageResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostUnpinChatMessageResponse200 PostUnpinChatMessageResponseBody200 -- ^ 
   | PostUnpinChatMessageResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -100,22 +100,22 @@ data PostUnpinChatMessageResponse =
 -- 
 data PostUnpinChatMessageResponseBody200 = PostUnpinChatMessageResponseBody200 {
   -- | ok
-  postUnpinChatMessageResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postUnpinChatMessageResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostUnpinChatMessageResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postUnpinChatMessageResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postUnpinChatMessageResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postUnpinChatMessageResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postUnpinChatMessageResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostUnpinChatMessageResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostUnpinChatMessageResponseBody200" (\obj -> (GHC.Base.pure PostUnpinChatMessageResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostUnpinChatMessageResponseBody200' with all required fields.
-mkPostUnpinChatMessageResponseBody200 :: GHC.Types.Bool -- ^ 'postUnpinChatMessageResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postUnpinChatMessageResponseBody200Result'
+mkPostUnpinChatMessageResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostUnpinChatMessageResponseBody200
-mkPostUnpinChatMessageResponseBody200 postUnpinChatMessageResponseBody200Ok postUnpinChatMessageResponseBody200Result = PostUnpinChatMessageResponseBody200{postUnpinChatMessageResponseBody200Ok = postUnpinChatMessageResponseBody200Ok,
-                                                                                                                                                            postUnpinChatMessageResponseBody200Result = postUnpinChatMessageResponseBody200Result}
+mkPostUnpinChatMessageResponseBody200 ok result = PostUnpinChatMessageResponseBody200{ok = ok,
+                                                                                      result = result}
 -- | > POST /unpinChatMessage
 -- 
 -- The same as 'postUnpinChatMessage' but accepts an explicit configuration.
@@ -123,9 +123,9 @@ postUnpinChatMessageWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m 
   -> PostUnpinChatMessageRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostUnpinChatMessageResponse) -- ^ Monadic computation which returns the result of the operation
 postUnpinChatMessageWithConfiguration config
-                                      body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostUnpinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                      body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostUnpinChatMessageResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                 PostUnpinChatMessageResponseBody200)
-                                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                            | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostUnpinChatMessageResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                   Error)
                                                                                                                                                                                             | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/unpinChatMessage") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /unpinChatMessage

@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postEditMessageMedia
 module TgBotAPI.Operations.PostEditMessageMedia where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,16 +47,16 @@ import TgBotAPI.Types
 -- 
 -- Use this method to edit animation, audio, document, photo, or video messages. If a message is part of a message album, then it can be edited only to an audio for audio albums, only to a document for document albums and to a photo or a video otherwise. When an inline message is edited, a new file can\'t be uploaded. Use a previously uploaded file via its file\\_id or specify a URL. On success, if the edited message was sent by the bot, the edited [Message](https:\/\/core.telegram.org\/bots\/api\/\#message) is returned, otherwise *True* is returned.
 postEditMessageMedia :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostEditMessageMediaResponse) -- ^ Monadic computation which returns the result of the operation
-postEditMessageMedia = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostEditMessageMediaResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postEditMessageMedia = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostEditMessageMediaResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                           PostEditMessageMediaResponseBody200)
-                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                      | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                             Error)
                                                                                                                                                                       | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/editMessageMedia") GHC.Base.mempty)
 -- | Represents a response of the operation 'postEditMessageMedia'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostEditMessageMediaResponseError' is used.
 data PostEditMessageMediaResponse =
-   PostEditMessageMediaResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostEditMessageMediaResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostEditMessageMediaResponse200 PostEditMessageMediaResponseBody200 -- ^ 
   | PostEditMessageMediaResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -65,34 +65,34 @@ data PostEditMessageMediaResponse =
 -- 
 data PostEditMessageMediaResponseBody200 = PostEditMessageMediaResponseBody200 {
   -- | ok
-  postEditMessageMediaResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postEditMessageMediaResponseBody200Result :: PostEditMessageMediaResponseBody200ResultVariants
+  , result :: ResultVariants
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostEditMessageMediaResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postEditMessageMediaResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postEditMessageMediaResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postEditMessageMediaResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postEditMessageMediaResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageMediaResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostEditMessageMediaResponseBody200" (\obj -> (GHC.Base.pure PostEditMessageMediaResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostEditMessageMediaResponseBody200' with all required fields.
-mkPostEditMessageMediaResponseBody200 :: GHC.Types.Bool -- ^ 'postEditMessageMediaResponseBody200Ok'
-  -> PostEditMessageMediaResponseBody200ResultVariants -- ^ 'postEditMessageMediaResponseBody200Result'
+mkPostEditMessageMediaResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> ResultVariants -- ^ 'result'
   -> PostEditMessageMediaResponseBody200
-mkPostEditMessageMediaResponseBody200 postEditMessageMediaResponseBody200Ok postEditMessageMediaResponseBody200Result = PostEditMessageMediaResponseBody200{postEditMessageMediaResponseBody200Ok = postEditMessageMediaResponseBody200Ok,
-                                                                                                                                                            postEditMessageMediaResponseBody200Result = postEditMessageMediaResponseBody200Result}
+mkPostEditMessageMediaResponseBody200 ok result = PostEditMessageMediaResponseBody200{ok = ok,
+                                                                                      result = result}
 -- | Defines the oneOf schema located at @paths.\/editMessageMedia.POST.responses.200.content.application\/json.schema.properties.result.anyOf@ in the specification.
 -- 
 -- 
-data PostEditMessageMediaResponseBody200ResultVariants =
-   PostEditMessageMediaResponseBody200ResultMessage Message
-  | PostEditMessageMediaResponseBody200ResultBool GHC.Types.Bool
+data ResultVariants =
+   ResultMessage Message
+  | ResultBool GHC.Types.Bool
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PostEditMessageMediaResponseBody200ResultVariants
-    where toJSON (PostEditMessageMediaResponseBody200ResultMessage a) = Data.Aeson.Types.ToJSON.toJSON a
-          toJSON (PostEditMessageMediaResponseBody200ResultBool a) = Data.Aeson.Types.ToJSON.toJSON a
-instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageMediaResponseBody200ResultVariants
-    where parseJSON val = case (PostEditMessageMediaResponseBody200ResultMessage Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((PostEditMessageMediaResponseBody200ResultBool Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
+instance Data.Aeson.Types.ToJSON.ToJSON ResultVariants
+    where toJSON (ResultMessage a) = Data.Aeson.Types.ToJSON.toJSON a
+          toJSON (ResultBool a) = Data.Aeson.Types.ToJSON.toJSON a
+instance Data.Aeson.Types.FromJSON.FromJSON ResultVariants
+    where parseJSON val = case (ResultMessage Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> ((ResultBool Data.Functor.<$> Data.Aeson.Types.FromJSON.fromJSON val) GHC.Base.<|> Data.Aeson.Types.Internal.Error "No variant matched") of
                               Data.Aeson.Types.Internal.Success a -> GHC.Base.pure a
                               Data.Aeson.Types.Internal.Error a -> Control.Monad.Fail.fail a
 -- | > POST /editMessageMedia
@@ -100,9 +100,9 @@ instance Data.Aeson.Types.FromJSON.FromJSON PostEditMessageMediaResponseBody200R
 -- The same as 'postEditMessageMedia' but accepts an explicit configuration.
 postEditMessageMediaWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.Configuration -- ^ The configuration to use in the request
   -> m (Network.HTTP.Client.Types.Response PostEditMessageMediaResponse) -- ^ Monadic computation which returns the result of the operation
-postEditMessageMediaWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostEditMessageMediaResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postEditMessageMediaWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostEditMessageMediaResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                   PostEditMessageMediaResponseBody200)
-                                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostEditMessageMediaResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                     Error)
                                                                                                                                                                                               | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/editMessageMedia") GHC.Base.mempty)
 -- | > POST /editMessageMedia

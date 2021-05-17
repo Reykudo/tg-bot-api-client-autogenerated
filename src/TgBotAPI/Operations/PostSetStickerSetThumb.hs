@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postSetStickerSetThumb
 module TgBotAPI.Operations.PostSetStickerSetThumb where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -47,16 +47,16 @@ import TgBotAPI.Types
 -- 
 -- Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker sets only. Returns *True* on success.
 postSetStickerSetThumb :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostSetStickerSetThumbResponse) -- ^ Monadic computation which returns the result of the operation
-postSetStickerSetThumb = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetStickerSetThumbResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetStickerSetThumb = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostSetStickerSetThumbResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                 PostSetStickerSetThumbResponseBody200)
-                                                                                                                                                                          | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                          | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                   Error)
                                                                                                                                                                           | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setStickerSetThumb") GHC.Base.mempty)
 -- | Represents a response of the operation 'postSetStickerSetThumb'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostSetStickerSetThumbResponseError' is used.
 data PostSetStickerSetThumbResponse =
-   PostSetStickerSetThumbResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostSetStickerSetThumbResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostSetStickerSetThumbResponse200 PostSetStickerSetThumbResponseBody200 -- ^ 
   | PostSetStickerSetThumbResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -65,30 +65,30 @@ data PostSetStickerSetThumbResponse =
 -- 
 data PostSetStickerSetThumbResponseBody200 = PostSetStickerSetThumbResponseBody200 {
   -- | ok
-  postSetStickerSetThumbResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postSetStickerSetThumbResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostSetStickerSetThumbResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postSetStickerSetThumbResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postSetStickerSetThumbResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postSetStickerSetThumbResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postSetStickerSetThumbResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostSetStickerSetThumbResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostSetStickerSetThumbResponseBody200" (\obj -> (GHC.Base.pure PostSetStickerSetThumbResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostSetStickerSetThumbResponseBody200' with all required fields.
-mkPostSetStickerSetThumbResponseBody200 :: GHC.Types.Bool -- ^ 'postSetStickerSetThumbResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postSetStickerSetThumbResponseBody200Result'
+mkPostSetStickerSetThumbResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostSetStickerSetThumbResponseBody200
-mkPostSetStickerSetThumbResponseBody200 postSetStickerSetThumbResponseBody200Ok postSetStickerSetThumbResponseBody200Result = PostSetStickerSetThumbResponseBody200{postSetStickerSetThumbResponseBody200Ok = postSetStickerSetThumbResponseBody200Ok,
-                                                                                                                                                                    postSetStickerSetThumbResponseBody200Result = postSetStickerSetThumbResponseBody200Result}
+mkPostSetStickerSetThumbResponseBody200 ok result = PostSetStickerSetThumbResponseBody200{ok = ok,
+                                                                                          result = result}
 -- | > POST /setStickerSetThumb
 -- 
 -- The same as 'postSetStickerSetThumb' but accepts an explicit configuration.
 postSetStickerSetThumbWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m => TgBotAPI.Common.Configuration -- ^ The configuration to use in the request
   -> m (Network.HTTP.Client.Types.Response PostSetStickerSetThumbResponse) -- ^ Monadic computation which returns the result of the operation
-postSetStickerSetThumbWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetStickerSetThumbResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postSetStickerSetThumbWithConfiguration config = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostSetStickerSetThumbResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                         PostSetStickerSetThumbResponseBody200)
-                                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                                  | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostSetStickerSetThumbResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                           Error)
                                                                                                                                                                                                   | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/setStickerSetThumb") GHC.Base.mempty)
 -- | > POST /setStickerSetThumb

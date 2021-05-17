@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema PassportElementErrorFrontSide
 module TgBotAPI.Types.PassportElementErrorFrontSide where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,51 +37,51 @@ import TgBotAPI.TypeAlias
 -- Represents an issue with the front side of a document. The error is considered resolved when the file with the front side of the document changes.
 data PassportElementErrorFrontSide = PassportElementErrorFrontSide {
   -- | file_hash: Base64-encoded hash of the file with the front side of the document
-  passportElementErrorFrontSideFileHash :: Data.Text.Internal.Text
+  fileHash :: Data.Text.Internal.Text
   -- | message: Error message
-  , passportElementErrorFrontSideMessage :: Data.Text.Internal.Text
+  , message :: Data.Text.Internal.Text
   -- | source: Error source, must be *front\\_side*
-  , passportElementErrorFrontSideSource :: Data.Text.Internal.Text
+  , source :: Data.Text.Internal.Text
   -- | type: The section of the user\'s Telegram Passport which has the issue, one of “passport”, “driver\\_license”, “identity\\_card”, “internal\\_passport”
-  , passportElementErrorFrontSideType :: PassportElementErrorFrontSideType
+  , type' :: Type
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PassportElementErrorFrontSide
-    where toJSON obj = Data.Aeson.Types.Internal.object ("file_hash" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideFileHash obj : "message" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideMessage obj : "source" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideSource obj : "type" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_hash" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideFileHash obj) GHC.Base.<> (("message" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideMessage obj) GHC.Base.<> (("source" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideSource obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= passportElementErrorFrontSideType obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("file_hash" Data.Aeson.Types.ToJSON..= fileHash obj : "message" Data.Aeson.Types.ToJSON..= message obj : "source" Data.Aeson.Types.ToJSON..= source obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("file_hash" Data.Aeson.Types.ToJSON..= fileHash obj) GHC.Base.<> (("message" Data.Aeson.Types.ToJSON..= message obj) GHC.Base.<> (("source" Data.Aeson.Types.ToJSON..= source obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON PassportElementErrorFrontSide
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PassportElementErrorFrontSide" (\obj -> (((GHC.Base.pure PassportElementErrorFrontSide GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_hash")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "source")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'PassportElementErrorFrontSide' with all required fields.
-mkPassportElementErrorFrontSide :: Data.Text.Internal.Text -- ^ 'passportElementErrorFrontSideFileHash'
-  -> Data.Text.Internal.Text -- ^ 'passportElementErrorFrontSideMessage'
-  -> Data.Text.Internal.Text -- ^ 'passportElementErrorFrontSideSource'
-  -> PassportElementErrorFrontSideType -- ^ 'passportElementErrorFrontSideType'
+mkPassportElementErrorFrontSide :: Data.Text.Internal.Text -- ^ 'fileHash'
+  -> Data.Text.Internal.Text -- ^ 'message'
+  -> Data.Text.Internal.Text -- ^ 'source'
+  -> Type -- ^ 'type''
   -> PassportElementErrorFrontSide
-mkPassportElementErrorFrontSide passportElementErrorFrontSideFileHash passportElementErrorFrontSideMessage passportElementErrorFrontSideSource passportElementErrorFrontSideType = PassportElementErrorFrontSide{passportElementErrorFrontSideFileHash = passportElementErrorFrontSideFileHash,
-                                                                                                                                                                                                                 passportElementErrorFrontSideMessage = passportElementErrorFrontSideMessage,
-                                                                                                                                                                                                                 passportElementErrorFrontSideSource = passportElementErrorFrontSideSource,
-                                                                                                                                                                                                                 passportElementErrorFrontSideType = passportElementErrorFrontSideType}
+mkPassportElementErrorFrontSide fileHash message source type' = PassportElementErrorFrontSide{fileHash = fileHash,
+                                                                                              message = message,
+                                                                                              source = source,
+                                                                                              type' = type'}
 -- | Defines the enum schema located at @components.schemas.PassportElementErrorFrontSide.properties.type@ in the specification.
 -- 
 -- The section of the user\'s Telegram Passport which has the issue, one of “passport”, “driver\\_license”, “identity\\_card”, “internal\\_passport”
-data PassportElementErrorFrontSideType =
-   PassportElementErrorFrontSideTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | PassportElementErrorFrontSideTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | PassportElementErrorFrontSideTypeEnumPassport -- ^ Represents the JSON value @"passport"@
-  | PassportElementErrorFrontSideTypeEnumDriverLicense -- ^ Represents the JSON value @"driver_license"@
-  | PassportElementErrorFrontSideTypeEnumIdentityCard -- ^ Represents the JSON value @"identity_card"@
-  | PassportElementErrorFrontSideTypeEnumInternalPassport -- ^ Represents the JSON value @"internal_passport"@
+data Type =
+   TypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | TypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | TypeEnumPassport -- ^ Represents the JSON value @"passport"@
+  | TypeEnumDriverLicense -- ^ Represents the JSON value @"driver_license"@
+  | TypeEnumIdentityCard -- ^ Represents the JSON value @"identity_card"@
+  | TypeEnumInternalPassport -- ^ Represents the JSON value @"internal_passport"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON PassportElementErrorFrontSideType
-    where toJSON (PassportElementErrorFrontSideTypeOther val) = val
-          toJSON (PassportElementErrorFrontSideTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (PassportElementErrorFrontSideTypeEnumPassport) = "passport"
-          toJSON (PassportElementErrorFrontSideTypeEnumDriverLicense) = "driver_license"
-          toJSON (PassportElementErrorFrontSideTypeEnumIdentityCard) = "identity_card"
-          toJSON (PassportElementErrorFrontSideTypeEnumInternalPassport) = "internal_passport"
-instance Data.Aeson.Types.FromJSON.FromJSON PassportElementErrorFrontSideType
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "passport" -> PassportElementErrorFrontSideTypeEnumPassport
-                                            | val GHC.Classes.== "driver_license" -> PassportElementErrorFrontSideTypeEnumDriverLicense
-                                            | val GHC.Classes.== "identity_card" -> PassportElementErrorFrontSideTypeEnumIdentityCard
-                                            | val GHC.Classes.== "internal_passport" -> PassportElementErrorFrontSideTypeEnumInternalPassport
-                                            | GHC.Base.otherwise -> PassportElementErrorFrontSideTypeOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON Type
+    where toJSON (TypeOther val) = val
+          toJSON (TypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (TypeEnumPassport) = "passport"
+          toJSON (TypeEnumDriverLicense) = "driver_license"
+          toJSON (TypeEnumIdentityCard) = "identity_card"
+          toJSON (TypeEnumInternalPassport) = "internal_passport"
+instance Data.Aeson.Types.FromJSON.FromJSON Type
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "passport" -> TypeEnumPassport
+                                            | val GHC.Classes.== "driver_license" -> TypeEnumDriverLicense
+                                            | val GHC.Classes.== "identity_card" -> TypeEnumIdentityCard
+                                            | val GHC.Classes.== "internal_passport" -> TypeEnumInternalPassport
+                                            | GHC.Base.otherwise -> TypeOther val)

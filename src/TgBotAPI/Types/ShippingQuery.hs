@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema ShippingQuery
 module TgBotAPI.Types.ShippingQuery where
@@ -24,42 +25,41 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.ShippingAddress
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.ShippingAddress (ShippingAddress)
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.ShippingQuery@ in the specification.
 -- 
 -- This object contains information about an incoming shipping query.
 data ShippingQuery = ShippingQuery {
   -- | from: This object represents a Telegram user or bot.
-  shippingQueryFrom :: User
+  from :: User
   -- | id: Unique query identifier
-  , shippingQueryId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | invoice_payload: Bot specified invoice payload
-  , shippingQueryInvoicePayload :: Data.Text.Internal.Text
+  , invoicePayload :: Data.Text.Internal.Text
   -- | shipping_address: This object represents a shipping address.
-  , shippingQueryShippingAddress :: ShippingAddress
+  , shippingAddress :: ShippingAddress
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON ShippingQuery
-    where toJSON obj = Data.Aeson.Types.Internal.object ("from" Data.Aeson.Types.ToJSON..= shippingQueryFrom obj : "id" Data.Aeson.Types.ToJSON..= shippingQueryId obj : "invoice_payload" Data.Aeson.Types.ToJSON..= shippingQueryInvoicePayload obj : "shipping_address" Data.Aeson.Types.ToJSON..= shippingQueryShippingAddress obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("from" Data.Aeson.Types.ToJSON..= shippingQueryFrom obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= shippingQueryId obj) GHC.Base.<> (("invoice_payload" Data.Aeson.Types.ToJSON..= shippingQueryInvoicePayload obj) GHC.Base.<> ("shipping_address" Data.Aeson.Types.ToJSON..= shippingQueryShippingAddress obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("from" Data.Aeson.Types.ToJSON..= from obj : "id" Data.Aeson.Types.ToJSON..= id obj : "invoice_payload" Data.Aeson.Types.ToJSON..= invoicePayload obj : "shipping_address" Data.Aeson.Types.ToJSON..= shippingAddress obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("from" Data.Aeson.Types.ToJSON..= from obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("invoice_payload" Data.Aeson.Types.ToJSON..= invoicePayload obj) GHC.Base.<> ("shipping_address" Data.Aeson.Types.ToJSON..= shippingAddress obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON ShippingQuery
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "ShippingQuery" (\obj -> (((GHC.Base.pure ShippingQuery GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "invoice_payload")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "shipping_address"))
 -- | Create a new 'ShippingQuery' with all required fields.
-mkShippingQuery :: User -- ^ 'shippingQueryFrom'
-  -> Data.Text.Internal.Text -- ^ 'shippingQueryId'
-  -> Data.Text.Internal.Text -- ^ 'shippingQueryInvoicePayload'
-  -> ShippingAddress -- ^ 'shippingQueryShippingAddress'
+mkShippingQuery :: User -- ^ 'from'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'invoicePayload'
+  -> ShippingAddress -- ^ 'shippingAddress'
   -> ShippingQuery
-mkShippingQuery shippingQueryFrom shippingQueryId shippingQueryInvoicePayload shippingQueryShippingAddress = ShippingQuery{shippingQueryFrom = shippingQueryFrom,
-                                                                                                                           shippingQueryId = shippingQueryId,
-                                                                                                                           shippingQueryInvoicePayload = shippingQueryInvoicePayload,
-                                                                                                                           shippingQueryShippingAddress = shippingQueryShippingAddress}
+mkShippingQuery from id invoicePayload shippingAddress = ShippingQuery{from = from,
+                                                                       id = id,
+                                                                       invoicePayload = invoicePayload,
+                                                                       shippingAddress = shippingAddress}

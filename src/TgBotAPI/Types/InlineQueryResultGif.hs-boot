@@ -6,8 +6,8 @@ instance Show InlineQueryResultGif
 instance Eq InlineQueryResultGif
 instance FromJSON InlineQueryResultGif
 instance ToJSON InlineQueryResultGif
-data InlineQueryResultGifThumbMimeType
-instance Show InlineQueryResultGifThumbMimeType
-instance Eq InlineQueryResultGifThumbMimeType
-instance FromJSON InlineQueryResultGifThumbMimeType
-instance ToJSON InlineQueryResultGifThumbMimeType
+data ThumbMimeType
+instance Show ThumbMimeType
+instance Eq ThumbMimeType
+instance FromJSON ThumbMimeType
+instance ToJSON ThumbMimeType

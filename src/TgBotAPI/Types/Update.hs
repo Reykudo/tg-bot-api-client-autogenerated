@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Update
 module TgBotAPI.Types.Update where
@@ -24,22 +25,21 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.CallbackQuery
-import {-# SOURCE #-} TgBotAPI.Types.ChatMemberUpdated
-import {-# SOURCE #-} TgBotAPI.Types.ChosenInlineResult
-import {-# SOURCE #-} TgBotAPI.Types.InlineQuery
-import {-# SOURCE #-} TgBotAPI.Types.Message
-import {-# SOURCE #-} TgBotAPI.Types.Poll
-import {-# SOURCE #-} TgBotAPI.Types.PollAnswer
-import {-# SOURCE #-} TgBotAPI.Types.PreCheckoutQuery
-import {-# SOURCE #-} TgBotAPI.Types.ShippingQuery
+import  {-# SOURCE #-}  TgBotAPI.Types.CallbackQuery (CallbackQuery)
+import  {-# SOURCE #-}  TgBotAPI.Types.ChatMemberUpdated (ChatMemberUpdated)
+import  {-# SOURCE #-}  TgBotAPI.Types.ChosenInlineResult (ChosenInlineResult)
+import  {-# SOURCE #-}  TgBotAPI.Types.InlineQuery (InlineQuery)
+import  {-# SOURCE #-}  TgBotAPI.Types.Message (Message)
+import  {-# SOURCE #-}  TgBotAPI.Types.Poll (Poll)
+import  {-# SOURCE #-}  TgBotAPI.Types.PollAnswer (PollAnswer)
+import  {-# SOURCE #-}  TgBotAPI.Types.PreCheckoutQuery (PreCheckoutQuery)
+import  {-# SOURCE #-}  TgBotAPI.Types.ShippingQuery (ShippingQuery)
 
 -- | Defines the object schema located at @components.schemas.Update@ in the specification.
 -- 
@@ -47,54 +47,54 @@ import {-# SOURCE #-} TgBotAPI.Types.ShippingQuery
 -- At most **one** of the optional parameters can be present in any given update.
 data Update = Update {
   -- | callback_query: This object represents an incoming callback query from a callback button in an [inline keyboard](\/bots\#inline-keyboards-and-on-the-fly-updating). If the button that originated the query was attached to a message sent by the bot, the field *message* will be present. If the button was attached to a message sent via the bot (in [inline mode](https:\/\/core.telegram.org\/bots\/api\/\#inline-mode)), the field *inline\\_message\\_id* will be present. Exactly one of the fields *data* or *game\\_short\\_name* will be present.
-  updateCallbackQuery :: (GHC.Maybe.Maybe CallbackQuery)
+  callbackQuery :: (GHC.Maybe.Maybe CallbackQuery)
   -- | channel_post: This object represents a message.
-  , updateChannelPost :: (GHC.Maybe.Maybe Message)
+  , channelPost :: (GHC.Maybe.Maybe Message)
   -- | chat_member: This object represents changes in the status of a chat member.
-  , updateChatMember :: (GHC.Maybe.Maybe ChatMemberUpdated)
+  , chatMember :: (GHC.Maybe.Maybe ChatMemberUpdated)
   -- | chosen_inline_result: Represents a [result](https:\/\/core.telegram.org\/bots\/api\/\#inlinequeryresult) of an inline query that was chosen by the user and sent to their chat partner.
-  , updateChosenInlineResult :: (GHC.Maybe.Maybe ChosenInlineResult)
+  , chosenInlineResult :: (GHC.Maybe.Maybe ChosenInlineResult)
   -- | edited_channel_post: This object represents a message.
-  , updateEditedChannelPost :: (GHC.Maybe.Maybe Message)
+  , editedChannelPost :: (GHC.Maybe.Maybe Message)
   -- | edited_message: This object represents a message.
-  , updateEditedMessage :: (GHC.Maybe.Maybe Message)
+  , editedMessage :: (GHC.Maybe.Maybe Message)
   -- | inline_query: This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
-  , updateInlineQuery :: (GHC.Maybe.Maybe InlineQuery)
+  , inlineQuery :: (GHC.Maybe.Maybe InlineQuery)
   -- | message: This object represents a message.
-  , updateMessage :: (GHC.Maybe.Maybe Message)
+  , message :: (GHC.Maybe.Maybe Message)
   -- | my_chat_member: This object represents changes in the status of a chat member.
-  , updateMyChatMember :: (GHC.Maybe.Maybe ChatMemberUpdated)
+  , myChatMember :: (GHC.Maybe.Maybe ChatMemberUpdated)
   -- | poll: This object contains information about a poll.
-  , updatePoll :: (GHC.Maybe.Maybe Poll)
+  , poll :: (GHC.Maybe.Maybe Poll)
   -- | poll_answer: This object represents an answer of a user in a non-anonymous poll.
-  , updatePollAnswer :: (GHC.Maybe.Maybe PollAnswer)
+  , pollAnswer :: (GHC.Maybe.Maybe PollAnswer)
   -- | pre_checkout_query: This object contains information about an incoming pre-checkout query.
-  , updatePreCheckoutQuery :: (GHC.Maybe.Maybe PreCheckoutQuery)
+  , preCheckoutQuery :: (GHC.Maybe.Maybe PreCheckoutQuery)
   -- | shipping_query: This object contains information about an incoming shipping query.
-  , updateShippingQuery :: (GHC.Maybe.Maybe ShippingQuery)
+  , shippingQuery :: (GHC.Maybe.Maybe ShippingQuery)
   -- | update_id: The update\'s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you\'re using [Webhooks](https:\/\/core.telegram.org\/bots\/api\/\#setwebhook), since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
-  , updateUpdateId :: GHC.Types.Int
+  , updateId :: GHC.Types.Int
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Update
-    where toJSON obj = Data.Aeson.Types.Internal.object ("callback_query" Data.Aeson.Types.ToJSON..= updateCallbackQuery obj : "channel_post" Data.Aeson.Types.ToJSON..= updateChannelPost obj : "chat_member" Data.Aeson.Types.ToJSON..= updateChatMember obj : "chosen_inline_result" Data.Aeson.Types.ToJSON..= updateChosenInlineResult obj : "edited_channel_post" Data.Aeson.Types.ToJSON..= updateEditedChannelPost obj : "edited_message" Data.Aeson.Types.ToJSON..= updateEditedMessage obj : "inline_query" Data.Aeson.Types.ToJSON..= updateInlineQuery obj : "message" Data.Aeson.Types.ToJSON..= updateMessage obj : "my_chat_member" Data.Aeson.Types.ToJSON..= updateMyChatMember obj : "poll" Data.Aeson.Types.ToJSON..= updatePoll obj : "poll_answer" Data.Aeson.Types.ToJSON..= updatePollAnswer obj : "pre_checkout_query" Data.Aeson.Types.ToJSON..= updatePreCheckoutQuery obj : "shipping_query" Data.Aeson.Types.ToJSON..= updateShippingQuery obj : "update_id" Data.Aeson.Types.ToJSON..= updateUpdateId obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("callback_query" Data.Aeson.Types.ToJSON..= updateCallbackQuery obj) GHC.Base.<> (("channel_post" Data.Aeson.Types.ToJSON..= updateChannelPost obj) GHC.Base.<> (("chat_member" Data.Aeson.Types.ToJSON..= updateChatMember obj) GHC.Base.<> (("chosen_inline_result" Data.Aeson.Types.ToJSON..= updateChosenInlineResult obj) GHC.Base.<> (("edited_channel_post" Data.Aeson.Types.ToJSON..= updateEditedChannelPost obj) GHC.Base.<> (("edited_message" Data.Aeson.Types.ToJSON..= updateEditedMessage obj) GHC.Base.<> (("inline_query" Data.Aeson.Types.ToJSON..= updateInlineQuery obj) GHC.Base.<> (("message" Data.Aeson.Types.ToJSON..= updateMessage obj) GHC.Base.<> (("my_chat_member" Data.Aeson.Types.ToJSON..= updateMyChatMember obj) GHC.Base.<> (("poll" Data.Aeson.Types.ToJSON..= updatePoll obj) GHC.Base.<> (("poll_answer" Data.Aeson.Types.ToJSON..= updatePollAnswer obj) GHC.Base.<> (("pre_checkout_query" Data.Aeson.Types.ToJSON..= updatePreCheckoutQuery obj) GHC.Base.<> (("shipping_query" Data.Aeson.Types.ToJSON..= updateShippingQuery obj) GHC.Base.<> ("update_id" Data.Aeson.Types.ToJSON..= updateUpdateId obj))))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("callback_query" Data.Aeson.Types.ToJSON..= callbackQuery obj : "channel_post" Data.Aeson.Types.ToJSON..= channelPost obj : "chat_member" Data.Aeson.Types.ToJSON..= chatMember obj : "chosen_inline_result" Data.Aeson.Types.ToJSON..= chosenInlineResult obj : "edited_channel_post" Data.Aeson.Types.ToJSON..= editedChannelPost obj : "edited_message" Data.Aeson.Types.ToJSON..= editedMessage obj : "inline_query" Data.Aeson.Types.ToJSON..= inlineQuery obj : "message" Data.Aeson.Types.ToJSON..= message obj : "my_chat_member" Data.Aeson.Types.ToJSON..= myChatMember obj : "poll" Data.Aeson.Types.ToJSON..= poll obj : "poll_answer" Data.Aeson.Types.ToJSON..= pollAnswer obj : "pre_checkout_query" Data.Aeson.Types.ToJSON..= preCheckoutQuery obj : "shipping_query" Data.Aeson.Types.ToJSON..= shippingQuery obj : "update_id" Data.Aeson.Types.ToJSON..= updateId obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("callback_query" Data.Aeson.Types.ToJSON..= callbackQuery obj) GHC.Base.<> (("channel_post" Data.Aeson.Types.ToJSON..= channelPost obj) GHC.Base.<> (("chat_member" Data.Aeson.Types.ToJSON..= chatMember obj) GHC.Base.<> (("chosen_inline_result" Data.Aeson.Types.ToJSON..= chosenInlineResult obj) GHC.Base.<> (("edited_channel_post" Data.Aeson.Types.ToJSON..= editedChannelPost obj) GHC.Base.<> (("edited_message" Data.Aeson.Types.ToJSON..= editedMessage obj) GHC.Base.<> (("inline_query" Data.Aeson.Types.ToJSON..= inlineQuery obj) GHC.Base.<> (("message" Data.Aeson.Types.ToJSON..= message obj) GHC.Base.<> (("my_chat_member" Data.Aeson.Types.ToJSON..= myChatMember obj) GHC.Base.<> (("poll" Data.Aeson.Types.ToJSON..= poll obj) GHC.Base.<> (("poll_answer" Data.Aeson.Types.ToJSON..= pollAnswer obj) GHC.Base.<> (("pre_checkout_query" Data.Aeson.Types.ToJSON..= preCheckoutQuery obj) GHC.Base.<> (("shipping_query" Data.Aeson.Types.ToJSON..= shippingQuery obj) GHC.Base.<> ("update_id" Data.Aeson.Types.ToJSON..= updateId obj))))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Update
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Update" (\obj -> (((((((((((((GHC.Base.pure Update GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "callback_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "channel_post")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chosen_inline_result")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "edited_channel_post")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "edited_message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "inline_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "message")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "my_chat_member")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "poll")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "poll_answer")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "pre_checkout_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "shipping_query")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "update_id"))
 -- | Create a new 'Update' with all required fields.
-mkUpdate :: GHC.Types.Int -- ^ 'updateUpdateId'
+mkUpdate :: GHC.Types.Int -- ^ 'updateId'
   -> Update
-mkUpdate updateUpdateId = Update{updateCallbackQuery = GHC.Maybe.Nothing,
-                                 updateChannelPost = GHC.Maybe.Nothing,
-                                 updateChatMember = GHC.Maybe.Nothing,
-                                 updateChosenInlineResult = GHC.Maybe.Nothing,
-                                 updateEditedChannelPost = GHC.Maybe.Nothing,
-                                 updateEditedMessage = GHC.Maybe.Nothing,
-                                 updateInlineQuery = GHC.Maybe.Nothing,
-                                 updateMessage = GHC.Maybe.Nothing,
-                                 updateMyChatMember = GHC.Maybe.Nothing,
-                                 updatePoll = GHC.Maybe.Nothing,
-                                 updatePollAnswer = GHC.Maybe.Nothing,
-                                 updatePreCheckoutQuery = GHC.Maybe.Nothing,
-                                 updateShippingQuery = GHC.Maybe.Nothing,
-                                 updateUpdateId = updateUpdateId}
+mkUpdate updateId = Update{callbackQuery = GHC.Maybe.Nothing,
+                           channelPost = GHC.Maybe.Nothing,
+                           chatMember = GHC.Maybe.Nothing,
+                           chosenInlineResult = GHC.Maybe.Nothing,
+                           editedChannelPost = GHC.Maybe.Nothing,
+                           editedMessage = GHC.Maybe.Nothing,
+                           inlineQuery = GHC.Maybe.Nothing,
+                           message = GHC.Maybe.Nothing,
+                           myChatMember = GHC.Maybe.Nothing,
+                           poll = GHC.Maybe.Nothing,
+                           pollAnswer = GHC.Maybe.Nothing,
+                           preCheckoutQuery = GHC.Maybe.Nothing,
+                           shippingQuery = GHC.Maybe.Nothing,
+                           updateId = updateId}

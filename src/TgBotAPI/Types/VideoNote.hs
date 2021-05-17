@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema VideoNote
 module TgBotAPI.Types.VideoNote where
@@ -24,47 +25,46 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.PhotoSize
+import  {-# SOURCE #-}  TgBotAPI.Types.PhotoSize (PhotoSize)
 
 -- | Defines the object schema located at @components.schemas.VideoNote@ in the specification.
 -- 
 -- This object represents a [video message](https:\/\/telegram.org\/blog\/video-messages-and-telescope) (available in Telegram apps as of [v.4.0](https:\/\/telegram.org\/blog\/video-messages-and-telescope)).
 data VideoNote = VideoNote {
   -- | duration: Duration of the video in seconds as defined by sender
-  videoNoteDuration :: GHC.Types.Int
+  duration :: GHC.Types.Int
   -- | file_id: Identifier for this file, which can be used to download or reuse the file
-  , videoNoteFileId :: Data.Text.Internal.Text
+  , fileId :: Data.Text.Internal.Text
   -- | file_size: *Optional*. File size
-  , videoNoteFileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , fileSize :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | file_unique_id: Unique identifier for this file, which is supposed to be the same over time and for different bots. Can\'t be used to download or reuse the file.
-  , videoNoteFileUniqueId :: Data.Text.Internal.Text
+  , fileUniqueId :: Data.Text.Internal.Text
   -- | length: Video width and height (diameter of the video message) as defined by sender
-  , videoNoteLength :: GHC.Types.Int
+  , length :: GHC.Types.Int
   -- | thumb: This object represents one size of a photo or a [file](https:\/\/core.telegram.org\/bots\/api\/\#document) \/ [sticker](https:\/\/core.telegram.org\/bots\/api\/\#sticker) thumbnail.
-  , videoNoteThumb :: (GHC.Maybe.Maybe PhotoSize)
+  , thumb :: (GHC.Maybe.Maybe PhotoSize)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON VideoNote
-    where toJSON obj = Data.Aeson.Types.Internal.object ("duration" Data.Aeson.Types.ToJSON..= videoNoteDuration obj : "file_id" Data.Aeson.Types.ToJSON..= videoNoteFileId obj : "file_size" Data.Aeson.Types.ToJSON..= videoNoteFileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= videoNoteFileUniqueId obj : "length" Data.Aeson.Types.ToJSON..= videoNoteLength obj : "thumb" Data.Aeson.Types.ToJSON..= videoNoteThumb obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("duration" Data.Aeson.Types.ToJSON..= videoNoteDuration obj) GHC.Base.<> (("file_id" Data.Aeson.Types.ToJSON..= videoNoteFileId obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= videoNoteFileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= videoNoteFileUniqueId obj) GHC.Base.<> (("length" Data.Aeson.Types.ToJSON..= videoNoteLength obj) GHC.Base.<> ("thumb" Data.Aeson.Types.ToJSON..= videoNoteThumb obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("duration" Data.Aeson.Types.ToJSON..= duration obj : "file_id" Data.Aeson.Types.ToJSON..= fileId obj : "file_size" Data.Aeson.Types.ToJSON..= fileSize obj : "file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj : "length" Data.Aeson.Types.ToJSON..= length obj : "thumb" Data.Aeson.Types.ToJSON..= thumb obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("duration" Data.Aeson.Types.ToJSON..= duration obj) GHC.Base.<> (("file_id" Data.Aeson.Types.ToJSON..= fileId obj) GHC.Base.<> (("file_size" Data.Aeson.Types.ToJSON..= fileSize obj) GHC.Base.<> (("file_unique_id" Data.Aeson.Types.ToJSON..= fileUniqueId obj) GHC.Base.<> (("length" Data.Aeson.Types.ToJSON..= length obj) GHC.Base.<> ("thumb" Data.Aeson.Types.ToJSON..= thumb obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON VideoNote
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "VideoNote" (\obj -> (((((GHC.Base.pure VideoNote GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "duration")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "file_size")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "file_unique_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "length")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "thumb"))
 -- | Create a new 'VideoNote' with all required fields.
-mkVideoNote :: GHC.Types.Int -- ^ 'videoNoteDuration'
-  -> Data.Text.Internal.Text -- ^ 'videoNoteFileId'
-  -> Data.Text.Internal.Text -- ^ 'videoNoteFileUniqueId'
-  -> GHC.Types.Int -- ^ 'videoNoteLength'
+mkVideoNote :: GHC.Types.Int -- ^ 'duration'
+  -> Data.Text.Internal.Text -- ^ 'fileId'
+  -> Data.Text.Internal.Text -- ^ 'fileUniqueId'
+  -> GHC.Types.Int -- ^ 'length'
   -> VideoNote
-mkVideoNote videoNoteDuration videoNoteFileId videoNoteFileUniqueId videoNoteLength = VideoNote{videoNoteDuration = videoNoteDuration,
-                                                                                                videoNoteFileId = videoNoteFileId,
-                                                                                                videoNoteFileSize = GHC.Maybe.Nothing,
-                                                                                                videoNoteFileUniqueId = videoNoteFileUniqueId,
-                                                                                                videoNoteLength = videoNoteLength,
-                                                                                                videoNoteThumb = GHC.Maybe.Nothing}
+mkVideoNote duration fileId fileUniqueId length = VideoNote{duration = duration,
+                                                            fileId = fileId,
+                                                            fileSize = GHC.Maybe.Nothing,
+                                                            fileUniqueId = fileUniqueId,
+                                                            length = length,
+                                                            thumb = GHC.Maybe.Nothing}

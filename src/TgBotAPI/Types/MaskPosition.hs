@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema MaskPosition
 module TgBotAPI.Types.MaskPosition where
@@ -24,7 +25,6 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -37,51 +37,51 @@ import TgBotAPI.TypeAlias
 -- This object describes the position on faces where a mask should be placed by default.
 data MaskPosition = MaskPosition {
   -- | point: The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
-  maskPositionPoint :: MaskPositionPoint
+  point :: Point
   -- | scale: Mask scaling coefficient. For example, 2.0 means double size.
-  , maskPositionScale :: GHC.Types.Double
+  , scale :: GHC.Types.Double
   -- | x_shift: Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position.
-  , maskPositionXShift :: GHC.Types.Double
+  , xShift :: GHC.Types.Double
   -- | y_shift: Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example, 1.0 will place the mask just below the default mask position.
-  , maskPositionYShift :: GHC.Types.Double
+  , yShift :: GHC.Types.Double
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON MaskPosition
-    where toJSON obj = Data.Aeson.Types.Internal.object ("point" Data.Aeson.Types.ToJSON..= maskPositionPoint obj : "scale" Data.Aeson.Types.ToJSON..= maskPositionScale obj : "x_shift" Data.Aeson.Types.ToJSON..= maskPositionXShift obj : "y_shift" Data.Aeson.Types.ToJSON..= maskPositionYShift obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("point" Data.Aeson.Types.ToJSON..= maskPositionPoint obj) GHC.Base.<> (("scale" Data.Aeson.Types.ToJSON..= maskPositionScale obj) GHC.Base.<> (("x_shift" Data.Aeson.Types.ToJSON..= maskPositionXShift obj) GHC.Base.<> ("y_shift" Data.Aeson.Types.ToJSON..= maskPositionYShift obj))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("point" Data.Aeson.Types.ToJSON..= point obj : "scale" Data.Aeson.Types.ToJSON..= scale obj : "x_shift" Data.Aeson.Types.ToJSON..= xShift obj : "y_shift" Data.Aeson.Types.ToJSON..= yShift obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("point" Data.Aeson.Types.ToJSON..= point obj) GHC.Base.<> (("scale" Data.Aeson.Types.ToJSON..= scale obj) GHC.Base.<> (("x_shift" Data.Aeson.Types.ToJSON..= xShift obj) GHC.Base.<> ("y_shift" Data.Aeson.Types.ToJSON..= yShift obj))))
 instance Data.Aeson.Types.FromJSON.FromJSON MaskPosition
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "MaskPosition" (\obj -> (((GHC.Base.pure MaskPosition GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "point")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "scale")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "x_shift")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "y_shift"))
 -- | Create a new 'MaskPosition' with all required fields.
-mkMaskPosition :: MaskPositionPoint -- ^ 'maskPositionPoint'
-  -> GHC.Types.Double -- ^ 'maskPositionScale'
-  -> GHC.Types.Double -- ^ 'maskPositionXShift'
-  -> GHC.Types.Double -- ^ 'maskPositionYShift'
+mkMaskPosition :: Point -- ^ 'point'
+  -> GHC.Types.Double -- ^ 'scale'
+  -> GHC.Types.Double -- ^ 'xShift'
+  -> GHC.Types.Double -- ^ 'yShift'
   -> MaskPosition
-mkMaskPosition maskPositionPoint maskPositionScale maskPositionXShift maskPositionYShift = MaskPosition{maskPositionPoint = maskPositionPoint,
-                                                                                                        maskPositionScale = maskPositionScale,
-                                                                                                        maskPositionXShift = maskPositionXShift,
-                                                                                                        maskPositionYShift = maskPositionYShift}
+mkMaskPosition point scale xShift yShift = MaskPosition{point = point,
+                                                        scale = scale,
+                                                        xShift = xShift,
+                                                        yShift = yShift}
 -- | Defines the enum schema located at @components.schemas.MaskPosition.properties.point@ in the specification.
 -- 
 -- The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”.
-data MaskPositionPoint =
-   MaskPositionPointOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | MaskPositionPointTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | MaskPositionPointEnumForehead -- ^ Represents the JSON value @"forehead"@
-  | MaskPositionPointEnumEyes -- ^ Represents the JSON value @"eyes"@
-  | MaskPositionPointEnumMouth -- ^ Represents the JSON value @"mouth"@
-  | MaskPositionPointEnumChin -- ^ Represents the JSON value @"chin"@
+data Point =
+   PointOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | PointTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | PointEnumForehead -- ^ Represents the JSON value @"forehead"@
+  | PointEnumEyes -- ^ Represents the JSON value @"eyes"@
+  | PointEnumMouth -- ^ Represents the JSON value @"mouth"@
+  | PointEnumChin -- ^ Represents the JSON value @"chin"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON MaskPositionPoint
-    where toJSON (MaskPositionPointOther val) = val
-          toJSON (MaskPositionPointTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (MaskPositionPointEnumForehead) = "forehead"
-          toJSON (MaskPositionPointEnumEyes) = "eyes"
-          toJSON (MaskPositionPointEnumMouth) = "mouth"
-          toJSON (MaskPositionPointEnumChin) = "chin"
-instance Data.Aeson.Types.FromJSON.FromJSON MaskPositionPoint
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "forehead" -> MaskPositionPointEnumForehead
-                                            | val GHC.Classes.== "eyes" -> MaskPositionPointEnumEyes
-                                            | val GHC.Classes.== "mouth" -> MaskPositionPointEnumMouth
-                                            | val GHC.Classes.== "chin" -> MaskPositionPointEnumChin
-                                            | GHC.Base.otherwise -> MaskPositionPointOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON Point
+    where toJSON (PointOther val) = val
+          toJSON (PointTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (PointEnumForehead) = "forehead"
+          toJSON (PointEnumEyes) = "eyes"
+          toJSON (PointEnumMouth) = "mouth"
+          toJSON (PointEnumChin) = "chin"
+instance Data.Aeson.Types.FromJSON.FromJSON Point
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "forehead" -> PointEnumForehead
+                                            | val GHC.Classes.== "eyes" -> PointEnumEyes
+                                            | val GHC.Classes.== "mouth" -> PointEnumMouth
+                                            | val GHC.Classes.== "chin" -> PointEnumChin
+                                            | GHC.Base.otherwise -> PointOther val)

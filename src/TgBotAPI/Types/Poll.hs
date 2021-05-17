@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema Poll
 module TgBotAPI.Types.Poll where
@@ -24,73 +25,72 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.MessageEntity
-import {-# SOURCE #-} TgBotAPI.Types.PollOption
+import  {-# SOURCE #-}  TgBotAPI.Types.MessageEntity (MessageEntity)
+import  {-# SOURCE #-}  TgBotAPI.Types.PollOption (PollOption)
 
 -- | Defines the object schema located at @components.schemas.Poll@ in the specification.
 -- 
 -- This object contains information about a poll.
 data Poll = Poll {
   -- | allows_multiple_answers: True, if the poll allows multiple answers
-  pollAllowsMultipleAnswers :: GHC.Types.Bool
+  allowsMultipleAnswers :: GHC.Types.Bool
   -- | close_date: *Optional*. Point in time (Unix timestamp) when the poll will be automatically closed
-  , pollCloseDate :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , closeDate :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | correct_option_id: *Optional*. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
-  , pollCorrectOptionId :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , correctOptionId :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | explanation: *Optional*. Text that is shown when a user chooses an incorrect answer or taps on the lamp icon in a quiz-style poll, 0-200 characters
-  , pollExplanation :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , explanation :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | explanation_entities: *Optional*. Special entities like usernames, URLs, bot commands, etc. that appear in the *explanation*
-  , pollExplanationEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
+  , explanationEntities :: (GHC.Maybe.Maybe ([MessageEntity]))
   -- | id: Unique poll identifier
-  , pollId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | is_anonymous: True, if the poll is anonymous
-  , pollIsAnonymous :: GHC.Types.Bool
+  , isAnonymous :: GHC.Types.Bool
   -- | is_closed: True, if the poll is closed
-  , pollIsClosed :: GHC.Types.Bool
+  , isClosed :: GHC.Types.Bool
   -- | open_period: *Optional*. Amount of time in seconds the poll will be active after creation
-  , pollOpenPeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
+  , openPeriod :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | options: List of poll options
-  , pollOptions :: ([PollOption])
+  , options :: ([PollOption])
   -- | question: Poll question, 1-300 characters
-  , pollQuestion :: Data.Text.Internal.Text
+  , question :: Data.Text.Internal.Text
   -- | total_voter_count: Total number of users that voted in the poll
-  , pollTotalVoterCount :: GHC.Types.Int
+  , totalVoterCount :: GHC.Types.Int
   -- | type: Poll type, currently can be “regular” or “quiz”
-  , pollType :: Data.Text.Internal.Text
+  , type' :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON Poll
-    where toJSON obj = Data.Aeson.Types.Internal.object ("allows_multiple_answers" Data.Aeson.Types.ToJSON..= pollAllowsMultipleAnswers obj : "close_date" Data.Aeson.Types.ToJSON..= pollCloseDate obj : "correct_option_id" Data.Aeson.Types.ToJSON..= pollCorrectOptionId obj : "explanation" Data.Aeson.Types.ToJSON..= pollExplanation obj : "explanation_entities" Data.Aeson.Types.ToJSON..= pollExplanationEntities obj : "id" Data.Aeson.Types.ToJSON..= pollId obj : "is_anonymous" Data.Aeson.Types.ToJSON..= pollIsAnonymous obj : "is_closed" Data.Aeson.Types.ToJSON..= pollIsClosed obj : "open_period" Data.Aeson.Types.ToJSON..= pollOpenPeriod obj : "options" Data.Aeson.Types.ToJSON..= pollOptions obj : "question" Data.Aeson.Types.ToJSON..= pollQuestion obj : "total_voter_count" Data.Aeson.Types.ToJSON..= pollTotalVoterCount obj : "type" Data.Aeson.Types.ToJSON..= pollType obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allows_multiple_answers" Data.Aeson.Types.ToJSON..= pollAllowsMultipleAnswers obj) GHC.Base.<> (("close_date" Data.Aeson.Types.ToJSON..= pollCloseDate obj) GHC.Base.<> (("correct_option_id" Data.Aeson.Types.ToJSON..= pollCorrectOptionId obj) GHC.Base.<> (("explanation" Data.Aeson.Types.ToJSON..= pollExplanation obj) GHC.Base.<> (("explanation_entities" Data.Aeson.Types.ToJSON..= pollExplanationEntities obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= pollId obj) GHC.Base.<> (("is_anonymous" Data.Aeson.Types.ToJSON..= pollIsAnonymous obj) GHC.Base.<> (("is_closed" Data.Aeson.Types.ToJSON..= pollIsClosed obj) GHC.Base.<> (("open_period" Data.Aeson.Types.ToJSON..= pollOpenPeriod obj) GHC.Base.<> (("options" Data.Aeson.Types.ToJSON..= pollOptions obj) GHC.Base.<> (("question" Data.Aeson.Types.ToJSON..= pollQuestion obj) GHC.Base.<> (("total_voter_count" Data.Aeson.Types.ToJSON..= pollTotalVoterCount obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= pollType obj)))))))))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("allows_multiple_answers" Data.Aeson.Types.ToJSON..= allowsMultipleAnswers obj : "close_date" Data.Aeson.Types.ToJSON..= closeDate obj : "correct_option_id" Data.Aeson.Types.ToJSON..= correctOptionId obj : "explanation" Data.Aeson.Types.ToJSON..= explanation obj : "explanation_entities" Data.Aeson.Types.ToJSON..= explanationEntities obj : "id" Data.Aeson.Types.ToJSON..= id obj : "is_anonymous" Data.Aeson.Types.ToJSON..= isAnonymous obj : "is_closed" Data.Aeson.Types.ToJSON..= isClosed obj : "open_period" Data.Aeson.Types.ToJSON..= openPeriod obj : "options" Data.Aeson.Types.ToJSON..= options obj : "question" Data.Aeson.Types.ToJSON..= question obj : "total_voter_count" Data.Aeson.Types.ToJSON..= totalVoterCount obj : "type" Data.Aeson.Types.ToJSON..= type' obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("allows_multiple_answers" Data.Aeson.Types.ToJSON..= allowsMultipleAnswers obj) GHC.Base.<> (("close_date" Data.Aeson.Types.ToJSON..= closeDate obj) GHC.Base.<> (("correct_option_id" Data.Aeson.Types.ToJSON..= correctOptionId obj) GHC.Base.<> (("explanation" Data.Aeson.Types.ToJSON..= explanation obj) GHC.Base.<> (("explanation_entities" Data.Aeson.Types.ToJSON..= explanationEntities obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("is_anonymous" Data.Aeson.Types.ToJSON..= isAnonymous obj) GHC.Base.<> (("is_closed" Data.Aeson.Types.ToJSON..= isClosed obj) GHC.Base.<> (("open_period" Data.Aeson.Types.ToJSON..= openPeriod obj) GHC.Base.<> (("options" Data.Aeson.Types.ToJSON..= options obj) GHC.Base.<> (("question" Data.Aeson.Types.ToJSON..= question obj) GHC.Base.<> (("total_voter_count" Data.Aeson.Types.ToJSON..= totalVoterCount obj) GHC.Base.<> ("type" Data.Aeson.Types.ToJSON..= type' obj)))))))))))))
 instance Data.Aeson.Types.FromJSON.FromJSON Poll
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "Poll" (\obj -> ((((((((((((GHC.Base.pure Poll GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "allows_multiple_answers")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "close_date")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "correct_option_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "explanation")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "explanation_entities")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "is_anonymous")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "is_closed")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "open_period")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "options")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "question")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "total_voter_count")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "type"))
 -- | Create a new 'Poll' with all required fields.
-mkPoll :: GHC.Types.Bool -- ^ 'pollAllowsMultipleAnswers'
-  -> Data.Text.Internal.Text -- ^ 'pollId'
-  -> GHC.Types.Bool -- ^ 'pollIsAnonymous'
-  -> GHC.Types.Bool -- ^ 'pollIsClosed'
-  -> [PollOption] -- ^ 'pollOptions'
-  -> Data.Text.Internal.Text -- ^ 'pollQuestion'
-  -> GHC.Types.Int -- ^ 'pollTotalVoterCount'
-  -> Data.Text.Internal.Text -- ^ 'pollType'
+mkPoll :: GHC.Types.Bool -- ^ 'allowsMultipleAnswers'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> GHC.Types.Bool -- ^ 'isAnonymous'
+  -> GHC.Types.Bool -- ^ 'isClosed'
+  -> [PollOption] -- ^ 'options'
+  -> Data.Text.Internal.Text -- ^ 'question'
+  -> GHC.Types.Int -- ^ 'totalVoterCount'
+  -> Data.Text.Internal.Text -- ^ 'type''
   -> Poll
-mkPoll pollAllowsMultipleAnswers pollId pollIsAnonymous pollIsClosed pollOptions pollQuestion pollTotalVoterCount pollType = Poll{pollAllowsMultipleAnswers = pollAllowsMultipleAnswers,
-                                                                                                                                  pollCloseDate = GHC.Maybe.Nothing,
-                                                                                                                                  pollCorrectOptionId = GHC.Maybe.Nothing,
-                                                                                                                                  pollExplanation = GHC.Maybe.Nothing,
-                                                                                                                                  pollExplanationEntities = GHC.Maybe.Nothing,
-                                                                                                                                  pollId = pollId,
-                                                                                                                                  pollIsAnonymous = pollIsAnonymous,
-                                                                                                                                  pollIsClosed = pollIsClosed,
-                                                                                                                                  pollOpenPeriod = GHC.Maybe.Nothing,
-                                                                                                                                  pollOptions = pollOptions,
-                                                                                                                                  pollQuestion = pollQuestion,
-                                                                                                                                  pollTotalVoterCount = pollTotalVoterCount,
-                                                                                                                                  pollType = pollType}
+mkPoll allowsMultipleAnswers id isAnonymous isClosed options question totalVoterCount type' = Poll{allowsMultipleAnswers = allowsMultipleAnswers,
+                                                                                                   closeDate = GHC.Maybe.Nothing,
+                                                                                                   correctOptionId = GHC.Maybe.Nothing,
+                                                                                                   explanation = GHC.Maybe.Nothing,
+                                                                                                   explanationEntities = GHC.Maybe.Nothing,
+                                                                                                   id = id,
+                                                                                                   isAnonymous = isAnonymous,
+                                                                                                   isClosed = isClosed,
+                                                                                                   openPeriod = GHC.Maybe.Nothing,
+                                                                                                   options = options,
+                                                                                                   question = question,
+                                                                                                   totalVoterCount = totalVoterCount,
+                                                                                                   type' = type'}

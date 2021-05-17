@@ -2,6 +2,7 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the types generated from the schema InlineQuery
 module TgBotAPI.Types.InlineQuery where
@@ -24,75 +25,74 @@ import qualified Data.Text.Internal
 import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
 import qualified GHC.Types
 import qualified TgBotAPI.Common
 import TgBotAPI.TypeAlias
-import {-# SOURCE #-} TgBotAPI.Types.Location
-import {-# SOURCE #-} TgBotAPI.Types.User
+import  {-# SOURCE #-}  TgBotAPI.Types.Location (Location)
+import  {-# SOURCE #-}  TgBotAPI.Types.User (User)
 
 -- | Defines the object schema located at @components.schemas.InlineQuery@ in the specification.
 -- 
 -- This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results.
 data InlineQuery = InlineQuery {
   -- | chat_type: *Optional*. Type of the chat, from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat
-  inlineQueryChatType :: (GHC.Maybe.Maybe InlineQueryChatType)
+  chatType :: (GHC.Maybe.Maybe ChatType)
   -- | from: This object represents a Telegram user or bot.
-  , inlineQueryFrom :: User
+  , from :: User
   -- | id: Unique identifier for this query
-  , inlineQueryId :: Data.Text.Internal.Text
+  , id :: Data.Text.Internal.Text
   -- | location: This object represents a point on the map.
-  , inlineQueryLocation :: (GHC.Maybe.Maybe Location)
+  , location :: (GHC.Maybe.Maybe Location)
   -- | offset: Offset of the results to be returned, can be controlled by the bot
-  , inlineQueryOffset :: Data.Text.Internal.Text
+  , offset :: Data.Text.Internal.Text
   -- | query: Text of the query (up to 256 characters)
-  , inlineQueryQuery :: Data.Text.Internal.Text
+  , query :: Data.Text.Internal.Text
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON InlineQuery
-    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_type" Data.Aeson.Types.ToJSON..= inlineQueryChatType obj : "from" Data.Aeson.Types.ToJSON..= inlineQueryFrom obj : "id" Data.Aeson.Types.ToJSON..= inlineQueryId obj : "location" Data.Aeson.Types.ToJSON..= inlineQueryLocation obj : "offset" Data.Aeson.Types.ToJSON..= inlineQueryOffset obj : "query" Data.Aeson.Types.ToJSON..= inlineQueryQuery obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_type" Data.Aeson.Types.ToJSON..= inlineQueryChatType obj) GHC.Base.<> (("from" Data.Aeson.Types.ToJSON..= inlineQueryFrom obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= inlineQueryId obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= inlineQueryLocation obj) GHC.Base.<> (("offset" Data.Aeson.Types.ToJSON..= inlineQueryOffset obj) GHC.Base.<> ("query" Data.Aeson.Types.ToJSON..= inlineQueryQuery obj))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("chat_type" Data.Aeson.Types.ToJSON..= chatType obj : "from" Data.Aeson.Types.ToJSON..= from obj : "id" Data.Aeson.Types.ToJSON..= id obj : "location" Data.Aeson.Types.ToJSON..= location obj : "offset" Data.Aeson.Types.ToJSON..= offset obj : "query" Data.Aeson.Types.ToJSON..= query obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("chat_type" Data.Aeson.Types.ToJSON..= chatType obj) GHC.Base.<> (("from" Data.Aeson.Types.ToJSON..= from obj) GHC.Base.<> (("id" Data.Aeson.Types.ToJSON..= id obj) GHC.Base.<> (("location" Data.Aeson.Types.ToJSON..= location obj) GHC.Base.<> (("offset" Data.Aeson.Types.ToJSON..= offset obj) GHC.Base.<> ("query" Data.Aeson.Types.ToJSON..= query obj))))))
 instance Data.Aeson.Types.FromJSON.FromJSON InlineQuery
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "InlineQuery" (\obj -> (((((GHC.Base.pure InlineQuery GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "chat_type")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "from")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "location")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "offset")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "query"))
 -- | Create a new 'InlineQuery' with all required fields.
-mkInlineQuery :: User -- ^ 'inlineQueryFrom'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryId'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryOffset'
-  -> Data.Text.Internal.Text -- ^ 'inlineQueryQuery'
+mkInlineQuery :: User -- ^ 'from'
+  -> Data.Text.Internal.Text -- ^ 'id'
+  -> Data.Text.Internal.Text -- ^ 'offset'
+  -> Data.Text.Internal.Text -- ^ 'query'
   -> InlineQuery
-mkInlineQuery inlineQueryFrom inlineQueryId inlineQueryOffset inlineQueryQuery = InlineQuery{inlineQueryChatType = GHC.Maybe.Nothing,
-                                                                                             inlineQueryFrom = inlineQueryFrom,
-                                                                                             inlineQueryId = inlineQueryId,
-                                                                                             inlineQueryLocation = GHC.Maybe.Nothing,
-                                                                                             inlineQueryOffset = inlineQueryOffset,
-                                                                                             inlineQueryQuery = inlineQueryQuery}
+mkInlineQuery from id offset query = InlineQuery{chatType = GHC.Maybe.Nothing,
+                                                 from = from,
+                                                 id = id,
+                                                 location = GHC.Maybe.Nothing,
+                                                 offset = offset,
+                                                 query = query}
 -- | Defines the enum schema located at @components.schemas.InlineQuery.properties.chat_type@ in the specification.
 -- 
 -- *Optional*. Type of the chat, from which the inline query was sent. Can be either “sender” for a private chat with the inline query sender, “private”, “group”, “supergroup”, or “channel”. The chat type should be always known for requests sent from official clients and most third-party clients, unless the request was sent from a secret chat
-data InlineQueryChatType =
-   InlineQueryChatTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
-  | InlineQueryChatTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
-  | InlineQueryChatTypeEnumSender -- ^ Represents the JSON value @"sender"@
-  | InlineQueryChatTypeEnumPrivate -- ^ Represents the JSON value @"private"@
-  | InlineQueryChatTypeEnumGroup -- ^ Represents the JSON value @"group"@
-  | InlineQueryChatTypeEnumSupergroup -- ^ Represents the JSON value @"supergroup"@
-  | InlineQueryChatTypeEnumChannel -- ^ Represents the JSON value @"channel"@
+data ChatType =
+   ChatTypeOther Data.Aeson.Types.Internal.Value -- ^ This case is used if the value encountered during decoding does not match any of the provided cases in the specification.
+  | ChatTypeTyped Data.Text.Internal.Text -- ^ This constructor can be used to send values to the server which are not present in the specification yet.
+  | ChatTypeEnumSender -- ^ Represents the JSON value @"sender"@
+  | ChatTypeEnumPrivate -- ^ Represents the JSON value @"private"@
+  | ChatTypeEnumGroup -- ^ Represents the JSON value @"group"@
+  | ChatTypeEnumSupergroup -- ^ Represents the JSON value @"supergroup"@
+  | ChatTypeEnumChannel -- ^ Represents the JSON value @"channel"@
   deriving (GHC.Show.Show, GHC.Classes.Eq)
-instance Data.Aeson.Types.ToJSON.ToJSON InlineQueryChatType
-    where toJSON (InlineQueryChatTypeOther val) = val
-          toJSON (InlineQueryChatTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
-          toJSON (InlineQueryChatTypeEnumSender) = "sender"
-          toJSON (InlineQueryChatTypeEnumPrivate) = "private"
-          toJSON (InlineQueryChatTypeEnumGroup) = "group"
-          toJSON (InlineQueryChatTypeEnumSupergroup) = "supergroup"
-          toJSON (InlineQueryChatTypeEnumChannel) = "channel"
-instance Data.Aeson.Types.FromJSON.FromJSON InlineQueryChatType
-    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "sender" -> InlineQueryChatTypeEnumSender
-                                            | val GHC.Classes.== "private" -> InlineQueryChatTypeEnumPrivate
-                                            | val GHC.Classes.== "group" -> InlineQueryChatTypeEnumGroup
-                                            | val GHC.Classes.== "supergroup" -> InlineQueryChatTypeEnumSupergroup
-                                            | val GHC.Classes.== "channel" -> InlineQueryChatTypeEnumChannel
-                                            | GHC.Base.otherwise -> InlineQueryChatTypeOther val)
+instance Data.Aeson.Types.ToJSON.ToJSON ChatType
+    where toJSON (ChatTypeOther val) = val
+          toJSON (ChatTypeTyped val) = Data.Aeson.Types.ToJSON.toJSON val
+          toJSON (ChatTypeEnumSender) = "sender"
+          toJSON (ChatTypeEnumPrivate) = "private"
+          toJSON (ChatTypeEnumGroup) = "group"
+          toJSON (ChatTypeEnumSupergroup) = "supergroup"
+          toJSON (ChatTypeEnumChannel) = "channel"
+instance Data.Aeson.Types.FromJSON.FromJSON ChatType
+    where parseJSON val = GHC.Base.pure (if | val GHC.Classes.== "sender" -> ChatTypeEnumSender
+                                            | val GHC.Classes.== "private" -> ChatTypeEnumPrivate
+                                            | val GHC.Classes.== "group" -> ChatTypeEnumGroup
+                                            | val GHC.Classes.== "supergroup" -> ChatTypeEnumSupergroup
+                                            | val GHC.Classes.== "channel" -> ChatTypeEnumChannel
+                                            | GHC.Base.otherwise -> ChatTypeOther val)

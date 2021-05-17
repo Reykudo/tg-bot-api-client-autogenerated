@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 -- | Contains the different functions to run the operation postAnswerInlineQuery
 module TgBotAPI.Operations.PostAnswerInlineQuery where
@@ -28,7 +29,6 @@ import qualified Data.Time.Calendar as Data.Time.Calendar.Days
 import qualified Data.Time.LocalTime as Data.Time.LocalTime.Internal.ZonedTime
 import qualified Data.Vector
 import qualified GHC.Base
-import qualified Data.Bifunctor
 import qualified GHC.Classes
 import qualified GHC.Int
 import qualified GHC.Show
@@ -49,9 +49,9 @@ import TgBotAPI.Types
 -- No more than **50** results per query are allowed.
 postAnswerInlineQuery :: forall m . TgBotAPI.Common.MonadHTTP m => PostAnswerInlineQueryRequestBody -- ^ The request body to send
   -> TgBotAPI.Common.StripeT m (Network.HTTP.Client.Types.Response PostAnswerInlineQueryResponse) -- ^ Monadic computation which returns the result of the operation
-postAnswerInlineQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostAnswerInlineQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+postAnswerInlineQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.Either.either PostAnswerInlineQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_1 -> Network.HTTP.Types.Status.statusCode status_1 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                   PostAnswerInlineQueryResponseBody200)
-                                                                                                                                                                             | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                             | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                     Error)
                                                                                                                                                                              | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_0) response_0) (TgBotAPI.Common.doBodyCallWithConfigurationM (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/answerInlineQuery") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | Defines the object schema located at @paths.\/answerInlineQuery.POST.requestBody.content.application\/json.schema@ in the specification.
@@ -59,44 +59,44 @@ postAnswerInlineQuery body = GHC.Base.fmap (\response_0 -> GHC.Base.fmap (Data.E
 -- 
 data PostAnswerInlineQueryRequestBody = PostAnswerInlineQueryRequestBody {
   -- | cache_time: The maximum amount of time in seconds that the result of the inline query may be cached on the server. Defaults to 300.
-  postAnswerInlineQueryRequestBodyCacheTime :: (GHC.Maybe.Maybe GHC.Types.Int)
+  cacheTime :: (GHC.Maybe.Maybe GHC.Types.Int)
   -- | inline_query_id: Unique identifier for the answered query
-  , postAnswerInlineQueryRequestBodyInlineQueryId :: Data.Text.Internal.Text
+  , inlineQueryId :: Data.Text.Internal.Text
   -- | is_personal: Pass *True*, if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query
-  , postAnswerInlineQueryRequestBodyIsPersonal :: (GHC.Maybe.Maybe GHC.Types.Bool)
+  , isPersonal :: (GHC.Maybe.Maybe GHC.Types.Bool)
   -- | next_offset: Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don\'t support pagination. Offset length can\'t exceed 64 bytes.
-  , postAnswerInlineQueryRequestBodyNextOffset :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , nextOffset :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | results: A JSON-serialized array of results for the inline query
-  , postAnswerInlineQueryRequestBodyResults :: ([InlineQueryResult])
+  , results :: ([InlineQueryResult])
   -- | switch_pm_parameter: [Deep-linking](\/bots\#deep-linking) parameter for the \/start message sent to the bot when user presses the switch button. 1-64 characters, only \`A-Z\`, \`a-z\`, \`0-9\`, \`_\` and \`-\` are allowed.  
   -- 
   -- *Example:* An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a \'Connect your YouTube account\' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an oauth link. Once done, the bot can offer a [*switch\\_inline*](https:\/\/core.telegram.org\/bots\/api\/\#inlinekeyboardmarkup) button so that the user can easily return to the chat where they wanted to use the bot\'s inline capabilities.
-  , postAnswerInlineQueryRequestBodySwitchPmParameter :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , switchPmParameter :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   -- | switch_pm_text: If passed, clients will display a button with specified text that switches the user to a private chat with the bot and sends the bot a start message with the parameter *switch\\_pm\\_parameter*
-  , postAnswerInlineQueryRequestBodySwitchPmText :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
+  , switchPmText :: (GHC.Maybe.Maybe Data.Text.Internal.Text)
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostAnswerInlineQueryRequestBody
-    where toJSON obj = Data.Aeson.Types.Internal.object ("cache_time" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyCacheTime obj : "inline_query_id" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyInlineQueryId obj : "is_personal" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyIsPersonal obj : "next_offset" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyNextOffset obj : "results" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyResults obj : "switch_pm_parameter" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodySwitchPmParameter obj : "switch_pm_text" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodySwitchPmText obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("cache_time" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyCacheTime obj) GHC.Base.<> (("inline_query_id" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyInlineQueryId obj) GHC.Base.<> (("is_personal" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyIsPersonal obj) GHC.Base.<> (("next_offset" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyNextOffset obj) GHC.Base.<> (("results" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodyResults obj) GHC.Base.<> (("switch_pm_parameter" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodySwitchPmParameter obj) GHC.Base.<> ("switch_pm_text" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryRequestBodySwitchPmText obj)))))))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("cache_time" Data.Aeson.Types.ToJSON..= cacheTime obj : "inline_query_id" Data.Aeson.Types.ToJSON..= inlineQueryId obj : "is_personal" Data.Aeson.Types.ToJSON..= isPersonal obj : "next_offset" Data.Aeson.Types.ToJSON..= nextOffset obj : "results" Data.Aeson.Types.ToJSON..= results obj : "switch_pm_parameter" Data.Aeson.Types.ToJSON..= switchPmParameter obj : "switch_pm_text" Data.Aeson.Types.ToJSON..= switchPmText obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("cache_time" Data.Aeson.Types.ToJSON..= cacheTime obj) GHC.Base.<> (("inline_query_id" Data.Aeson.Types.ToJSON..= inlineQueryId obj) GHC.Base.<> (("is_personal" Data.Aeson.Types.ToJSON..= isPersonal obj) GHC.Base.<> (("next_offset" Data.Aeson.Types.ToJSON..= nextOffset obj) GHC.Base.<> (("results" Data.Aeson.Types.ToJSON..= results obj) GHC.Base.<> (("switch_pm_parameter" Data.Aeson.Types.ToJSON..= switchPmParameter obj) GHC.Base.<> ("switch_pm_text" Data.Aeson.Types.ToJSON..= switchPmText obj)))))))
 instance Data.Aeson.Types.FromJSON.FromJSON PostAnswerInlineQueryRequestBody
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostAnswerInlineQueryRequestBody" (\obj -> ((((((GHC.Base.pure PostAnswerInlineQueryRequestBody GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "cache_time")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "inline_query_id")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "is_personal")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "next_offset")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "results")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "switch_pm_parameter")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..:? "switch_pm_text"))
 -- | Create a new 'PostAnswerInlineQueryRequestBody' with all required fields.
-mkPostAnswerInlineQueryRequestBody :: Data.Text.Internal.Text -- ^ 'postAnswerInlineQueryRequestBodyInlineQueryId'
-  -> [InlineQueryResult] -- ^ 'postAnswerInlineQueryRequestBodyResults'
+mkPostAnswerInlineQueryRequestBody :: Data.Text.Internal.Text -- ^ 'inlineQueryId'
+  -> [InlineQueryResult] -- ^ 'results'
   -> PostAnswerInlineQueryRequestBody
-mkPostAnswerInlineQueryRequestBody postAnswerInlineQueryRequestBodyInlineQueryId postAnswerInlineQueryRequestBodyResults = PostAnswerInlineQueryRequestBody{postAnswerInlineQueryRequestBodyCacheTime = GHC.Maybe.Nothing,
-                                                                                                                                                            postAnswerInlineQueryRequestBodyInlineQueryId = postAnswerInlineQueryRequestBodyInlineQueryId,
-                                                                                                                                                            postAnswerInlineQueryRequestBodyIsPersonal = GHC.Maybe.Nothing,
-                                                                                                                                                            postAnswerInlineQueryRequestBodyNextOffset = GHC.Maybe.Nothing,
-                                                                                                                                                            postAnswerInlineQueryRequestBodyResults = postAnswerInlineQueryRequestBodyResults,
-                                                                                                                                                            postAnswerInlineQueryRequestBodySwitchPmParameter = GHC.Maybe.Nothing,
-                                                                                                                                                            postAnswerInlineQueryRequestBodySwitchPmText = GHC.Maybe.Nothing}
+mkPostAnswerInlineQueryRequestBody inlineQueryId results = PostAnswerInlineQueryRequestBody{cacheTime = GHC.Maybe.Nothing,
+                                                                                            inlineQueryId = inlineQueryId,
+                                                                                            isPersonal = GHC.Maybe.Nothing,
+                                                                                            nextOffset = GHC.Maybe.Nothing,
+                                                                                            results = results,
+                                                                                            switchPmParameter = GHC.Maybe.Nothing,
+                                                                                            switchPmText = GHC.Maybe.Nothing}
 -- | Represents a response of the operation 'postAnswerInlineQuery'.
 -- 
 -- The response constructor is chosen by the status code of the response. If no case matches (no specific case for the response code, no range case, no default case), 'PostAnswerInlineQueryResponseError' is used.
 data PostAnswerInlineQueryResponse =
-   PostAnswerInlineQueryResponseError Data.Text.Text -- ^ Means either no matching case available or a parse error
+   PostAnswerInlineQueryResponseError GHC.Base.String -- ^ Means either no matching case available or a parse error
   | PostAnswerInlineQueryResponse200 PostAnswerInlineQueryResponseBody200 -- ^ 
   | PostAnswerInlineQueryResponseDefault Error -- ^ 
   deriving (GHC.Show.Show, GHC.Classes.Eq)
@@ -105,22 +105,22 @@ data PostAnswerInlineQueryResponse =
 -- 
 data PostAnswerInlineQueryResponseBody200 = PostAnswerInlineQueryResponseBody200 {
   -- | ok
-  postAnswerInlineQueryResponseBody200Ok :: GHC.Types.Bool
+  ok :: GHC.Types.Bool
   -- | result
-  , postAnswerInlineQueryResponseBody200Result :: GHC.Types.Bool
+  , result :: GHC.Types.Bool
   } deriving (GHC.Show.Show
   , GHC.Classes.Eq)
 instance Data.Aeson.Types.ToJSON.ToJSON PostAnswerInlineQueryResponseBody200
-    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryResponseBody200Ok obj : "result" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryResponseBody200Result obj : GHC.Base.mempty)
-          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryResponseBody200Ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= postAnswerInlineQueryResponseBody200Result obj))
+    where toJSON obj = Data.Aeson.Types.Internal.object ("ok" Data.Aeson.Types.ToJSON..= ok obj : "result" Data.Aeson.Types.ToJSON..= result obj : GHC.Base.mempty)
+          toEncoding obj = Data.Aeson.Encoding.Internal.pairs (("ok" Data.Aeson.Types.ToJSON..= ok obj) GHC.Base.<> ("result" Data.Aeson.Types.ToJSON..= result obj))
 instance Data.Aeson.Types.FromJSON.FromJSON PostAnswerInlineQueryResponseBody200
     where parseJSON = Data.Aeson.Types.FromJSON.withObject "PostAnswerInlineQueryResponseBody200" (\obj -> (GHC.Base.pure PostAnswerInlineQueryResponseBody200 GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "ok")) GHC.Base.<*> (obj Data.Aeson.Types.FromJSON..: "result"))
 -- | Create a new 'PostAnswerInlineQueryResponseBody200' with all required fields.
-mkPostAnswerInlineQueryResponseBody200 :: GHC.Types.Bool -- ^ 'postAnswerInlineQueryResponseBody200Ok'
-  -> GHC.Types.Bool -- ^ 'postAnswerInlineQueryResponseBody200Result'
+mkPostAnswerInlineQueryResponseBody200 :: GHC.Types.Bool -- ^ 'ok'
+  -> GHC.Types.Bool -- ^ 'result'
   -> PostAnswerInlineQueryResponseBody200
-mkPostAnswerInlineQueryResponseBody200 postAnswerInlineQueryResponseBody200Ok postAnswerInlineQueryResponseBody200Result = PostAnswerInlineQueryResponseBody200{postAnswerInlineQueryResponseBody200Ok = postAnswerInlineQueryResponseBody200Ok,
-                                                                                                                                                                postAnswerInlineQueryResponseBody200Result = postAnswerInlineQueryResponseBody200Result}
+mkPostAnswerInlineQueryResponseBody200 ok result = PostAnswerInlineQueryResponseBody200{ok = ok,
+                                                                                        result = result}
 -- | > POST /answerInlineQuery
 -- 
 -- The same as 'postAnswerInlineQuery' but accepts an explicit configuration.
@@ -128,9 +128,9 @@ postAnswerInlineQueryWithConfiguration :: forall m . TgBotAPI.Common.MonadHTTP m
   -> PostAnswerInlineQueryRequestBody -- ^ The request body to send
   -> m (Network.HTTP.Client.Types.Response PostAnswerInlineQueryResponse) -- ^ Monadic computation which returns the result of the operation
 postAnswerInlineQueryWithConfiguration config
-                                       body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostAnswerInlineQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponse200 Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                       body = GHC.Base.fmap (\response_2 -> GHC.Base.fmap (Data.Either.either PostAnswerInlineQueryResponseError GHC.Base.id GHC.Base.. (\response body -> if | (\status_3 -> Network.HTTP.Types.Status.statusCode status_3 GHC.Classes.== 200) (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponse200 Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                                                                    PostAnswerInlineQueryResponseBody200)
-                                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponseDefault Data.Functor.<$> ((Data.Bifunctor.first Data.Text.pack (Data.Aeson.eitherDecodeStrict body)) :: Data.Either.Either Data.Text.Text
+                                                                                                                                                                                              | GHC.Base.const GHC.Types.True (Network.HTTP.Client.Types.responseStatus response) -> PostAnswerInlineQueryResponseDefault Data.Functor.<$> (Data.Aeson.eitherDecodeStrict body :: Data.Either.Either GHC.Base.String
                                                                                                                                                                                                                                                                                                                                                                                                      Error)
                                                                                                                                                                                               | GHC.Base.otherwise -> Data.Either.Left "Missing default response type") response_2) response_2) (TgBotAPI.Common.doBodyCallWithConfiguration config (Data.Text.toUpper GHC.Base.$ Data.Text.pack "POST") (Data.Text.pack "/answerInlineQuery") GHC.Base.mempty (GHC.Maybe.Just body) TgBotAPI.Common.RequestBodyEncodingJSON)
 -- | > POST /answerInlineQuery
